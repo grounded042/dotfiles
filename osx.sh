@@ -68,6 +68,7 @@ require_brew findutils
 # Install other useful binaries
 require_brew ack
 
+require_brew bzr
 # dos2unix converts windows newlines to unix newlines
 require_brew dos2unix
 require_brew git
@@ -81,7 +82,6 @@ require_brew homebrew/dupes/grep
 require_brew hub
 require_brew nmap
 require_brew node
-require_brew postgres
 require_brew postgres
 brew_launchctl_restart postgresql
 require_brew tmux
