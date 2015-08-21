@@ -80,6 +80,7 @@ require_brew go
 # better, more recent grep
 require_brew homebrew/dupes/grep
 require_brew hub
+require_brew mobile-shell
 require_brew nmap
 require_brew node
 require_brew postgres
