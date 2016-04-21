@@ -20,19 +20,11 @@ running "checking homebrew install"
 brew_bin=$(which brew) 2>&1 > /dev/null
 if [[ $? != 0 ]]; then
 	action "installing homebrew"
-    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     if [[ $? != 0 ]]; then
     	error "unable to install homebrew, script $0 abort!"
     	exit -1
 	fi
-fi
-ok
-
-running "checking brew-cask install"
-output=$(brew tap | grep cask)
-if [[ $? != 0 ]]; then
-	action "installing brew-cask"
-	require_brew caskroom/cask/brew-cask
 fi
 ok
 
@@ -103,10 +95,12 @@ require_cask dropbox
 require_cask slack
 
 # tools
+require_cask atom
 require_cask diffmerge
-require_cask github
+require_cask gitkraken
 require_cask iterm2
 require_cask vlc
+require_cask radiant-player
 require_cask google-chrome
 require_cask virtualbox
 
@@ -157,6 +151,7 @@ running "Restart automatically if the computer freezes"
 sudo systemsetup -setrestartfreeze on;ok
 
 running "Check for software updates daily, not just once per week"
+
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1;ok
 
 running "Trackpad: enable tap to click for this user and for the login screen"
