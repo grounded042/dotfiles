@@ -1,6 +1,6 @@
 [user]
 	name = Jon Carl
-	email = joncarl42@gmail.com
+	useConfigOnly = true
 [github]
     # https://github.com/blog/180-local-github-config
     user = grounded042

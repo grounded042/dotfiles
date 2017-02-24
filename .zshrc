@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/joncarl/.oh-my-zsh
+export ZSH=/Users/jcarl/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -18,11 +18,18 @@ plugins=(git golang history history-substring-search)
 
 # User configuration
 
-export PATH="/Users/joncarl/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/Users/jcarl/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
+
+# aliases
+alias vd='vagrant destroy --force'
+alias eev='export $(cat .env | xargs)'
 
 # go stuff
 export GOPATH=$HOME/gocode
 export PATH=$GOPATH/bin:$PATH
 
 source $ZSH/oh-my-zsh.sh
+source /usr/local/opt/autoenv/activate.sh
+source $ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+eval $(/usr/libexec/path_helper -s)

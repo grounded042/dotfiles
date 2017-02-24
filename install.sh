@@ -22,7 +22,6 @@ me=`dscl . -read /Users/$(whoami)`
 
 lastname=`dscl . -read /Users/$(whoami) | grep LastName | sed "s/LastName: //"`
 firstname=`dscl . -read /Users/$(whoami) | grep FirstName | sed "s/FirstName: //"`
-email=`dscl . -read /Users/$(whoami)  | grep EMailAddress | sed "s/EMailAddress: //"`
 
 if [[ ! "$firstname" ]];then
   response='n'
@@ -39,20 +38,9 @@ fullname="$firstname $lastname"
 
 bot "Great $fullname, "
 
-if [[ ! $email ]];then
-  response='n'
-else
-  echo -e "The best I can make out, your email address is $COL_YELLOW$email$COL_RESET"
-  read -r -p "Is this correct? [Y|n] " response
-fi
-
-if [[ $response =~ ^(no|n|N) ]];then
-	read -r -p "What is your email? " email
-fi
-
 read -r -p "What is your github.com username? " githubuser
 
-running "replacing items in .gitconfig with your info ($COL_YELLOW$fullname, $email, $githubuser$COL_RESET)"
+running "replacing items in .gitconfig with your info ($COL_YELLOW$fullname, $githubuser$COL_RESET)"
 
 # test if gnu-sed or osx sed
 
@@ -61,13 +49,11 @@ if [[ ${PIPESTATUS[0]} != 0 ]]; then
   echo
   running "looks like you are using OSX sed rather than gnu-sed, accommodating"
   sed -i '' 's/Jon Carl/'$firstname' '$lastname'/' .gitconfig;
-  sed -i '' 's/joncarl42@gmail.com/'$email'/' .gitconfig;
   sed -i '' 's/grounded042/'$githubuser'/' .gitconfig;
   sed -i '' 's/joncarl/'$(whoami)'/g' .zshrc;ok
 else
   echo
   bot "looks like you are already using gnu-sed. woot!"
-  sed -i 's/joncarl42@gmail.com/'$email'/' .gitconfig;
   sed -i 's/grounded042/'$githubuser'/' .gitconfig;
   sed -i 's/joncarl/'$(whoami)'/g' .zshrc;ok
 fi
@@ -83,39 +69,6 @@ fi
 running "adding oh my zsh"
 curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 
-pushd ~ > /dev/null 2>&1
-
-# function symlinkifne {
-#     running "$1"
-
-#     if [[ -e $1 ]]; then
-#         # file exists
-#         if [[ -L $1 ]]; then
-#             # it's already a simlink (could have come from this project)
-#             echo -en '\tsimlink exists, skipped\t';ok
-#             return
-#         fi
-#         # backup file does not exist yet
-#         if [[ ! -e ~/.dotfiles_backup/$1 ]];then
-#             mv $1 ~/.dotfiles_backup/
-#             echo -en 'backed up saved...';
-#         fi
-#     fi
-#     # create the link
-#     ln -s ~/$1 $1
-#     echo -en 'linked';ok
-# }
-
-# bot "creating symlinks for project dotfiles..."
-
-# # copy the .gitconfig to resolve symlink loop
-# cp .gitconfig ~/
-# symlinkifne .gitignore
-# symlinkifne .vim
-# symlinkifne .vimrc
-# symlinkifne .zprofile
-# symlinkifne .zshrc
-
 bot "copying dotfiles..."
 
 ./bootstrap.sh
@@ -125,8 +78,6 @@ cp themes/grounded042.zsh-theme ~/.oh-my-zsh/themes
 
 bot "setting up go"
 mkdir ~/gocode
-
-popd > /dev/null 2>&1
 
 ./osx.sh
 

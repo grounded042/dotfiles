@@ -59,8 +59,10 @@ require_brew findutils
 
 # Install other useful binaries
 require_brew ack
+require_brew autoenv
 
 require_brew bzr
+require_brew caddy
 # dos2unix converts windows newlines to unix newlines
 require_brew dos2unix
 require_brew git
@@ -72,6 +74,8 @@ require_brew go
 # better, more recent grep
 require_brew homebrew/dupes/grep
 require_brew hub
+require_brew keybase
+require_brew koekeishiya/kwm/kwm
 require_brew mobile-shell
 require_brew nmap
 require_brew node
@@ -89,7 +93,7 @@ bot "installing GUI tools via homebrew casks..."
 brew tap caskroom/versions > /dev/null 2>&1
 
 # cloud storage
-require_cask dropbox
+# require_cask dropbox
 
 # communication
 require_cask slack
@@ -97,11 +101,10 @@ require_cask slack
 # tools
 require_cask atom
 require_cask diffmerge
-require_cask gitkraken
 require_cask iterm2
 require_cask vlc
-require_cask radiant-player
 require_cask google-chrome
+require_cask vagrant
 require_cask virtualbox
 
 bot "Alright, cleaning up homebrew cache..."
@@ -151,7 +154,6 @@ running "Restart automatically if the computer freezes"
 sudo systemsetup -setrestartfreeze on;ok
 
 running "Check for software updates daily, not just once per week"
-
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1;ok
 
 running "Trackpad: enable tap to click for this user and for the login screen"
@@ -299,18 +301,10 @@ bot "Terminal & iTerm2"
 running "Only use UTF-8 in Terminal.app"
 defaults write com.apple.terminal StringEncodings -array 4;ok
 
-running "Use a modified version of the Solarized Dark theme by default in Terminal.app"
-TERM_PROFILE='Solarized Dark xterm-256color';
-CURRENT_PROFILE="$(defaults read com.apple.terminal 'Default Window Settings')";
-if [ "${CURRENT_PROFILE}" != "${TERM_PROFILE}" ]; then
-	open "./configs/${TERM_PROFILE}.terminal";
-	sleep 1; # Wait a bit to make sure the theme is loaded
-	defaults write com.apple.terminal 'Default Window Settings' -string "${TERM_PROFILE}";
-	defaults write com.apple.terminal 'Startup Window Settings' -string "${TERM_PROFILE}";
-fi;
+running "Use my own terminal theme because reasons"
 
-running "Installing the Solarized Dark theme for iTerm (opening file)"
-open "./configs/Solarized Dark.itermcolors";ok
+running "Installing the grounded042 theme for iTerm (opening file)"
+open "./configs/grounded042.itermcolors";ok
 
 running "Don’t display the annoying prompt when quitting iTerm"
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false;ok
@@ -350,7 +344,6 @@ require_npm gulp
 require_npm jshint
 # https://github.com/MrRio/vtop
 require_npm vtop
-require_npm yo
 
 ###############################################################################
 # Kill affected applications                                                  #
