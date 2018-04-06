@@ -66,7 +66,6 @@ require_brew caddy
 # dos2unix converts windows newlines to unix newlines
 require_brew dos2unix
 require_brew git
-require_brew git-flow
 # Install GNU `sed`, overwriting the built-in `sed`
 # so we can do "sed -i 's/foo/bar/' file" instead of "sed -i '' 's/foo/bar/' file"
 require_brew gnu-sed --default-names
@@ -78,12 +77,11 @@ require_brew keybase
 require_brew koekeishiya/kwm/kwm
 require_brew mobile-shell
 require_brew nmap
-require_brew node
-require_brew postgres
-brew_launchctl_restart postgresql
+require_brew nvm
 require_brew tmux
 # better, more recent vim
 require_brew vim --override-system-vi
+require_brew yarn
 require_brew zsh
 
 ###############################################################################
@@ -103,7 +101,6 @@ require_cask atom
 require_cask diffmerge
 require_cask iterm2
 require_cask vlc
-require_cask google-chrome
 require_cask vagrant
 require_cask virtualbox
 

@@ -24,6 +24,8 @@ export PATH="/Users/jcarl/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # aliases
 alias vd='vagrant destroy --force'
 alias eev='export $(cat .env | xargs)'
+alias lla='ll -A'
+alias dd='docker stop $(docker ps -a -q); docker rm $(docker ps -a -q)'
 
 # go stuff
 export GOPATH=$HOME/gocode
@@ -33,3 +35,7 @@ source $ZSH/oh-my-zsh.sh
 source /usr/local/opt/autoenv/activate.sh
 source $ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval $(/usr/libexec/path_helper -s)
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
