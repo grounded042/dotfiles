@@ -1,7 +1,8 @@
 [user]
 	name = Jon Carl
 	useConfigOnly = true
-	email = jon.carl.42@gmail.com
+	email = grounded042@icloud.com
+	signingkey = FE6D0451652D5FCC
 [github]
     # https://github.com/blog/180-local-github-config
     user = grounded042
@@ -198,3 +199,5 @@
 	required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
+[commit]
+	gpgsign = true
