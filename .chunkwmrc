@@ -5,7 +5,7 @@
 #       loading a plugin. '~' expansion is supported.
 #
 
-chunkc core::plugin_dir ~/.chunkwm_plugins
+chunkc core::plugin_dir /usr/local/opt/chunkwm/share/chunkwm/plugins
 
 #
 # NOTE: if enabled, chunkwm will monitor the specified plugin_dir
@@ -70,10 +70,11 @@ chunkc set mouse_modifier                fn
 # NOTE: The following are config variables for the chunkwm-border plugin
 #
 
-chunkc set focused_border_color          0xDDF94F41
-chunkc set focused_border_width          4
-chunkc set focused_border_radius         4
-chunkc set focused_border_skip_floating  0
+# chunkc set focused_border_color          0xDDE650A0
+# chunkc set focused_border_color          0xDDF94F41
+# chunkc set focused_border_width          4
+# chunkc set focused_border_radius         4
+# chunkc set focused_border_skip_floating  0
 
 # enable fading of windows that are not in focus
 chunkc set window_fade_inactive 1
@@ -88,10 +89,11 @@ chunkc set window_fade_duration 0.25
 
 chunkc core::load tiling.so
 chunkc core::load ffm.so
-chunkc core::load border.so
+# chunkc core::load border.so
 
 chunkc tiling::rule --owner \"System Preferences\" --state float
 chunkc tiling::rule --owner Finder --name Copy --state float
+chunkc tiling::rule --owner iTunes --name MiniPlayer --state float
 chunkc tiling::rule --owner \"iTerm\" --state tile
 chunkc tiling::rule --owner \"kitty\" --state tile
 
