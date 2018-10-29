@@ -1,6 +1,6 @@
 
 export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$PATH:$HOME/go/bin"
+export PATH="$PATH:$HOME/go/bin:$(brew --prefix coreutils)/libexec/gnubin"
 
 # aliases
 alias vd='vagrant destroy --force'

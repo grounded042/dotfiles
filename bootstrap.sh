@@ -1,23 +1,21 @@
 #!/usr/bin/env bash
 
-cd "$(dirname "${BASH_SOURCE}")";
+###########################
+# This script installs the dotfiles and runs all other system configuration scripts
+# Copied from Adam Eivy
+# @author Jon Carl
+###########################
 
-git pull origin master;
 
-function doIt() {
-	rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" --exclude "install.sh" \
-		--exclude "README.md" --exclude "LICENSE" --exclude "configs/" --exclude "lib.sh" --exclude "osx.sh" \
-		--exclude "themes/" --exclude "Übersicht/" -avh --no-perms . ~;
-	source ~/.bash_profile;
-}
+# include my library helpers for colorized echo and require_brew, etc
+source ./lib.sh
 
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
-	doIt;
-else
-	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
-	echo "";
-	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt;
-	fi;
-fi;
-unset doIt;
+running "adding oh my zsh"
+curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+
+bot "setting up go"
+mkdir ~/gocode
+
+./osx.sh
+
+bot "Woot! All done."
