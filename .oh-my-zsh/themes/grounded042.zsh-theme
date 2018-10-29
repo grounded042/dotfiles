@@ -18,7 +18,7 @@ function box_name {
 
 #PROMPT='%{$fg[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}$(box_name)%{$reset_color%} in %{$fg_bold[green]%}${PWD/#$HOME/~}%{$reset_color%}$(git_prompt_info)$(virtualenv_info)%(?,,%{${fg_bold[blue]}%}[%?]%{$reset_color%} )$ '
 PROMPT='
-%n@$(box_name)%{$reset_color%} in %{$fg[blue]%}${PWD/#$HOME/~}%b%{$reset_color%}$(git_prompt_info)
+%n%{$reset_color%} in %{$fg[blue]%}${PWD/#$HOME/~}%b%{$reset_color%}$(git_prompt_info)
 $(prompt_char) '
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[white]%}"
