@@ -50,6 +50,7 @@ brew "koekeishiya/formulae/skhd"
 
 # GUI
 cask "diffmerge"
+cask "iterm2"
 cask "keybase" # manage PGP real nice
 cask "vagrant"
 cask "virtualbox"
