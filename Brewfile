@@ -27,6 +27,7 @@ brew "gnu-sed", args: ["with-default-names"]
 brew "libffi"
 brew "gnupg" # pretty good privacy
 brew "go" # golang
+brew "ical-buddy"
 brew "jq" # json on the command line
 
 # kubernetes

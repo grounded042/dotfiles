@@ -8,6 +8,14 @@ alias eev='export $(cat .env | xargs)'
 alias lla='ll -A'
 alias dd='docker stop $(docker ps -a -q); docker rm $(docker ps -a -q)'
 
+alias ls='exa'
+alias ll='exa -l'
+
+alias today="icalbuddy -f -eep notes eventsToday"
+
+# git aliases
+alias gs="git status"
+
 # kubernetes stuff
 kc() {
     if [[ -z "$1" ]]; then
