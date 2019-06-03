@@ -194,10 +194,17 @@
 [filter "tabspace"]
 	clean = expand -t 4
 [push]
-	default = matching
+	default = simple
 [filter "media"]
 	required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
 [commit]
 	gpgsign = true
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

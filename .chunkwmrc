@@ -96,6 +96,7 @@ chunkc tiling::rule --owner Finder --name Copy --state float
 chunkc tiling::rule --owner iTunes --name MiniPlayer --state float
 chunkc tiling::rule --owner \"iTerm\" --state tile
 chunkc tiling::rule --owner \"kitty\" --state tile
+chunkc tiling::rule --owner GifCapture --state float
 
 #
 # NOTE: if chunkc plugin_dir is not set, the absolutepath is necessary.

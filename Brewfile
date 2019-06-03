@@ -18,6 +18,8 @@ brew "findutils"
 
 # Install other useful stuff
 brew "ack"
+brew "antibody"
+brew "awscli"
 cask "aws-vault"
 brew "caddy" # local web server 
 brew "cmake" # cross platform make 
@@ -32,6 +34,7 @@ brew "jq" # json on the command line
 
 # kubernetes
 brew "kubernetes-cli"
+brew "kube-ps1"
 brew "kops"
 
 brew "nmap" # port scanning
@@ -41,6 +44,7 @@ brew "sshuttle" # poor mans VPN
 brew "terraform"
 brew "tmux"
 brew "vim", args: ["with-luajit", "with-override-system-vi"]
+brew "wakeonlan"
 brew "watch"
 brew "yadm"
 brew "yq" # yaml on the command line
