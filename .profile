@@ -1,9 +1,12 @@
 
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin:$(brew --prefix coreutils)/libexec/gnubin"
+export GOPATH="$HOME/go"
 
 # aliases
 alias vd='vagrant destroy --force'
+alias vu='vagrant up'
+alias vs='vagrant ssh'
 alias eev='export $(cat .env | xargs)'
 alias lla='ll -A'
 alias dd='docker stop $(docker ps -a -q); docker rm $(docker ps -a -q)'
@@ -12,6 +15,8 @@ alias ls='exa'
 alias ll='exa -l'
 
 alias today="icalbuddy -f -eep notes eventsToday"
+
+alias k="kubectl"
 
 # git aliases
 alias gs="git status"
@@ -41,5 +46,9 @@ kn() {
     echo "Namespace set to \"$1\""
   fi
 }
+
+source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+export KUBE_PS1_SYMBOL_ENABLE="false"
+# PS1='$(kube_ps1)'$PS1
 
 source $HOME/.work_profile
