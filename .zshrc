@@ -1,11 +1,14 @@
-# Path to your oh-my-zsh installation.
 source <(antibody init)
-antibody bundle < ~/.zsh_plugins.txt
+
+export DISABLE_AUTO_UPDATE=true
 export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+
+antibody bundle < ~/.zsh_plugins.txt
 
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
+export HISTIGNORE="ls:ll:cd:cd -:pwd:exit:date:* --help:clear"
 
 setopt hist_ignore_all_dups # remove older duplicate entries from history
 setopt hist_reduce_blanks # remove superfluous blanks from history items
@@ -21,3 +24,5 @@ zstyle ':completion:::::' completer _expand _complete _ignored _approximate # en
 
 source $HOME/.profile
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

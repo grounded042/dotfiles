@@ -7,3 +7,15 @@ alt - h : chunkc tiling::window --focus west
 alt - j : chunkc tiling::window --focus south
 alt - k : chunkc tiling::window --focus north
 alt - l : chunkc tiling::window --focus east
+
+# increase region size
+shift + alt - h : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
+shift + alt - j : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge south
+shift + alt - k : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
+shift + alt - l : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge east
+
+# decrease region size
+shift + cmd - h : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
+shift + cmd - j : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
+shift + cmd - k : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
+shift + cmd - l : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
