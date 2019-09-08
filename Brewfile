@@ -1,6 +1,5 @@
 
 # tap 
-tap "crisidev/chunkwm"
 tap "homebrew/cask"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
@@ -20,10 +19,10 @@ brew "findutils"
 brew "ack"
 brew "antibody"
 brew "awscli"
-cask "aws-vault"
 brew "caddy" # local web server 
 brew "cmake" # cross platform make 
 brew "exa" # newer ls
+brew "fzf"
 brew "git"
 brew "gnu-sed", args: ["with-default-names"]
 brew "libffi"
@@ -50,7 +49,7 @@ brew "yadm"
 brew "yq" # yaml on the command line
 brew "zsh"
 brew "zsh-syntax-highlighting"
-brew "crisidev/chunkwm/chunkwm", args: ["with-tmp-logging"]
+brew "koekeishiya/formulae/yabai"
 brew "koekeishiya/formulae/skhd"
 
 # GUI
