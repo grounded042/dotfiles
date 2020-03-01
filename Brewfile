@@ -59,5 +59,3 @@ cask "keybase" # manage PGP real nice
 cask "vagrant"
 cask "virtualbox"
 cask "vlc"
-
-brew cleanup > /dev/null 2>&1

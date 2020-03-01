@@ -13,7 +13,7 @@
 " }
 
 " Vim UI {
-    set showmode                    " Display the current mode
+    set noshowmode                    " Disable the current mode because we have lightline
     set laststatus=2
 
     " Broken down into easily includeable segments
@@ -57,11 +57,14 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'itchyny/lightline.vim'
 
 Plug 'preservim/nerdtree'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 Plug 'hashivim/vim-terraform'
 Plug 'APZelos/blamer.nvim'
@@ -80,4 +83,16 @@ let g:terraform_align = 1 " align automatically
 let g:terraform_fmt_on_save = 1 " format on save
 " }
 
+" Statusline {
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified', 'gitinfo' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitinfo': 'FugitiveStatusline'
+      \ },
+      \ }
+" }
 
