@@ -442,9 +442,9 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>187 389 928 394 0 0 2560 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>21 62 1634 941 0 0 1680 1050 </string>
+	<string>21 84 2516 949 0 0 2560 1080 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1285 77 1249 957 0 0 2560 1080 </string>
+	<string>1286 84 1249 949 0 0 2560 1080 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -639,13 +639,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.91764706373214722</real>
+				<real>0.29999999999999999</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.88627451658248901</real>
+				<real>0.29999999999999999</real>
 				<key>Red Component</key>
-				<real>0.87058836221694946</real>
+				<real>0.29999999999999999</real>
 			</dict>
 			<key>Ansi 9 Color</key>
 			<dict>
@@ -667,13 +667,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.098039202392101288</real>
+				<real>0.16078431372549021</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.098039217293262482</real>
+				<real>0.16078431372549021</real>
 				<key>Red Component</key>
-				<real>0.098039247095584869</real>
+				<real>0.16078431372549021</real>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
@@ -1174,7 +1174,7 @@
 	<array>
 		<string>3.3.6</string>
 		<string>3.3.8</string>
-		<string>3.3.4</string>
+		<string>3.3.0</string>
 		<string>3.3.1</string>
 		<string>3.3.3</string>
 		<string>3.3.5</string>
@@ -1182,21 +1182,21 @@
 		<string>3.3.9</string>
 		<string>3.2.9</string>
 		<string>3.3.2</string>
-		<string>3.3.0</string>
+		<string>3.3.4</string>
 	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1680, 1050}}</string>
+		<string>{{0, 0}, {2560, 1080}}</string>
 		<key>topLeft</key>
-		<string>{438, 1024}</string>
+		<string>{7, 781}</string>
 	</dict>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>7806EE79-EBB6-43BC-BD30-B7EA743DCABB</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>56</integer>
+	<integer>57</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2003,7 +2003,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-03-02T13:53:42Z</date>
+	<date>2020-03-27T13:06:45Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>

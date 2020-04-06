@@ -13,18 +13,10 @@ set encoding=utf-8
 " }
 
 " Vim UI {
-set noshowmode                    " Disable the current mode because we have lightline
-set laststatus=2
+set cmdheight=2                 " Better display for messages
 
-" Broken down into easily includeable segments
-set statusline=%<%f\                     " Filename
-set statusline+=%w%h%m%r                 " Options
-if !exists('g:override_spf13_bundles')
-	set statusline+=%{fugitive#statusline()} " Git Hotness
-endif
-set statusline+=\ [%{&ff}/%Y]            " Filetype
-set statusline+=\ [%{getcwd()}]          " Current dir
-set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+set noshowmode                  " Disable the current mode because we have lightline
+set laststatus=2
 
 set backspace=indent,eol,start  " Backspace for dummies
 set linespace=0                 " No extra spaces between rows
@@ -35,8 +27,8 @@ set hlsearch                    " Highlight search terms
 set winminheight=0              " Windows can be 0 line high
 set ignorecase                  " Case insensitive search
 set smartcase                   " Case sensitive when uc present
-set wildmenu                    " Show list instead of just completing
-set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
+" set wildmenu                    " Show list instead of just completing
+" set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
@@ -56,7 +48,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'Shougo/deoplete.nvim'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'itchyny/lightline.vim'
 
 Plug 'preservim/nerdtree'
@@ -75,6 +66,8 @@ let g:deoplete#enable_at_startup = 1 " Use deoplete
 let g:blamer_enabled = 1
 
 " Golang {
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' }) " use vim-go for golang autocompletion
 " }
 
@@ -102,5 +95,6 @@ autocmd VimEnter * NERDTree
 
 " Formatting {
 "au BufWrite * :Autoformat
+au BufNewFile,BufRead Jenkinsfile setf groovy
 "
 
