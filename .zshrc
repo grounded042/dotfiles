@@ -19,6 +19,23 @@ export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 export HISTIGNORE="ls:ll:cd:cd -:pwd:exit:date:* --help:clear"
 
+bindkey -v # vi mode
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+bindkey '^[[3~' delete-char
+
+export KEYTIMEOUT=1
+
+autoload -U select-word-style
+select-word-style bash
+
 # load plugins
 zplugin load zsh-users/zsh-completions
 zplugin load zdharma/fast-syntax-highlighting
@@ -50,3 +67,4 @@ source $HOME/.profile
 
 # uncomment for profiling
 # zprof
+export PATH="/usr/local/opt/node@10/bin:$PATH"
