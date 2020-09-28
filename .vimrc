@@ -58,7 +58,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'hashivim/vim-terraform'
-Plug 'APZelos/blamer.nvim'
+" Plug 'APZelos/blamer.nvim'
 Plug 'Chiel92/vim-autoformat'
 call plug#end()
 
