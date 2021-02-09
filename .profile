@@ -3,6 +3,9 @@ export PATH="/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin:$(brew --prefix coreutils)/libexec/gnubin"
 export GOPATH="$HOME/go"
 
+## direnv.net
+eval "$(direnv hook zsh)"
+
 # aliases
 alias vd='vagrant destroy --force'
 alias vu='vagrant up'
@@ -20,6 +23,7 @@ alias k="kubectl"
 
 # git aliases
 alias gs="git status"
+alias cdgb='cd $(git rev-parse --show-toplevel)'
 
 # kubernetes stuff
 kc() {
