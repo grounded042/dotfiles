@@ -13,6 +13,13 @@ set encoding=utf-8
 " }
 
 " Vim UI {
+
+" Color column 80 and all columns beyond 120 a different color
+"highlight ColorColumn ctermbg=235 guibg=#2c2d27
+highlight ColorColumn ctermbg=14 guibg=#384550
+let &colorcolumn="80"
+
+
 set cmdheight=2                 " Better display for messages
 
 set noshowmode                  " Disable the current mode because we have lightline
