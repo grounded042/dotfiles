@@ -78,6 +78,19 @@ let g:blamer_enabled = 1
 " Golang {
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
+let g:go_fmt_command = 'goimports'
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_types = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+let g:go_auto_sameids = 1
+
 call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' }) " use vim-go for golang autocompletion
 " }
 
@@ -100,7 +113,7 @@ let g:lightline = {
 " }
 
 " On Start {
-autocmd VimEnter * NERDTree
+" autocmd VimEnter * NERDTree
 " }
 
 " Formatting {
