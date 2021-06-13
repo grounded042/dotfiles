@@ -1,5 +1,5 @@
 
-export PATH="/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH"
+export PATH="/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:/opt/homebrew/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin:$(brew --prefix coreutils)/libexec/gnubin"
 export GOPATH="$HOME/go"
 export HOMEBREW_NO_AUTO_UPDATE=1
