@@ -18,6 +18,7 @@ export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 export HISTIGNORE="ls:ll:cd:cd -:pwd:exit:date:* --help:clear"
+export HISTDUP=erase        # Erase duplicates in the history file
 
 bindkey -v # vi mode
 
@@ -68,3 +69,9 @@ source $HOME/.profile
 # uncomment for profiling
 # zprof
 export PATH="/usr/local/opt/node@10/bin:$PATH"
+
+# so you can use gnu utils without their prefix
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export XDG_CONFIG_HOME=~/.config
+
+if [ -e /Users/joncarl/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/joncarl/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

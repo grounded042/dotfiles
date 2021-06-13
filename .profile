@@ -3,10 +3,10 @@ export PATH="/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin:$(brew --prefix coreutils)/libexec/gnubin"
 export GOPATH="$HOME/go"
 export HOMEBREW_NO_AUTO_UPDATE=1
+export GPG_TTY=$(tty)
 
 ## direnv.net
 eval "$(direnv hook zsh)"
-
 
 # aliases
 alias vd='vagrant destroy --force'
@@ -26,6 +26,9 @@ alias k="kubectl"
 # git aliases
 alias gs="git status"
 alias cdgb='cd $(git rev-parse --show-toplevel)'
+
+# vim
+alias vim="nvim"
 
 # kubernetes stuff
 kc() {
@@ -53,8 +56,8 @@ kn() {
   fi
 }
 
-source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
-export KUBE_PS1_SYMBOL_ENABLE="false"
-# PS1='$(kube_ps1)'$PS1
+if [ -f $HOME/.work_profile ]; then
+    source $HOME/.work_profile
+fi
 
-source $HOME/.work_profile
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
