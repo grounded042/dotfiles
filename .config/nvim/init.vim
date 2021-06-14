@@ -61,6 +61,8 @@ Plug 'chemzqm/vim-jsx-improve'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 call plug#end()
 
+lua require("lsp")
+
 " nvim compe
 set completeopt=menuone,noselect
 " let g:compe.enabled = v:true
@@ -68,6 +70,8 @@ set completeopt=menuone,noselect
 let g:blamer_enabled = 1
 
 " Golang {
+autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc
+autocmd BufWritePre *.go lua goimports(1000)
 autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
 " let g:go_def_mode='gopls'
 " let g:go_info_mode='gopls'
@@ -113,4 +117,3 @@ au BufNewFile,BufRead Jenkinsfile setf groovy
 " Format prior to save
 "
 
-lua require("lsp")

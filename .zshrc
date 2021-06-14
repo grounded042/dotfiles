@@ -68,7 +68,7 @@ source $HOME/.profile
 
 # uncomment for profiling
 # zprof
-export PATH="/usr/local/opt/node@10/bin:$PATH"
+export PATH="/usr/local/opt/node@16/bin:$PATH"
 
 # so you can use gnu utils without their prefix
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
