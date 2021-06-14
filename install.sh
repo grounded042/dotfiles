@@ -37,7 +37,7 @@ else
   fi
 fi
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(brew shellenv)"
 
 # Just to avoid a potential bug
 mkdir -p ~/Library/Caches/Homebrew/Formula

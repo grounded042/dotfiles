@@ -104,11 +104,11 @@
   "Mouse Reporting" : true,
   "Screen" : -1,
   "Selection Color" : {
-    "Red Component" : 0.16470587253570557,
+    "Red Component" : 0.98823541402816772,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.16470587253570557,
+    "Blue Component" : 0.11764704436063766,
     "Alpha Component" : 1,
-    "Green Component" : 0.16470587253570557
+    "Green Component" : 0.17647045850753784
   },
   "Columns" : 80,
   "Idle Code" : 0,
