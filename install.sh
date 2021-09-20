@@ -1,6 +1,21 @@
 #!/bin/sh
 
 ###############################################################################
+# nix                                                                         #
+###############################################################################
+
+# install nix
+curl -L https://nixos.org/nix/install | sh
+
+# source nix
+. $HOME/.nix-profile/etc/profile.d/nix.sh
+
+# install nix-darwin
+nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+./result/bin/darwin-installer
+darwin-rebuild switch
+
+###############################################################################
 # Homebrew                                                                    #
 ###############################################################################
 
@@ -43,57 +58,46 @@ eval "$(brew shellenv)"
 mkdir -p ~/Library/Caches/Homebrew/Formula
 brew doctor
 
-# Install GNU core utilities (those that come with OS X are outdated)
-brew install coreutils
-
-# Install some other useful utilities like `sponge`
-brew install moreutils
-
-# Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
-brew install findutils
-
-brew install gnu-sed
-
 # Install other useful stuff
-brew install ack
-brew install antibody # zsh plugin manager
-brew install automake
-brew install awscli
-brew install bat
-brew install caddy # local web server
-brew install cmake # cross platform make
-brew install direnv
-brew install exa # newer ls
-brew install fzf
-brew install git
-brew install libffi
-brew install gnupg
-brew install go
-brew install jq
-brew install lua
-brew install nmap
-brew install python
-brew install tmux
-brew install watch
-brew install yadm
-brew install yq
-brew install zsh
-brew install zsh-syntax-highlighting
+# brew install ack
+# brew install antibody # zsh plugin manager
+# brew install automake
+# brew install awscli
+# brew install bat
+# brew install caddy # local web server
+# brew install cmake # cross platform make
+# brew install direnv
+# brew install exa # newer ls
+# brew install fzf
+# brew install git
+# brew install libffi
+# brew install gnupg
+# brew install go
+# brew install jq
+# brew install lua
+# brew install nmap
+# brew install python
+# brew install tmux
+# brew install watch
+# brew install yadm
+# brew install yq
+# brew install zsh
+# brew install zsh-syntax-highlighting
 
-brew install koekeishiya/formulae/yabai
-brew services start koekeishiya/formulae/yabai
-
-brew install koekeishiya/formulae/skhd
-brew services start koekeishiya/formulae/skhd
+# brew install koekeishiya/formulae/yabai
+# brew services start koekeishiya/formulae/yabai
+# 
+# brew install koekeishiya/formulae/skhd
+# brew services start koekeishiya/formulae/skhd
 
 brew tap homebrew/cask-fonts
 brew install font-fontawesome
-brew install cmacrae/formulae/spacebar
-brew services start cmacrae/formulae/spacebar
+# brew install cmacrae/formulae/spacebar
+# brew services start cmacrae/formulae/spacebar
 
 # GUI
-brew install --cask diffmerge
-brew install --cask iterm2
+# brew install --cask diffmerge
+# brew install --cask iterm2
 
 ###############################################################################
 # MacOS                                                                       #
