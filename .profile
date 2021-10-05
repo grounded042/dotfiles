@@ -61,3 +61,4 @@ if [ -f $HOME/.work_profile ]; then
 fi
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e /Users/jon.carl/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/jon.carl/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

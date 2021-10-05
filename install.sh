@@ -15,6 +15,8 @@ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 ./result/bin/darwin-installer
 darwin-rebuild switch
 
+# if you hit issues with the above, remove the nixpkgs config file for install
+
 ###############################################################################
 # Homebrew                                                                    #
 ###############################################################################

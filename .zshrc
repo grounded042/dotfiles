@@ -50,7 +50,10 @@ zplugin light sindresorhus/pure
 # source /Users/joncarl/.grounded042.zsh
 
 # fuzzy find
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -n "${commands[fzf-share]}" ]; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
 
 setopt hist_ignore_all_dups # remove older duplicate entries from history
 setopt hist_reduce_blanks # remove superfluous blanks from history items
@@ -75,3 +78,4 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export XDG_CONFIG_HOME=~/.config
 
 if [ -e /Users/joncarl/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/joncarl/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e /Users/jon.carl/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/jon.carl/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

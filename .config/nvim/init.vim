@@ -37,6 +37,7 @@ set splitbelow                  " Puts new split windows to the bottom of the cu
 call plug#begin('~/.vim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp_extensions.nvim'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Plug 'nvim-treesitter/playground'
 
