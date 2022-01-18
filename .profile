@@ -4,6 +4,8 @@ export PATH="$PATH:$HOME/go/bin:$(brew --prefix coreutils)/libexec/gnubin"
 export GOPATH="$HOME/go"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export GPG_TTY=$(tty)
+export VISUAL=nvim
+export EDITOR="$VISUAL"
 
 ## direnv.net
 eval "$(direnv hook zsh)"

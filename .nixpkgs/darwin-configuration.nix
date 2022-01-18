@@ -24,7 +24,6 @@
       pkgs.lua
       pkgs.moreutils
       pkgs.nmap
-      pkgs.nodejs
       pkgs.tmux
       pkgs.yadm
       pkgs.yq
@@ -47,8 +46,6 @@
     enable = true;
     package = pkgs.spacebar;
   };
-
-
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix

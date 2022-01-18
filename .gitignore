@@ -91,3 +91,5 @@ node_modules
 .vim/backup/*
 .vim/temp/*
 .vim/.netrwhist
+
+.config/gh/hosts.yml
