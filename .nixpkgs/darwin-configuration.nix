@@ -10,12 +10,12 @@
       pkgs.automake
       pkgs.bat
       pkgs.cmake
-      pkgs.coreutils
       pkgs.direnv
       pkgs.exa
       pkgs.findutils
       pkgs.fzf
       pkgs.git
+      pkgs.gnugrep
       pkgs.gnupg
       pkgs.gnused
       pkgs.go
@@ -30,22 +30,22 @@
       pkgs.zsh
       pkgs.zsh-syntax-highlighting
 
-      pkgs.yabai
-      pkgs.skhd
-      pkgs.spacebar
+      #pkgs.yabai
+      #pkgs.skhd
+      #pkgs.spacebar
 
       pkgs.neovim
     ];
 
-  services.yabai = {
-    enable = true;
-    package = pkgs.yabai;
-  };
+  # services.yabai = {
+  #   enable = true;
+  #   package = pkgs.yabai;
+  # };
 
-  services.spacebar = {
-    enable = true;
-    package = pkgs.spacebar;
-  };
+  # services.spacebar = {
+  #   enable = true;
+  #   package = pkgs.spacebar;
+  # };
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
