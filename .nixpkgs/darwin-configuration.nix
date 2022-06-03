@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
-
+let
+  unstable = import <unstable> {
+      config = config.nixpkgs.config;
+  };
+in
 {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -8,6 +12,7 @@
       pkgs.ack
       pkgs.antibody
       pkgs.automake
+      pkgs.awscli2
       pkgs.bat
       pkgs.cmake
       pkgs.direnv
@@ -15,17 +20,21 @@
       pkgs.findutils
       pkgs.fzf
       pkgs.git
+      pkgs.gh
       pkgs.gnugrep
       pkgs.gnupg
       pkgs.gnused
-      pkgs.go
+      unstable.go_1_18
       pkgs.hugo
       pkgs.jq
       pkgs.lua
       pkgs.moreutils
       pkgs.nmap
+      pkgs.nodejs-14_x
+      pkgs.shellcheck
       pkgs.tmux
       pkgs.yadm
+      pkgs.yarn
       pkgs.yq
       pkgs.zsh
       pkgs.zsh-syntax-highlighting
@@ -52,7 +61,7 @@
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
   # Auto upgrade nix package and the daemon service.
-  # services.nix-daemon.enable = true;
+  services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
 
   # Create /etc/bashrc that loads the nix-darwin environment.

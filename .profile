@@ -1,7 +1,7 @@
 
 export PATH="/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:/opt/homebrew/bin:$PATH"
-export PATH="$PATH:$HOME/go/bin:$(brew --prefix coreutils)/libexec/gnubin"
 export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH:$HOME/go/bin:$(brew --prefix coreutils)/libexec/gnubin"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export GPG_TTY=$(tty)
 export VISUAL=nvim
@@ -23,6 +23,7 @@ alias ll='exa -l'
 
 alias today="icalbuddy -f -eep notes eventsToday"
 
+alias kubectl='kubectl ${KUBECTL_ARGS}'
 alias k="kubectl"
 
 # git aliases
@@ -63,4 +64,3 @@ if [ -f $HOME/.work_profile ]; then
 fi
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-if [ -e /Users/jon.carl/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/jon.carl/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

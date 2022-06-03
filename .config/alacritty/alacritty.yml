@@ -1,0 +1,74 @@
+env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  TERM: xterm-256color
+
+window:
+  decorations: none
+  startup_mode: Windowed
+  title: Alacritty
+  dynamic_title: true
+
+scrolling:
+  history: 10000
+  multiplier: 3
+
+font:
+  normal:
+    family: Monaco
+    style: Regular
+  size: 12.0
+  use_thin_strokes: false
+
+draw_bold_text_with_bright_colors: true
+
+colors:
+  primary:
+    background: '#191918'
+    foreground: '#dee2ea'
+
+  cursor:
+    text: '#131313'
+    cursor: '#c5c5c5'
+
+  selection:
+    text: '#dee2ea'
+    background: '#fc2c1d'
+
+  normal:
+    black:   '#292929'
+    red:     '#fc2c1d'
+    green:   '#2fcc70'
+    yellow:  '#f1c40c'
+    blue:    '#3398db'
+    magenta: '#6170c4'
+    cyan:    '#0095de'
+    white:   '#dee2ea'
+
+  bright:
+    black:   '#dee2ea'
+    red:     '#e74b3b'
+    green:   '#07d773'
+    yellow:  '#f6c700'
+    blue:    '#0095de'
+    magenta: '#6667c6'
+    cyan:    '#0092e2'
+    white:   '#feffff'
+
+bell:
+  animation: EaseOutExpo
+  duration: 0
+
+selection:
+  save_to_clipboard: true
+
+cursor:
+  style:
+    shape: Block
+    blinking: Off
+
+live_config_reload: true

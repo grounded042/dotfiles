@@ -5,10 +5,17 @@
 ###############################################################################
 
 # install nix
-curl -L https://nixos.org/nix/install | sh
+
+NIX_SOURCE=/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+if test -e "$NIX_SOURCE"; then
+    echo "$NIX_SOURCE exists - skipping setup."
+else
+    echo "$NIX_SOURCE does not exist - setting up nix."
+    curl -L https://nixos.org/nix/install | sh
+fi
 
 # source nix
-. $HOME/.nix-profile/etc/profile.d/nix.sh
+. $NIX_SOURCE
 
 # install nix-darwin
 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
@@ -86,16 +93,16 @@ brew doctor
 # brew install zsh
 # brew install zsh-syntax-highlighting
 
-# brew install koekeishiya/formulae/yabai
-# brew services start koekeishiya/formulae/yabai
-# 
-# brew install koekeishiya/formulae/skhd
-# brew services start koekeishiya/formulae/skhd
+brew install koekeishiya/formulae/yabai
+brew services start koekeishiya/formulae/yabai
+
+brew install koekeishiya/formulae/skhd
+brew services start koekeishiya/formulae/skhd
 
 brew tap homebrew/cask-fonts
 brew install font-fontawesome
-# brew install cmacrae/formulae/spacebar
-# brew services start cmacrae/formulae/spacebar
+brew install cmacrae/formulae/spacebar
+brew services start cmacrae/formulae/spacebar
 
 # GUI
 # brew install --cask diffmerge
@@ -476,20 +483,20 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 mkdir ~/code
 
 # setup neovim
-nvim_bin=$(which nvim) 2>&1 > /dev/null
-if [[ $? != 0 ]]; then
-  brew install ninja libtool automake cmake pkg-config gettext
-  cd ~/code
-  git clone git@github.com:neovim/neovim.git
-  cd neovim
-  sudo make install CMAKE_BUILD_TYPE=Release DEPS_CMAKE_FLAGS="-DCMAKE_CXX_COMPILER=$(xcrun -find c++)"
-
-  # install vim-plug
-  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-  nvim -c ":PlugInstall"
-fi
+# nvim_bin=$(which nvim) 2>&1 > /dev/null
+# if [[ $? != 0 ]]; then
+#   brew install ninja libtool automake cmake pkg-config gettext
+#   cd ~/code
+#   git clone git@github.com:neovim/neovim.git
+#   cd neovim
+#   sudo make install CMAKE_BUILD_TYPE=Release DEPS_CMAKE_FLAGS="-DCMAKE_CXX_COMPILER=$(xcrun -find c++)"
+# 
+#   # install vim-plug
+#   sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+#          https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+# 
+#   nvim -c ":PlugInstall"
+# fi
 
 ###############################################################################
 # Finish up and kill affected applications                                    #

@@ -1,17 +1,21 @@
 # uncomment for profiling
 # zmodload zsh/zprof
 
-# install zplugin if not already installed
-if [[ ! -d $HOME/.zplugin/bin ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing Zplugin…%f"
-    command mkdir -p $HOME/.zplugin
-    command git clone https://github.com/zdharma/zplugin $HOME/.zplugin/bin && \
+# install zinit if not already installed
+#
+
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+if [[ ! -d $ZINIT_HOME ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing zinit…%f"
+    command mkdir -p "$(dirname $ZINIT_HOME)"
+    command git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%F" || \
         print -P "%F{160}▓▒░ The clone has failed.%F"
 fi
 
-# use zplugin
-source "$HOME/.zplugin/bin/zplugin.zsh"
+# use zinit
+source "${ZINIT_HOME}/zinit.zsh"
 
 export DISABLE_AUTO_UPDATE=true
 export HISTFILE=$HOME/.zsh_history
@@ -37,17 +41,18 @@ export KEYTIMEOUT=1
 autoload -U select-word-style
 select-word-style bash
 
+autoload -U compinit
+compinit
 # load plugins
-zplugin load zsh-users/zsh-completions
-zplugin load zdharma/fast-syntax-highlighting
-zplugin load zsh-users/zsh-autosuggestions
+zinit load zsh-users/zsh-completions
+zinit load zdharma-continuum/fast-syntax-highlighting
+zinit load zsh-users/zsh-autosuggestions
 
 export PURE_CMD_MAX_EXEC_TIME=0
 export PURE_PROMPT_SYMBOL=→
-zplugin ice pick"async.zsh" src"pure.zsh"
-zplugin light sindresorhus/pure
-
-# source /Users/joncarl/.grounded042.zsh
+export RPROMPT=""
+zinit ice pick"async.zsh" src"pure.zsh"
+zinit light sindresorhus/pure
 
 # fuzzy find
 if [ -n "${commands[fzf-share]}" ]; then
@@ -71,11 +76,8 @@ source $HOME/.profile
 
 # uncomment for profiling
 # zprof
-export PATH="/usr/local/opt/node@16/bin:$PATH"
 
 # so you can use gnu utils without their prefix
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export XDG_CONFIG_HOME=~/.config
 
 if [ -e /Users/joncarl/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/joncarl/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-if [ -e /Users/jon.carl/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/jon.carl/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
