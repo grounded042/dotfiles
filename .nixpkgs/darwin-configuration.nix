@@ -12,7 +12,7 @@ in
       pkgs.ack
       pkgs.antibody
       pkgs.automake
-      pkgs.awscli2
+      unstable.awscli2
       pkgs.bat
       pkgs.cmake
       pkgs.direnv
@@ -24,13 +24,14 @@ in
       pkgs.gnugrep
       pkgs.gnupg
       pkgs.gnused
-      unstable.go_1_18
+      #pkgs.go
       pkgs.hugo
       pkgs.jq
       pkgs.lua
       pkgs.moreutils
       pkgs.nmap
-      pkgs.nodejs-14_x
+      pkgs.openssl
+      pkgs.nodejs-16_x
       pkgs.shellcheck
       pkgs.tmux
       pkgs.yadm

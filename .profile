@@ -18,8 +18,9 @@ alias eev='export $(cat .env | xargs)'
 alias lla='ll -A'
 alias dd='docker stop $(docker ps -a -q); docker rm $(docker ps -a -q)'
 
-alias ls='exa'
-alias ll='exa -l'
+alias ls='exa -a'
+alias lsg='exa -la --git'
+alias ll='exa -la'
 
 alias today="icalbuddy -f -eep notes eventsToday"
 
