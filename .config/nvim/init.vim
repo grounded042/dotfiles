@@ -62,7 +62,7 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'hashivim/vim-terraform'
 " Plug 'APZelos/blamer.nvim'
-Plug 'Chiel92/vim-autoformat'
+" Plug 'Chiel92/vim-autoformat'
 
 Plug 'chemzqm/vim-jsx-improve'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }

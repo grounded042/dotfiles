@@ -1,7 +1,9 @@
 
 export PATH="/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:/opt/homebrew/bin:$PATH"
+export PATH="$PATH:$HOME/.npm-packages/bin"
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH:$HOME/go/bin:$(brew --prefix coreutils)/libexec/gnubin"
+export GOBIN="$GOPATH/bin"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export GPG_TTY=$(tty)
 export VISUAL=nvim

@@ -10,7 +10,6 @@ in
   environment.systemPackages =
     [
       pkgs.ack
-      pkgs.antibody
       pkgs.automake
       unstable.awscli2
       pkgs.bat
@@ -26,12 +25,13 @@ in
       pkgs.gnused
       #pkgs.go
       pkgs.hugo
+      pkgs.imagemagick
       pkgs.jq
       pkgs.lua
       pkgs.moreutils
       pkgs.nmap
       pkgs.openssl
-      pkgs.nodejs-16_x
+      pkgs.nodejs-18_x
       pkgs.shellcheck
       pkgs.tmux
       pkgs.yadm
