@@ -102,7 +102,7 @@ inoremap <silent><expr> <TAB> pumvisible() ? compe#confirm('<CR>') : "\<TAB>"
 let g:blamer_enabled = 1
 
 " Golang {
-autocmd BufWritePre *.go lua goimports(1000)
+autocmd BufWritePre *.go lua goimports()
 autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
 " let g:go_def_mode='gopls'
 " let g:go_info_mode='gopls'
