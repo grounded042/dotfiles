@@ -17,12 +17,16 @@ fi
 # source nix
 . $NIX_SOURCE
 
-# install nix-darwin
-nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-./result/bin/darwin-installer
-darwin-rebuild switch
+# if you hit:
+# unable to download ... Problem with the SSL CA cert (path? access rights?) (77)
+# then do the following:
+# sudo launchctl setenv NIX_SSL_CERT_FILE $NIX_SSL_CERT_FILE
+# sudo launchctl kickstart -k system/org.nixos.nix-daemon
 
-# if you hit issues with the above, remove the nixpkgs config file for install
+pushd ~/.config/nix
+nix build .#darwinConfigurations.joncarl-macbook.system
+./result/sw/bin/darwin-rebuild switch --flake ~/.config/nix\#joncarl-macbook
+popd
 
 ###############################################################################
 # Homebrew                                                                    #
@@ -101,8 +105,9 @@ brew services start koekeishiya/formulae/skhd
 
 brew tap homebrew/cask-fonts
 brew install font-fontawesome
-brew install cmacrae/formulae/spacebar
-brew services start cmacrae/formulae/spacebar
+brew tap FelixKratz/formulae
+brew install sketchybar
+brew services start sketchybar
 
 # GUI
 # brew install --cask diffmerge
