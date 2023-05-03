@@ -1,3 +1,5 @@
+# https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
+
 { config, pkgs, lib, ... }:
 {
   home.username = "joncarl";
@@ -24,10 +26,14 @@
       };
 
       window = {
-        decorations = "none";
+        decorations = "buttonless";
         startup_mode = "Windowed";
         title = "Alacritty";
         dynamic_title = true;
+        padding = {
+          x = 8;
+          y = 8;
+        };
       };
 
       scrolling = {
@@ -352,19 +358,24 @@ source $HOME/.work_profile
     pkgs.ack
     pkgs.automake
     pkgs.awscli2
+    pkgs.benthos
     pkgs.cmake
+    pkgs.dyff
     pkgs.findutils
     pkgs.git
     pkgs.gnugrep
     pkgs.gnupg
     pkgs.gnused
+    pkgs.grpcurl
     pkgs.hugo
     pkgs.imagemagick
+    pkgs.kcat
     pkgs.lua
     pkgs.moreutils
     pkgs.nmap
     pkgs.openssl
     pkgs.nodejs-18_x
+    pkgs.redis
     pkgs.shellcheck
     pkgs.tmux
     pkgs.yadm

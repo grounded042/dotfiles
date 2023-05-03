@@ -1,3 +1,6 @@
+# https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
+# https://github.com/malob/nixpkgs/blob/master/flake.nix
+
 {
   description = "Jon Carl's darwin setup";
 
@@ -16,6 +19,12 @@
     inherit (darwin.lib) darwinSystem;
   in
   {
+    overlays = {
+      home-manager.programs.zsh.sessionVariables = _: prev: {
+        prev.extend.TESTING_OVERLAYS = "joncarl1";
+      };
+    };
+
     darwinConfigurations = rec {
       joncarl-macbook = darwinSystem {
         system = "aarch64-darwin";
