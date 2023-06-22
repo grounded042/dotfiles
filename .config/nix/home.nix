@@ -1,12 +1,21 @@
 # https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
+# https://github.com/simonrw/nix-config/blob/d0fafa870138b94da5e41286a58a8bd3cb0d0ed2/home/packages/simon.nix
 
 { config, pkgs, lib, ... }:
+let
+  # for some reason we cannot do an overlay of curl so we do this instead
+  custom-curl = pkgs.curl.override {
+    c-aresSupport = true;
+  };
+in
 {
   home.username = "joncarl";
   home.homeDirectory = "/Users/${config.home.username}";
   xdg.enable = true;
 
   home.stateVersion = "22.11";
+
+  manual.manpages.enable = false;
 
   home.sessionPath = [
     "$GOBIN"
@@ -354,39 +363,45 @@ source $HOME/.work_profile
   # TODO: targets.darwin.defaults
   # TODO: xdg
 
-  home.packages = [
-    pkgs.ack
-    pkgs.automake
-    pkgs.awscli2
-    pkgs.benthos
-    pkgs.cmake
-    pkgs.dyff
-    pkgs.findutils
-    pkgs.git
-    pkgs.gnugrep
-    pkgs.gnupg
-    pkgs.gnused
-    pkgs.grpcurl
-    pkgs.hugo
-    pkgs.imagemagick
-    pkgs.kcat
-    pkgs.lua
-    pkgs.moreutils
-    pkgs.nmap
-    pkgs.openssl
-    pkgs.nodejs-18_x
-    pkgs.redis
-    pkgs.shellcheck
-    pkgs.tmux
-    pkgs.yadm
-    pkgs.yarn
-    pkgs.yq
-    pkgs.zsh-syntax-highlighting
+  home.packages = with pkgs; [
+    ack
+    autoconf
+    automake
+    awscli2
+    benthos
+    cmake
+    custom-curl
+    c-ares
+    dyff
+    findutils
+    git
+    gnugrep
+    gnupg
+    gnused
+    grpcurl
+    hugo
+    imagemagick
+    kcat
+    ldns
+    libtool
+    lua
+    moreutils
+    nmap
+    openssl
+    pkg-config
+    nodejs-18_x
+    redis
+    shellcheck
+    tmux
+    yadm
+    yarn
+    yq
+    zsh-syntax-highlighting
 
-    #pkgs.yabai
-    #pkgs.skhd
-    #pkgs.spacebar
+    #yabai
+    #skhd
+    #spacebar
 
-    pkgs.neovim
+    neovim
   ];
 }
