@@ -359,6 +359,9 @@ source $HOME/.work_profile
     };
   };
 
+  home.file.".digrc".text = "@8.8.8.8";
+  home.file.".curlrc".text = "--doh-url https://dns.google/dns-query";
+
   # TODO: services.gpg-agent
   # TODO: targets.darwin.defaults
   # TODO: xdg
