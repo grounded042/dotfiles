@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# TODO: install SF Symbols
+# TODO: autohide the menu bar
+
 ###############################################################################
 # nix                                                                         #
 ###############################################################################
@@ -98,10 +101,10 @@ brew doctor
 # brew install zsh-syntax-highlighting
 
 brew install koekeishiya/formulae/yabai
-brew services start koekeishiya/formulae/yabai
+yabai --start-service
 
 brew install koekeishiya/formulae/skhd
-brew services start koekeishiya/formulae/skhd
+yabai --start-service
 
 brew tap homebrew/cask-fonts
 brew install font-fontawesome
@@ -111,7 +114,6 @@ brew services start sketchybar
 
 # GUI
 # brew install --cask diffmerge
-# brew install --cask iterm2
 
 ###############################################################################
 # MacOS                                                                       #
@@ -131,7 +133,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 sudo nvram SystemAudioVolume=" "
 
 # Disable local Time Machine snapshots
-sudo tmutil disablelocal
+# sudo tmutil disablelocal
 
 # always boot in verbose mode (not MacOS GUI mode)
 sudo nvram boot-args="-v"
@@ -231,6 +233,7 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bo
 sudo pmset -a lidwake 1
 
 # Restart automatically if the computer freezes
+# NOTE(joncarl): this could show an error, but apparently still works
 sudo systemsetup -setrestartfreeze on
 
 # Sleep the display after 15 minutes
@@ -305,7 +308,7 @@ defaults write com.apple.finder EmptyTrashSecurely -bool true
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 # Show the ~/Library folder
-chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
+chflags nohidden ~/Library
 
 # Show the /Volumes folder
 sudo chflags nohidden /Volumes
@@ -461,9 +464,6 @@ defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 # Only use UTF-8 in Terminal.app
 defaults write com.apple.terminal StringEncodings -array 4
 
-# Don’t display the annoying prompt when quitting iTerm
-defaults write com.googlecode.iterm2 PromptOnQuit -bool false
-
 ###############################################################################
 # Activity Monitor                                                            #
 ###############################################################################
@@ -485,7 +485,7 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 # Neovim                                                                      #
 ###############################################################################
 
-mkdir ~/code
+mkdir -p ~/code
 
 # setup neovim
 # nvim_bin=$(which nvim) 2>&1 > /dev/null
@@ -510,17 +510,7 @@ mkdir ~/code
 echo '
 ===============================================================================
 
-All done - before we proceed please manually enable the Python API in
-iTerm2: Preferences -> General -> Magic -> Enable Python API
-
-You can then continue this script.'
-
-read -n 1 -s -r -p "`echo $'\n'`Press any key to continue or ctrl+c to quit`echo $'\n'`"
-
-echo '
-We need to kill apps in order to finish things off. After things are
-killed please restart iTerm2 a couple of times and follow the prompts for
-everything to get setup there.'
+We need to kill apps in order to finish things off.'
 
 read -n 1 -s -r -p "`echo $'\n'`Press any key to continue or ctrl+c to quit`echo $'\n'`"
 

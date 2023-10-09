@@ -56,7 +56,6 @@ in
           style = "Regular";
         };
         size = 12.0;
-        use_thin_strokes = false;
       };
 
       draw_bold_text_with_bright_colors = true;
@@ -377,6 +376,7 @@ source $HOME/.work_profile
     c-ares
     dig
     dyff
+    exiftool
     findutils
     git
     gnugrep
