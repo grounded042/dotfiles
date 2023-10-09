@@ -129,7 +129,7 @@ in
     enable = true;
   };
 
-  programs.exa = {
+  programs.eza = {
     enable = true;
     enableAliases = true;
   };
@@ -360,7 +360,7 @@ source $HOME/.work_profile
   };
 
   home.file.".digrc".text = "@8.8.8.8";
-  home.file.".curlrc".text = "--doh-url https://dns.google/dns-query";
+  home.file.".curlrc".text = "--doh-url https://8.8.8.8/dns-query";
 
   # TODO: services.gpg-agent
   # TODO: targets.darwin.defaults
@@ -375,6 +375,7 @@ source $HOME/.work_profile
     cmake
     custom-curl
     c-ares
+    dig
     dyff
     findutils
     git
@@ -388,6 +389,7 @@ source $HOME/.work_profile
     ldns
     libtool
     lua
+    lynx
     moreutils
     nmap
     openssl
