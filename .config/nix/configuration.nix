@@ -5,9 +5,9 @@
 
   users = {
     users = {
-      joncarl = {
+      "jon.carl" = {
         description = "Jon Carl";
-        home = "/Users/joncarl";
+        home = "/Users/jon.carl";
         shell = pkgs.zsh;
       };
     };

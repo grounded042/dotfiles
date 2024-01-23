@@ -27,8 +27,7 @@ fi
 # sudo launchctl kickstart -k system/org.nixos.nix-daemon
 
 pushd ~/.config/nix
-nix build .#darwinConfigurations.joncarl-macbook.system
-./result/sw/bin/darwin-rebuild switch --flake ~/.config/nix\#joncarl-macbook
+nix run nix-darwin -- switch --flake .#joncarl-macbook
 popd
 
 ###############################################################################
@@ -496,11 +495,11 @@ mkdir -p ~/code
 #   cd neovim
 #   sudo make install CMAKE_BUILD_TYPE=Release DEPS_CMAKE_FLAGS="-DCMAKE_CXX_COMPILER=$(xcrun -find c++)"
 # 
-#   # install vim-plug
-#   sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-#          https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-# 
-#   nvim -c ":PlugInstall"
+# install vim-plug
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+nvim -c ":PlugInstall"
 # fi
 
 ###############################################################################

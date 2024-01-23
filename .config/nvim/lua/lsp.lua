@@ -54,4 +54,5 @@ function goimports(wait_ms)
       end
     end
   end
+  vim.lsp.buf.format({async = false})
 end

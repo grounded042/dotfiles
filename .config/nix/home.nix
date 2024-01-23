@@ -9,7 +9,7 @@ let
   };
 in
 {
-  home.username = "joncarl";
+  home.username = "jon.carl";
   home.homeDirectory = "/Users/${config.home.username}";
   xdg.enable = true;
 
@@ -25,6 +25,57 @@ in
     "$HOME/.npm-packages/bin"
     "$HOME/.cargo/bin"
   ];
+
+  home.file.".config/ghostty/config".text = ''
+# The syntax is "key = value". The whitespace around the equals doesn't matter.
+
+font-family = "Monaco"
+font-style = "Regular"
+font-size = 12
+
+background = 191918
+foreground = dee2ea
+
+selection-foreground = dee2ea
+selection-background = fc2c1d
+
+cursor-color = c5c5c5
+cursor-text = 131313
+
+# Colors can be changed by setting the 16 colors of `palette`, which each color
+# being defined as regular and bold.
+#
+# black
+palette = 0=#292929
+palette = 8=#dee2ea
+# red
+palette = 1=#fc2c1d
+palette = 9=#e74b3b
+# green
+palette = 2=#2fcc70
+palette = 10=#07d773
+# yellow
+palette = 3=#f1c40c
+palette = 11=#f6c700
+# blue
+palette = 4=#3398db
+palette = 12=#0095de
+# purple
+palette = 5=#6170c4
+palette = 13=#6667c6
+# aqua
+palette = 6=#0095de
+palette = 14=#0092e2
+# white
+palette = 7=#dee2ea
+palette = 15=#feffff
+
+window-padding-x = 8
+window-padding-y = 8
+window-theme = dark
+
+copy-on-select = clipboard
+'';
 
   programs.alacritty = {
     enable = true;
@@ -133,7 +184,11 @@ in
     enableAliases = true;
   };
 
-  programs.fzf.enable = true;
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  }
+
   programs.gh = {
     enable = true;
     settings = {
@@ -146,6 +201,7 @@ in
 
   programs.go = {
     enable = true;
+    package = pkgs.go_1_21;
     goPath = "go";
     goBin = "go/bin";
   };
@@ -282,15 +338,16 @@ zinit load zdharma-continuum/fast-syntax-highlighting
 
 export PURE_CMD_MAX_EXEC_TIME=0
 export PURE_PROMPT_SYMBOL=→
+export PURE_GIT_PULL=0
 export RPROMPT=""
 zinit ice pick"async.zsh" src"pure.zsh"
 zinit light sindresorhus/pure
 
 # fuzzy find
-if [ -n "''${commands[fzf-share]}" ]; then
-  source "$(fzf-share)/key-bindings.zsh"
-  source "$(fzf-share)/completion.zsh"
-fi
+# if [ -n "''${commands[fzf-share]}" ]; then
+#   source "$(fzf-share)/key-bindings.zsh"
+#   source "$(fzf-share)/completion.zsh"
+# fi
 
 setopt hist_ignore_all_dups # remove older duplicate entries from history
 setopt hist_reduce_blanks # remove superfluous blanks from history items
@@ -329,8 +386,7 @@ kn() {
 
 nix-rebuild() {
   pushd ~/.config/nix
-  nix build .#darwinConfigurations.joncarl-macbook.system
-  ./result/sw/bin/darwin-rebuild switch --flake ~/.config/nix\#joncarl-macbook
+  darwin-rebuild switch --flake .#joncarl-macbook
   popd
 }
 
@@ -383,6 +439,7 @@ source $HOME/.work_profile
     gnupg
     gnused
     grpcurl
+    htop
     hugo
     imagemagick
     kcat
@@ -396,11 +453,13 @@ source $HOME/.work_profile
     pkg-config
     nodejs-18_x
     redis
+    ripgrep
     shellcheck
     tmux
+    unbound
     yadm
     yarn
-    yq
+    yq-go
     zsh-syntax-highlighting
 
     #yabai
