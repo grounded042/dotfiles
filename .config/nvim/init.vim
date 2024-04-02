@@ -39,25 +39,35 @@ set softtabstop=4               " Let backspace delete indent
 set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
+set foldmethod=syntax
+set foldlevelstart=99
 " }
 
 call plug#begin('~/.vim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'hrsh7th/nvim-cmp'      " completions
+Plug 'hrsh7th/cmp-nvim-lsp'  " lsp completions
+Plug 'hrsh7th/cmp-buffer'    " buffer completions
+Plug 'hrsh7th/cmp-path'      " filesystem path completions
+
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+
+" Plug 'nvim-lua/lsp_extensions.nvim'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Plug 'nvim-treesitter/playground'
 
-Plug 'hrsh7th/nvim-compe'
-
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
+" Plug 'roxma/nvim-yarp'
+" Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'itchyny/lightline.vim'
 
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'junegunn/fzf', { 'do': './install --bin' }
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-fugitive'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
+
+" Plug 'junegunn/fzf', { 'do': './install --bin' }
+" Plug 'junegunn/fzf.vim'
+" Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'hashivim/vim-terraform'
@@ -70,58 +80,12 @@ call plug#end()
 
 lua require("lsp")
 
-" nvim compe
 set completeopt=menuone,noselect
-
-let g:compe = {}
-let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
-let g:compe.debug = v:false
-let g:compe.min_length = 1
-let g:compe.preselect = 'enable'
-let g:compe.throttle_time = 80
-let g:compe.source_timeout = 200
-let g:compe.resolve_timeout = 800
-let g:compe.incomplete_delay = 400
-let g:compe.max_abbr_width = 100
-let g:compe.max_kind_width = 100
-let g:compe.max_menu_width = 100
-let g:compe.documentation = v:true
-
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.calc = v:true
-let g:compe.source.nvim_lsp = v:true
-let g:compe.source.nvim_lua = v:true
-let g:compe.source.vsnip = v:true
-let g:compe.source.ultisnips = v:true
 
 inoremap <silent><expr> <TAB> pumvisible() ? compe#confirm('<CR>') : "\<TAB>"
 
-let g:blamer_enabled = 1
-
 " Golang {
-" autocmd BufWritePre *.go lua vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
-" autocmd BufWritePre *.go lua vim.lsp.buf.format()
 autocmd BufWritePre *.go lua goimports()
-" autocmd BufWritePre *.go lua vim.lsp.buf.format()
-" autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync()
-" let g:go_def_mode='gopls'
-" let g:go_info_mode='gopls'
-" let g:go_fmt_command = 'goimports'
-" let g:go_highlight_functions = 1
-" let g:go_highlight_methods = 1
-" let g:go_highlight_types = 1
-" let g:go_highlight_extra_types = 1
-" let g:go_highlight_fields = 1
-" let g:go_highlight_structs = 1
-" let g:go_highlight_interfaces = 1
-" let g:go_highlight_operators = 1
-" let g:go_highlight_build_constraints = 1
-" let g:go_highlight_generate_tags = 1
-" let g:go_auto_sameids = 1
-
 " }
 
 " Terraform {
@@ -146,8 +110,12 @@ let g:lightline = {
 " }
 
 " Formatting {
-"au BufWrite * :Autoformat
 au BufNewFile,BufRead Jenkinsfile setf groovy
-" Format prior to save
-"
+" }
 
+" Telescope {
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" }

@@ -187,21 +187,13 @@ copy-on-select = clipboard
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
-  }
-
-  programs.gh = {
-    enable = true;
-    settings = {
-      git_protocol = "ssh";
-      prompt = "enabled";
-    };
   };
 
   # TODO: programs.git
 
   programs.go = {
     enable = true;
-    package = pkgs.go_1_21;
+    package = pkgs.go_1_22;
     goPath = "go";
     goBin = "go/bin";
   };
@@ -414,8 +406,8 @@ source $HOME/.work_profile
     };
   };
 
-  home.file.".digrc".text = "@8.8.8.8";
-  home.file.".curlrc".text = "--doh-url https://8.8.8.8/dns-query";
+  home.file.".digrc".text = "@1.1.1.1";
+  home.file.".curlrc".text = "--doh-url \"https://1.1.1.1/dns-query\"\n--capath /Users/${config.home.username}/.config/certs";
 
   # TODO: services.gpg-agent
   # TODO: targets.darwin.defaults
@@ -430,10 +422,13 @@ source $HOME/.work_profile
     cmake
     custom-curl
     c-ares
+    difftastic
     dig
+    duckdb
     dyff
     exiftool
     findutils
+    gh
     git
     gnugrep
     gnupg
