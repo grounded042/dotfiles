@@ -423,6 +423,7 @@ source $HOME/.work_profile
     automake
     awscli2
     cmake
+    colmena
     custom-curl
     c-ares
     difftastic
@@ -446,6 +447,9 @@ source $HOME/.work_profile
     lua
     lynx
     moreutils
+    # https://github.com/fricklerhandwerk/settings/blob/561f33f8b49690b619349c3950c5129876c00504/user/profiles/darwin/nixos-rebuild.nix
+    (pkgs.callPackage ./nixos-rebuild.nix {})
+    niv
     nmap
     openssl
     pkg-config
@@ -456,9 +460,11 @@ source $HOME/.work_profile
     sipcalc
     tmux
     unbound
+    wakeonlan
     yadm
     yarn
     yq-go
+    zola
     zsh-syntax-highlighting
 
     #yabai
