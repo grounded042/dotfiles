@@ -24,6 +24,7 @@ in
     "/opt/homebrew/bin"
     "$HOME/.npm-packages/bin"
     "$HOME/.cargo/bin"
+    "$HOME/.local/bin"
   ];
 
   home.file.".config/ghostty/config".text = ''
@@ -109,9 +110,9 @@ copy-on-select = clipboard
         size = 12.0;
       };
 
-      draw_bold_text_with_bright_colors = true;
-
       colors = {
+        draw_bold_text_with_bright_colors = true;
+
         primary = {
           background = "#191918";
           foreground = "#dee2ea";
@@ -181,7 +182,6 @@ copy-on-select = clipboard
 
   programs.eza = {
     enable = true;
-    enableAliases = true;
   };
 
   programs.fzf = {
@@ -270,7 +270,9 @@ set -g window-status-format "#[fg=brightblack,bg=black] #I #W #F "
   programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
-    enableAutosuggestions = true;
+    autosuggestion = {
+      enable = true;
+    };
     enableCompletion = true;
 
     defaultKeymap = "viins";
@@ -309,6 +311,8 @@ export KEYTIMEOUT=1
 
 autoload -U select-word-style
 select-word-style bash
+
+export PATH=/etc/profiles/per-user/${config.home.username}/bin:$PATH
 '';
 
     initExtraBeforeCompInit = ''
@@ -418,7 +422,6 @@ source $HOME/.work_profile
     autoconf
     automake
     awscli2
-    benthos
     cmake
     custom-curl
     c-ares
@@ -450,6 +453,7 @@ source $HOME/.work_profile
     redis
     ripgrep
     shellcheck
+    sipcalc
     tmux
     unbound
     yadm
