@@ -16,6 +16,11 @@ set undofile
 
 " Vim UI {
 
+" neovim 0.10 changed how colors work. Use only terminal ANSI colors via the
+" below options.
+set notermguicolors
+colorscheme vim
+
 set colorcolumn=80
 
 set cmdheight=2                 " Better display for messages
@@ -76,8 +81,14 @@ Plug 'hashivim/vim-terraform'
 
 Plug 'chemzqm/vim-jsx-improve'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+
+" copilot
+Plug 'zbirenbaum/copilot.lua'
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+
 call plug#end()
 
+lua require("copilot_setup")
 lua require("lsp")
 
 set completeopt=menuone,noselect

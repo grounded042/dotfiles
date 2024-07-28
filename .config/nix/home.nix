@@ -453,6 +453,7 @@ source $HOME/.work_profile
     lua
     lynx
     moreutils
+    # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3
     # https://github.com/fricklerhandwerk/settings/blob/561f33f8b49690b619349c3950c5129876c00504/user/profiles/darwin/nixos-rebuild.nix
     (pkgs.callPackage ./nixos-rebuild.nix {})
     niv
