@@ -7,10 +7,12 @@ let
   custom-curl = pkgs.curl.override {
     c-aresSupport = true;
   };
+  currentSystem = import ./current_system.nix;
 in
 {
-  home.username = "jon.carl";
-  home.homeDirectory = "/Users/${config.home.username}";
+
+  home.username = currentSystem.username;
+  home.homeDirectory = "/Users/${currentSystem.username}";
   xdg.enable = true;
 
   home.stateVersion = "22.11";
@@ -34,8 +36,8 @@ font-family = "Monaco"
 font-style = "Regular"
 font-size = 12
 
-background = 191918
-foreground = dee2ea
+background = 191919
+foreground = ffffff
 
 selection-foreground = dee2ea
 selection-background = fc2c1d
@@ -48,7 +50,7 @@ cursor-text = 131313
 #
 # black
 palette = 0=#292929
-palette = 8=#dee2ea
+palette = 8=#494949
 # red
 palette = 1=#fc2c1d
 palette = 9=#e74b3b
@@ -68,14 +70,17 @@ palette = 13=#6667c6
 palette = 6=#0095de
 palette = 14=#0092e2
 # white
-palette = 7=#dee2ea
-palette = 15=#feffff
+palette = 7=#b9b9b9
+palette = 15=#d9d9d9
 
 window-padding-x = 8
 window-padding-y = 8
 window-theme = dark
 
 copy-on-select = clipboard
+
+window-padding-x = 2
+window-padding-y = 2
 '';
 
   programs.alacritty = {
@@ -114,7 +119,7 @@ copy-on-select = clipboard
         draw_bold_text_with_bright_colors = true;
 
         primary = {
-          background = "#191918";
+          background = "#292929";
           foreground = "#dee2ea";
         };
 
@@ -140,7 +145,7 @@ copy-on-select = clipboard
         };
 
         bright = {
-          black =   "#dee2ea";
+          black =   "#494949";
           red =     "#e74b3b";
           green =   "#07d773";
           yellow =  "#f6c700";
@@ -251,17 +256,18 @@ bind-key b break-pane -d
 bind-key C-j choose-tree
 
 # styling
-set -g status-bg black
+set -g status-bg "#191919"
 set -g status-fg white
 
 set-option -g status-left-length 50
 
 set -g status-justify centre
 
-set -g status-right "#[fg=brightblack,bg=black] %H:%M %d-%b-%y "
-set -g window-status-separator "#[fg=brightblack,bg=black]|"
-set -g window-status-current-format "#[fg=white,bg=black] #I #W #F "
-set -g window-status-format "#[fg=brightblack,bg=black] #I #W #F "
+set -g status-right "#[fg=white,bg=#191919] %H:%M %d-%b-%y "
+set -g status-left "#[fg=white,bg=#191919] [#S]"
+set -g window-status-separator "#[fg=white,bg=#191919]|"
+set -g window-status-current-format "#[fg=white,bg=#191919] #I #W #F "
+set -g window-status-format "#[fg=white,bg=#191919] #I #W #F "
 '';
 
 

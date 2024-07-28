@@ -17,6 +17,7 @@
   outputs = { self, darwin, nixpkgs, home-manager, ...}@inputs:
   let
     inherit (darwin.lib) darwinSystem;
+    currentSystem = import ./current_system.nix;
   in
   {
     overlays = {
@@ -34,7 +35,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users."jon.carl" = import ./home.nix;
+            home-manager.users.${currentSystem.username} = import ./home.nix;
           }
         ];
       };
