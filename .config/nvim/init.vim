@@ -50,25 +50,25 @@ set foldlevelstart=99
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig' " default lsp
 Plug 'hrsh7th/nvim-cmp'      " completions
 Plug 'hrsh7th/cmp-nvim-lsp'  " lsp completions
 Plug 'hrsh7th/cmp-buffer'    " buffer completions
 Plug 'hrsh7th/cmp-path'      " filesystem path completions
 
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
+" Plug 'hrsh7th/cmp-vsnip'
+" Plug 'hrsh7th/vim-vsnip'
 
 " Plug 'nvim-lua/lsp_extensions.nvim'
-" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Plug 'nvim-treesitter/playground'
 
 " Plug 'roxma/nvim-yarp'
 " Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim' " light status line
 
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
+Plug 'nvim-lua/plenary.nvim' " library of lua funcs for nvim
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' } " fuzzy finder
 
 " Plug 'junegunn/fzf', { 'do': './install --bin' }
 " Plug 'junegunn/fzf.vim'
@@ -84,11 +84,11 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 
 " copilot
 Plug 'zbirenbaum/copilot.lua'
-Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+Plug 'CopilotC-Nvim/CopilotChat.nvim'
 
 call plug#end()
 
-lua require("copilot_setup")
+lua require("init")
 lua require("lsp")
 
 set completeopt=menuone,noselect

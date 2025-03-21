@@ -1,8 +1,6 @@
 local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
 
-
-
 cmp.setup({
   snippet = {
     expand = function(args)

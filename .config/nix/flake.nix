@@ -12,9 +12,11 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, ...}@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, agenix, ...}@inputs:
   let
     inherit (darwin.lib) darwinSystem;
     currentSystem = import ./current_system.nix;
@@ -30,6 +32,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.${currentSystem.username} = import ./home.nix;
+          }
+          agenix.nixosModules.default
+          {
+            environment.systemPackages = [ agenix.packages.aarch64-darwin.default ];
           }
         ];
       };

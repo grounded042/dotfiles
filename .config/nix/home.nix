@@ -463,6 +463,7 @@ source $HOME/.work_profile
     hwatch
     imagemagick
     kind
+    iperf
     kcat
     kubectl
     ldns
@@ -485,7 +486,9 @@ source $HOME/.work_profile
     ripgrep
     shellcheck
     sipcalc
+    swiftlint
     tmux
+    tree-sitter
     unbound
     vegeta
     wakeonlan
