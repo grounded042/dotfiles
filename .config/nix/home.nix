@@ -45,6 +45,10 @@ selection-background = fc2c1d
 cursor-color = c5c5c5
 cursor-text = 131313
 
+title = " "
+macos-titlebar-proxy-icon = hidden
+macos-icon = xray
+
 # Colors can be changed by setting the 16 colors of `palette`, which each color
 # being defined as regular and bold.
 #
@@ -198,7 +202,7 @@ window-padding-y = 2
 
   programs.go = {
     enable = true;
-    package = pkgs.go_1_22;
+    package = pkgs.go;
     goPath = "go";
     goBin = "go/bin";
   };
@@ -211,6 +215,10 @@ window-padding-y = 2
 
   programs.tmux = {
     enable = true;
+
+    # to work around tmux not using the correct shell
+    # https://github.com/nix-community/home-manager/issues/5952
+    sensibleOnTop = false;
 
     # so that escapes register immidiately in vim
     escapeTime = 0;
@@ -264,10 +272,12 @@ set-option -g status-left-length 50
 set -g status-justify centre
 
 set -g status-right "#[fg=white,bg=#191919] %H:%M %d-%b-%y "
-set -g status-left "#[fg=white,bg=#191919] [#S]"
+set -g status-left "#[fg=white,bg=#191919] #(layer0 profile current | tr '[:lower:]' '[:upper:]')"
 set -g window-status-separator "#[fg=white,bg=#191919]|"
 set -g window-status-current-format "#[fg=white,bg=#191919] #I #W #F "
 set -g window-status-format "#[fg=white,bg=#191919] #I #W #F "
+
+set -ga terminal-features "*:hyperlinks"
 '';
 
 
@@ -428,10 +438,12 @@ source $HOME/.work_profile
     autoconf
     automake
     awscli2
+    btop
     cmake
     colmena
     custom-curl
     c-ares
+    delta
     difftastic
     dig
     duckdb
@@ -441,21 +453,29 @@ source $HOME/.work_profile
     gh
     git
     gnugrep
+    gnumake
     gnupg
     gnused
+    graphviz
     grpcurl
     htop
     hugo
+    hwatch
     imagemagick
+    kind
     kcat
+    kubectl
     ldns
     libtool
-    lua
+    (lua.withPackages (ps: with ps; [luacheck cjson basexx]))
+    lua-language-server
     lynx
+    miller
     moreutils
     # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3
     # https://github.com/fricklerhandwerk/settings/blob/561f33f8b49690b619349c3950c5129876c00504/user/profiles/darwin/nixos-rebuild.nix
     (pkgs.callPackage ./nixos-rebuild.nix {})
+    nginx
     niv
     nmap
     openssl
@@ -467,6 +487,7 @@ source $HOME/.work_profile
     sipcalc
     tmux
     unbound
+    vegeta
     wakeonlan
     yadm
     yarn
