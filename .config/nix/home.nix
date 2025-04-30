@@ -460,6 +460,7 @@ source $HOME/.work_profile
     grpcurl
     htop
     hugo
+    hurl
     hwatch
     imagemagick
     kind
@@ -489,6 +490,7 @@ source $HOME/.work_profile
     swiftlint
     tmux
     tree-sitter
+    typescript-language-server
     unbound
     vegeta
     wakeonlan

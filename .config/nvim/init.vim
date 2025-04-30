@@ -21,7 +21,7 @@ set undofile
 set notermguicolors
 colorscheme vim
 
-set colorcolumn=80
+set colorcolumn=80              " Highlight 80 char limit
 
 set cmdheight=2                 " Better display for messages
 
@@ -32,15 +32,21 @@ set number                      " Line numbers on
 set showmatch                   " Show matching brackets/parenthesis
 set winminheight=0              " Windows can be 0 line high
 set ignorecase                  " Case insensitive search
+set hlsearch                    " Highlight results
+set incsearch                   " Show results while typing
 set smartcase                   " Case sensitive when uc present
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
-set list
+set list                        " Show hidden characters
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
+set t_Co=256                    " Use 256 colors
 " }
 
 " Formatting {
+set expandtab                   " Expand tabs to the proper type and size
+set tabstop=4                   " Tab width in spaces
+set softtabstop=4               " Soft tab width in spaces
+set shiftwidth=4                " Spaces when shifting
 set nowrap                      " Do not wrap long lines
-set softtabstop=4               " Let backspace delete indent
 set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
@@ -56,28 +62,19 @@ Plug 'hrsh7th/cmp-nvim-lsp'  " lsp completions
 Plug 'hrsh7th/cmp-buffer'    " buffer completions
 Plug 'hrsh7th/cmp-path'      " filesystem path completions
 
-" Plug 'hrsh7th/cmp-vsnip'
-" Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 
-" Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'nvim-treesitter/playground'
 
-" Plug 'roxma/nvim-yarp'
-" Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'itchyny/lightline.vim' " light status line
 
 Plug 'nvim-lua/plenary.nvim' " library of lua funcs for nvim
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' } " fuzzy finder
 
-" Plug 'junegunn/fzf', { 'do': './install --bin' }
-" Plug 'junegunn/fzf.vim'
-" Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'hashivim/vim-terraform'
-" Plug 'APZelos/blamer.nvim'
-" Plug 'Chiel92/vim-autoformat'
 
 Plug 'chemzqm/vim-jsx-improve'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
@@ -96,7 +93,6 @@ set completeopt=menuone,noselect
 inoremap <silent><expr> <TAB> pumvisible() ? compe#confirm('<CR>') : "\<TAB>"
 
 " Golang {
-autocmd BufWritePre *.go lua goimports()
 " }
 
 " Terraform {
