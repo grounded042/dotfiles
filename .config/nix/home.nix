@@ -32,12 +32,16 @@ in
   home.file.".config/ghostty/config".text = ''
 # The syntax is "key = value". The whitespace around the equals doesn't matter.
 
+# make alt work for tmux
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+
 font-family = "Monaco"
 font-style = "Regular"
 font-size = 12
 
-background = 191919
-foreground = ffffff
+background = 292929
+foreground = dee2ea
 
 selection-foreground = dee2ea
 selection-background = fc2c1d
