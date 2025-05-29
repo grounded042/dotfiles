@@ -4,7 +4,8 @@ let
 in
 {
   programs.zsh.enable = true;
-  services.nix-daemon.enable = true;
+  system.stateVersion = 6;
+  ids.gids.nixbld = 30000;
 
   users = {
     users = {

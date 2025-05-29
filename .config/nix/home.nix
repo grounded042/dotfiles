@@ -486,7 +486,8 @@ source $HOME/.work_profile
     nmap
     openssl
     pkg-config
-    nodejs-18_x
+    protobuf
+    nodejs_24
     redis
     ripgrep
     shellcheck
