@@ -2,7 +2,7 @@
 	name = Jon Carl
 	useConfigOnly = true
 	email = grounded042@joncarl.com
-	signingkey = FE6D0451652D5FCC
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKq+/aX9bH1PAyJXY9q1huLgPzQfkcokYryhiwMl6kw
 [github]
     # https://github.com/blog/180-local-github-config
     user = grounded042
@@ -210,3 +210,7 @@
 	required = true
 [pull]
 	rebase = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"

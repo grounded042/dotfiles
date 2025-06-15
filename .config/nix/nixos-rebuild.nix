@@ -3,7 +3,7 @@ let
   path = pkgs.path + /pkgs/os-specific/linux/nixos-rebuild;
   fallback = import (pkgs.path + /nixos/modules/installer/tools/nix-fallback-paths.nix);
 in
-(pkgs.substituteAll {
+(pkgs.replaceVars {
   dir = "bin";
   isExecutable = true;
   name = "nixos-rebuild";

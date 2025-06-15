@@ -64,7 +64,7 @@ end
 -- map buffer local keybindings when the language server attaches
 -- gopls: GO111MODULE=on go get golang.org/x/tools/gopls@latest
 -- pylsp: pip install 'python-lsp-server[all]'
-local servers = { "gopls", "pylsp", "ts_ls", "lua_ls" }
+local servers = { "gopls", "pylsp", "ts_ls", "lua_ls", "nixd" }
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {

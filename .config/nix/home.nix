@@ -1,16 +1,16 @@
 # https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
 # https://github.com/simonrw/nix-config/blob/d0fafa870138b94da5e41286a58a8bd3cb0d0ed2/home/packages/simon.nix
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, colmena, ... }:
 let
   # for some reason we cannot do an overlay of curl so we do this instead
   custom-curl = pkgs.curl.override {
     c-aresSupport = true;
   };
+  custom-colmena = colmena.packages.${pkgs.system}.colmena;
   currentSystem = import ./current_system.nix;
 in
 {
-
   home.username = currentSystem.username;
   home.homeDirectory = "/Users/${currentSystem.username}";
   xdg.enable = true;
@@ -431,7 +431,7 @@ source $HOME/.work_profile
   };
 
   home.file.".digrc".text = "@1.1.1.1";
-  home.file.".curlrc".text = "--doh-url \"https://1.1.1.1/dns-query\"\n--capath /Users/${config.home.username}/.config/certs";
+  # home.file.".curlrc".text = "--doh-url \"https://1.1.1.1/dns-query\"\n--capath /Users/${config.home.username}/.config/certs";
 
   # TODO: services.gpg-agent
   # TODO: targets.darwin.defaults
@@ -443,8 +443,9 @@ source $HOME/.work_profile
     automake
     awscli2
     btop
+    claude-code
     cmake
-    colmena
+    custom-colmena
     custom-curl
     c-ares
     delta
@@ -480,9 +481,10 @@ source $HOME/.work_profile
     moreutils
     # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3
     # https://github.com/fricklerhandwerk/settings/blob/561f33f8b49690b619349c3950c5129876c00504/user/profiles/darwin/nixos-rebuild.nix
-    (pkgs.callPackage ./nixos-rebuild.nix {})
+    # (pkgs.callPackage ./nixos-rebuild.nix {})
     nginx
     niv
+    nixd
     nmap
     openssl
     pkg-config
@@ -493,6 +495,7 @@ source $HOME/.work_profile
     shellcheck
     sipcalc
     swiftlint
+    tailwindcss_4
     tmux
     tree-sitter
     typescript-language-server

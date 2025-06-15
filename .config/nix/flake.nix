@@ -5,18 +5,19 @@
   description = "Jon Carl's darwin setup";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.url = "github:nix-darwin/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     agenix.url = "github:ryantm/agenix";
+    colmena.url = "github:zhaofengli/colmena";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, agenix, ...}@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, agenix, colmena, ...}@inputs:
   let
     inherit (darwin.lib) darwinSystem;
     currentSystem = import ./current_system.nix;
@@ -29,12 +30,13 @@
           ./configuration.nix
           home-manager.darwinModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${currentSystem.username} = import ./home.nix;
-          }
-          agenix.nixosModules.default
-          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = { inherit colmena; };
+              users.${currentSystem.username} = import ./home.nix;
+              sharedModules = [agenix.homeManagerModules.age];
+            };
             environment.systemPackages = [ agenix.packages.aarch64-darwin.default ];
           }
         ];
@@ -46,6 +48,7 @@
         git = super.git.override {
           osxkeychainSupport = false;
         };
+        claude-code = inputs.nixpkgs-unstable.claude-code;
       })
     ];
   };
