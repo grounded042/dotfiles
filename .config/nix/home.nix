@@ -1,18 +1,17 @@
 # https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
 # https://github.com/simonrw/nix-config/blob/d0fafa870138b94da5e41286a58a8bd3cb0d0ed2/home/packages/simon.nix
 
-{ config, pkgs, lib, colmena, ... }:
+{ config, pkgs, lib, colmena, username, ... }:
 let
   # for some reason we cannot do an overlay of curl so we do this instead
   custom-curl = pkgs.curl.override {
     c-aresSupport = true;
   };
   custom-colmena = colmena.packages.${pkgs.system}.colmena;
-  currentSystem = import ./current_system.nix;
 in
 {
-  home.username = currentSystem.username;
-  home.homeDirectory = "/Users/${currentSystem.username}";
+  home.username = username;
+  home.homeDirectory = "/Users/${username}";
   xdg.enable = true;
 
   home.stateVersion = "22.11";

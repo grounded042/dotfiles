@@ -20,12 +20,13 @@
   outputs = { self, darwin, nixpkgs, home-manager, agenix, colmena, ...}@inputs:
   let
     inherit (darwin.lib) darwinSystem;
-    currentSystem = import ./current_system.nix;
+    username = "joncarl";  # Can be overridden via --override-input
   in
   {
     darwinConfigurations = rec {
       joncarl-macbook = darwinSystem {
         system = "aarch64-darwin";
+        specialArgs = { inherit username; };
         modules = [
           ./configuration.nix
           home-manager.darwinModules.home-manager
@@ -33,8 +34,8 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = { inherit colmena; };
-              users.${currentSystem.username} = import ./home.nix;
+              extraSpecialArgs = { inherit colmena username; };
+              users.${username} = import ./home.nix;
               sharedModules = [agenix.homeManagerModules.age];
             };
             environment.systemPackages = [ agenix.packages.aarch64-darwin.default ];
