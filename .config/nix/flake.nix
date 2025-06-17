@@ -17,40 +17,49 @@
     colmena.url = "github:zhaofengli/colmena";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, agenix, colmena, ...}@inputs:
-  let
-    inherit (darwin.lib) darwinSystem;
-    username = "joncarl";  # Can be overridden via --override-input
-  in
-  {
-    darwinConfigurations = rec {
-      joncarl-macbook = darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit username; };
-        modules = [
-          ./configuration.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = { inherit colmena username; };
-              users.${username} = import ./home.nix;
-              sharedModules = [agenix.homeManagerModules.age];
-            };
-            environment.systemPackages = [ agenix.packages.aarch64-darwin.default ];
-          }
-        ];
-      };
-    };
-
-    nixpkgs.overlays = [
-      (self: super: {
-        git = super.git.override {
-          osxkeychainSupport = false;
+  outputs =
+    {
+      self,
+      darwin,
+      nixpkgs,
+      home-manager,
+      agenix,
+      colmena,
+      ...
+    }@inputs:
+    let
+      inherit (darwin.lib) darwinSystem;
+      username = "joncarl"; # Can be overridden via --override-input
+    in
+    {
+      darwinConfigurations = rec {
+        joncarl-macbook = darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = { inherit username; };
+          modules = [
+            ./configuration.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit colmena username; };
+                users.${username} = import ./home.nix;
+                sharedModules = [ agenix.homeManagerModules.age ];
+              };
+              environment.systemPackages = [ agenix.packages.aarch64-darwin.default ];
+            }
+          ];
         };
-        claude-code = inputs.nixpkgs-unstable.claude-code;
-      })
-    ];
-  };
+      };
+
+      nixpkgs.overlays = [
+        (self: super: {
+          git = super.git.override {
+            osxkeychainSupport = false;
+          };
+          claude-code = inputs.nixpkgs-unstable.claude-code;
+        })
+      ];
+    };
 }

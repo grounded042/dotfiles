@@ -1,4 +1,4 @@
-with import <nixpkgs/nixos> {};
+with import <nixpkgs/nixos> { };
 config.system.build.nixos-rebuild.overrideAttrs (old: {
   postInstall = ''
     # 1. pretend we're on Linux such that evaluation of

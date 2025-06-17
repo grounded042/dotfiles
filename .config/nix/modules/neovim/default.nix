@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   programs.neovim = {
@@ -8,73 +13,78 @@
     vimAlias = true;
     vimdiffAlias = true;
 
-    plugins = let
-      nvim-treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (treesitter-plugins: with treesitter-plugins; [
-        bash
-        c
-        css
-        dockerfile
-        go
-        hcl
-        html
-        javascript
-        jq
-        json
-        lua
-        make
-        markdown
-        markdown_inline
-        nginx
-        nix
-        rego
-        sql
-        tmux
-        typescript
-        vim
-        yaml
-      ]);
+    plugins =
+      let
+        nvim-treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (
+          treesitter-plugins: with treesitter-plugins; [
+            bash
+            c
+            css
+            dockerfile
+            go
+            hcl
+            html
+            javascript
+            jq
+            json
+            lua
+            make
+            markdown
+            markdown_inline
+            nginx
+            nix
+            rego
+            sql
+            tmux
+            typescript
+            vim
+            yaml
+          ]
+        );
 
-      vim-jsx-improve = pkgs.vimUtils.buildVimPlugin {
-        name = "vim-jsx-improve";
-        src = pkgs.fetchFromGitHub {
-          owner = "neoclide";
-          repo = "vim-jsx-improve";
-          rev = "b179bf9a3901ccc6afcaa3abc9c93bae450f3339";
-          sha256 = "sha256-/GygNrw+K4q3TBTz7hZxQwRbGCtwVXbZ4dbDlOGV8Bs=";
+        vim-jsx-improve = pkgs.vimUtils.buildVimPlugin {
+          name = "vim-jsx-improve";
+          src = pkgs.fetchFromGitHub {
+            owner = "neoclide";
+            repo = "vim-jsx-improve";
+            rev = "b179bf9a3901ccc6afcaa3abc9c93bae450f3339";
+            sha256 = "sha256-/GygNrw+K4q3TBTz7hZxQwRbGCtwVXbZ4dbDlOGV8Bs=";
+          };
         };
-      };
-    in with pkgs.vimPlugins; [
-      # LSP
-      nvim-lspconfig
+      in
+      with pkgs.vimPlugins;
+      [
+        # LSP
+        nvim-lspconfig
 
-      # Completions
-      nvim-cmp
-      cmp-nvim-lsp
-      cmp-buffer
-      cmp-path
-      cmp-vsnip
-      vim-vsnip
+        # Completions
+        nvim-cmp
+        cmp-nvim-lsp
+        cmp-buffer
+        cmp-path
+        cmp-vsnip
+        vim-vsnip
 
-      # TreeSitter
-      nvim-treesitter-with-plugins
+        # TreeSitter
+        nvim-treesitter-with-plugins
 
-      # Telescope
-      plenary-nvim
-      telescope-nvim
+        # Telescope
+        plenary-nvim
+        telescope-nvim
 
-      # UI
-      lightline-vim
-      vim-gitgutter
+        # UI
+        lightline-vim
+        vim-gitgutter
 
-      # Language specific
-      vim-terraform
-      vim-jsx-improve
-      vim-prettier
+        # Language specific
+        vim-terraform
+        vim-jsx-improve
+        vim-prettier
 
-      # Copilot
-      copilot-lua
-      CopilotChat-nvim
-    ];
+        # Copilot
+        copilot-lua
+        CopilotChat-nvim
+      ];
 
     extraConfig = lib.fileContents ./init.vim;
     extraLuaConfig = lib.fileContents ./init.lua;
