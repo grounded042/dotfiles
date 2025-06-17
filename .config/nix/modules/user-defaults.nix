@@ -96,6 +96,9 @@ in
       AppleLocale = "en_US@currency=USD";
       # Add a context menu item for showing the Web Inspector in web views
       WebKitDeveloperExtras = true;
+
+      # Automatically hide and show the menu bar
+      _HIHideMenuBar = true;
     };
 
     "com.apple.finder" = {

@@ -139,9 +139,9 @@ in
                        color=0xff202020 \
                        shadow=true
 
-      sketchybar --default icon.font="Helvetica Neue:Bold:18.0"  \
+      sketchybar --default icon.font="SF Pro:Semibold:15.0"  \
                            icon.color=0xffffffff                 \
-                           label.font="Helvetica Neue:Bold:12.0" \
+                           label.font="SF Pro:Semibold:13.0" \
                            label.color=0xffffffff                \
                            label.highlight_color=0xffe60000      \
                            padding_left=5                        \

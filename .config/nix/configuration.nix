@@ -21,6 +21,17 @@ in
   ids.gids.nixbld = 30000;
   nixpkgs.config.allowUnfree = true;
 
+  homebrew = {
+    enable = true;
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+    };
+    global = {
+      autoUpdate = false;
+    };
+  };
+
   users = {
     users = {
       ${username} = {
