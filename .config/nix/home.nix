@@ -214,6 +214,7 @@ window-padding-y = 2
 
   imports = [
     ./modules/neovim
+    ./modules/git
   ];
 
   # TODO: programs.ssh
