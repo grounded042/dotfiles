@@ -212,7 +212,9 @@ window-padding-y = 2
 
   programs.jq.enable = true;
 
-  # TODO: programs.neovim
+  imports = [
+    ./modules/neovim
+  ];
 
   # TODO: programs.ssh
 
@@ -510,7 +512,5 @@ source $HOME/.work_profile
     #yabai
     #skhd
     #spacebar
-
-    neovim
   ];
 }
