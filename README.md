@@ -20,6 +20,6 @@ the dotfiles of Jon Carl
 ### Installation
 Run the following command from the repository root:
 ```bash
-sudo darwin-rebuild switch --flake ~/code/dotfiles/.config/nix#joncarl-macbook
+sudo darwin-rebuild switch --flake ~/code/dotfiles#joncarl-macbook
 ```
 

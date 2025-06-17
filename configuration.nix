@@ -21,6 +21,18 @@ in
   ids.gids.nixbld = 30000;
   nixpkgs.config.allowUnfree = true;
 
+  nix = {
+    settings = {
+      allowed-users = [username];
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+    gc = {
+      automatic = true;
+      interval = { Weekday = 0; Hour = 2; Minute = 0; }; # Sunday 2 AM
+      options = "--delete-older-than 7d";
+    };
+  };
+
   homebrew = {
     enable = true;
     onActivation = {

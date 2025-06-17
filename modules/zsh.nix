@@ -127,12 +127,6 @@
         fi
       }
 
-      nix-rebuild() {
-        pushd ~/.config/nix
-        darwin-rebuild switch --flake .#joncarl-macbook
-        popd
-      }
-
       source $HOME/.work_profile
     '';
 
