@@ -224,6 +224,7 @@ in
     ./modules/git
     ./modules/tmux.nix
     ./modules/zsh.nix
+    ./modules/user-defaults.nix
   ];
 
   # TODO: programs.ssh
