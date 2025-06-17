@@ -99,17 +99,8 @@ brew doctor
 # brew install zsh
 # brew install zsh-syntax-highlighting
 
-brew install koekeishiya/formulae/yabai
-yabai --start-service
-
-brew install koekeishiya/formulae/skhd
-yabai --start-service
-
 brew tap homebrew/cask-fonts
 brew install font-fontawesome
-brew tap FelixKratz/formulae
-brew install sketchybar
-brew services start sketchybar
 
 # NOTE: macOS system configuration has been moved to nix-darwin configuration
 # See .config/nix/configuration.nix for system defaults, Finder, Dock, Safari, etc.
