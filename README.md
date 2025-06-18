@@ -18,19 +18,20 @@ the dotfiles of Jon Carl
    ```
 
 ### Installation
-Run the following command from the repository root:
-```bash
-sudo darwin-rebuild switch --flake ~/code/dotfiles#joncarl-macbook
-```
+1. **Install nix-darwin** - Run from the repository root:
+   ```bash
+   sudo nix run nix-darwin -- switch --flake ~/code/dotfiles#joncarl-macbook
+   ```
+
+2. **Apply future changes** - After initial setup, use:
+   ```bash
+   sudo darwin-rebuild switch --flake ~/code/dotfiles#joncarl-macbook
+   ```
 
 ## Customization
 
 ### Overriding Username
-To use these dotfiles with a different username, override the username input when building:
-
-```bash
-sudo darwin-rebuild switch --flake ~/code/dotfiles#joncarl-macbook --override-input username "your-username-here"
-```
+To use these dotfiles with a different username, modify the username in `current_system.nix`:
 
 ### System-Specific Configuration
 Use `current_system.nix` to add machine-specific configuration without modifying the main files:

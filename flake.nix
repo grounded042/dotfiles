@@ -26,7 +26,8 @@
     ...
   } @ inputs: let
     inherit (darwin.lib) darwinSystem;
-    username = "joncarl"; # Can be overridden via --override-input
+    currentSystem = import ./current_system.nix;
+    username = currentSystem.username;
   in {
     darwinConfigurations = rec {
       joncarl-macbook = darwinSystem {
