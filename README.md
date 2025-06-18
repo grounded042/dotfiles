@@ -23,3 +23,30 @@ Run the following command from the repository root:
 sudo darwin-rebuild switch --flake ~/code/dotfiles#joncarl-macbook
 ```
 
+## Customization
+
+### Overriding Username
+To use these dotfiles with a different username, override the username input when building:
+
+```bash
+sudo darwin-rebuild switch --flake ~/code/dotfiles#joncarl-macbook --override-input username "your-username-here"
+```
+
+### System-Specific Configuration
+Use `current_system.nix` to add machine-specific configuration without modifying the main files:
+
+```nix
+{
+  username = "joncarl";
+  configuration = {
+    config,
+    pkgs,
+    lib,
+    ...
+  }: {
+    # Add your system-specific configuration here
+    environment.etc."pam.d/sudo_local".enable = lib.mkForce false;
+  };
+}
+```
+
