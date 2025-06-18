@@ -3,8 +3,7 @@
   lib,
   username,
   ...
-}:
-{
+}: {
   system.defaults = {
     # Disable the "Are you sure you want to open this application?" dialog
     LaunchServices = {

@@ -3,9 +3,7 @@
   lib,
   username,
   ...
-}:
-
-let
+}: let
   # for modifier support, check https://github.com/LnL7/nix-darwin/issues/998
   hotCornerModifiers = {
     none = 0;
@@ -36,8 +34,7 @@ let
     inactiveProcesses = 106;
     windowedProcesses = 107;
   };
-in
-{
+in {
   targets.darwin.defaults = {
     NSGlobalDomain = {
       # Expand save panel by default
@@ -92,7 +89,7 @@ in
       # Adjust toolbar title rollover delay
       NSToolbarTitleViewRolloverDelay = 0.0;
       # Set language and text formats
-      AppleLanguages = [ "en" ];
+      AppleLanguages = ["en"];
       AppleLocale = "en_US@currency=USD";
       # Add a context menu item for showing the Web Inspector in web views
       WebKitDeveloperExtras = true;
@@ -267,7 +264,7 @@ in
 
     "com.apple.terminal" = {
       # Only use UTF-8 in Terminal.app
-      StringEncodings = [ 4 ];
+      StringEncodings = [4];
     };
 
     "com.apple.helpviewer" = {

@@ -1,6 +1,5 @@
 # https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
 # https://github.com/simonrw/nix-config/blob/d0fafa870138b94da5e41286a58a8bd3cb0d0ed2/home/packages/simon.nix
-
 {
   config,
   pkgs,
@@ -8,15 +7,13 @@
   colmena,
   username,
   ...
-}:
-let
+}: let
   # for some reason we cannot do an overlay of curl so we do this instead
   custom-curl = pkgs.curl.override {
     c-aresSupport = true;
   };
   custom-colmena = colmena.packages.${pkgs.system}.colmena;
-in
-{
+in {
   home.username = username;
   home.homeDirectory = "/Users/${username}";
   xdg.enable = true;
@@ -274,11 +271,12 @@ in
     ldns
     libtool
     (lua.withPackages (
-      ps: with ps; [
-        luacheck
-        cjson
-        basexx
-      ]
+      ps:
+        with ps; [
+          luacheck
+          cjson
+          basexx
+        ]
     ))
     lua-language-server
     lynx
@@ -290,7 +288,7 @@ in
     nginx
     niv
     nixd
-    nixfmt-rfc-style
+    alejandra
     nmap
     openssl
     pkg-config

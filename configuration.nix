@@ -3,12 +3,10 @@
   lib,
   username,
   ...
-}:
-let
+}: let
   # Import system-specific configuration
   currentSystem = import ./current_system.nix;
-in
-{
+in {
   imports = [
     currentSystem.configuration
     ./modules/sketchybar.nix
@@ -24,11 +22,15 @@ in
   nix = {
     settings = {
       allowed-users = [username];
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
     };
     gc = {
       automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; }; # Sunday 2 AM
+      interval = {
+        Weekday = 0;
+        Hour = 2;
+        Minute = 0;
+      }; # Sunday 2 AM
       options = "--delete-older-than 7d";
     };
   };
@@ -55,5 +57,4 @@ in
   };
 
   system.primaryUser = username;
-
 }

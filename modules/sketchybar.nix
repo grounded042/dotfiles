@@ -1,6 +1,8 @@
-{ pkgs, lib, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   # Plugin scripts that will be put in the nix store
   plugins = {
     battery = pkgs.writeShellScript "battery.sh" ''
@@ -126,8 +128,7 @@ let
       sketchybar --set $NAME label="''${WIFI}"
     '';
   };
-in
-{
+in {
   services.sketchybar = {
     enable = true;
     config = ''

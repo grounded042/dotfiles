@@ -123,7 +123,7 @@ for _, lsp in ipairs(servers) do
         user_config.settings = {
             nixd = {
                 formatting = {
-                    command = { "nixfmt" },
+                    command = { "alejandra" },
                 },
             },
         }

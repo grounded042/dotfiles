@@ -3,9 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-
-{
+}: {
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -13,10 +11,10 @@
     vimAlias = true;
     vimdiffAlias = true;
 
-    plugins =
-      let
-        nvim-treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (
-          treesitter-plugins: with treesitter-plugins; [
+    plugins = let
+      nvim-treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (
+        treesitter-plugins:
+          with treesitter-plugins; [
             bash
             c
             css
@@ -40,20 +38,19 @@
             vim
             yaml
           ]
-        );
+      );
 
-        vim-jsx-improve = pkgs.vimUtils.buildVimPlugin {
-          name = "vim-jsx-improve";
-          src = pkgs.fetchFromGitHub {
-            owner = "neoclide";
-            repo = "vim-jsx-improve";
-            rev = "b179bf9a3901ccc6afcaa3abc9c93bae450f3339";
-            sha256 = "sha256-/GygNrw+K4q3TBTz7hZxQwRbGCtwVXbZ4dbDlOGV8Bs=";
-          };
+      vim-jsx-improve = pkgs.vimUtils.buildVimPlugin {
+        name = "vim-jsx-improve";
+        src = pkgs.fetchFromGitHub {
+          owner = "neoclide";
+          repo = "vim-jsx-improve";
+          rev = "b179bf9a3901ccc6afcaa3abc9c93bae450f3339";
+          sha256 = "sha256-/GygNrw+K4q3TBTz7hZxQwRbGCtwVXbZ4dbDlOGV8Bs=";
         };
-      in
-      with pkgs.vimPlugins;
-      [
+      };
+    in
+      with pkgs.vimPlugins; [
         # LSP
         nvim-lspconfig
 
