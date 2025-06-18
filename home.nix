@@ -32,68 +32,6 @@ in {
     "$HOME/.local/bin"
   ];
 
-  home.file.".config/ghostty/config".text = ''
-    # The syntax is "key = value". The whitespace around the equals doesn't matter.
-
-    # make alt work for tmux
-    keybind = alt+left=unbind
-    keybind = alt+right=unbind
-
-    font-family = "Monaco"
-    font-style = "Regular"
-    font-size = 12
-
-    background = 292929
-    foreground = dee2ea
-
-    selection-foreground = dee2ea
-    selection-background = fc2c1d
-
-    cursor-color = c5c5c5
-    cursor-text = 131313
-
-    title = " "
-    macos-titlebar-proxy-icon = hidden
-    macos-icon = xray
-
-    # Colors can be changed by setting the 16 colors of `palette`, which each color
-    # being defined as regular and bold.
-    #
-    # black
-    palette = 0=#292929
-    palette = 8=#494949
-    # red
-    palette = 1=#fc2c1d
-    palette = 9=#e74b3b
-    # green
-    palette = 2=#2fcc70
-    palette = 10=#07d773
-    # yellow
-    palette = 3=#f1c40c
-    palette = 11=#f6c700
-    # blue
-    palette = 4=#3398db
-    palette = 12=#0095de
-    # purple
-    palette = 5=#6170c4
-    palette = 13=#6667c6
-    # aqua
-    palette = 6=#0095de
-    palette = 14=#0092e2
-    # white
-    palette = 7=#b9b9b9
-    palette = 15=#d9d9d9
-
-    window-padding-x = 8
-    window-padding-y = 8
-    window-theme = dark
-
-    copy-on-select = clipboard
-
-    window-padding-x = 2
-    window-padding-y = 2
-  '';
-
   programs.alacritty = {
     enable = true;
 
@@ -205,8 +143,6 @@ in {
     enableZshIntegration = true;
   };
 
-  # TODO: programs.git
-
   programs.go = {
     enable = true;
     package = pkgs.go;
@@ -222,6 +158,7 @@ in {
     ./modules/tmux.nix
     ./modules/zsh.nix
     ./modules/user-defaults.nix
+    ./modules/ghostty.nix
   ];
 
   # TODO: programs.ssh
@@ -230,7 +167,6 @@ in {
   # home.file.".curlrc".text = "--doh-url \"https://1.1.1.1/dns-query\"\n--capath /Users/${config.home.username}/.config/certs";
 
   # TODO: services.gpg-agent
-  # TODO: targets.darwin.defaults
   # TODO: xdg
 
   home.packages = with pkgs; [
@@ -308,9 +244,5 @@ in {
     yq-go
     zola
     zsh-syntax-highlighting
-
-    #yabai
-    #skhd
-    #spacebar
   ];
 }
