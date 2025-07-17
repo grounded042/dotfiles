@@ -32,6 +32,7 @@
             nginx
             nix
             rego
+            rust
             sql
             tmux
             typescript
@@ -77,6 +78,7 @@
         vim-terraform
         vim-jsx-improve
         vim-prettier
+        rust-vim
 
         # Copilot
         copilot-lua

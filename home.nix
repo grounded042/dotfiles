@@ -175,6 +175,7 @@ in {
     automake
     awscli2
     btop
+    cargo
     claude-code
     cmake
     custom-colmena
@@ -229,6 +230,8 @@ in {
     nodejs_24
     redis
     ripgrep
+    rustc
+    rust-analyzer
     shellcheck
     sipcalc
     swiftlint
