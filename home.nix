@@ -159,6 +159,7 @@ in {
     ./modules/zsh.nix
     ./modules/user-defaults.nix
     ./modules/ghostty.nix
+    ./modules/ghostty-shader
   ];
 
   # TODO: programs.ssh

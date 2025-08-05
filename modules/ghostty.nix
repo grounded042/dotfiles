@@ -1,4 +1,8 @@
-{...}: {
+{ pkgs, lib, config, ... }:
+
+let
+in
+{
   programs.ghostty = {
     enable = true;
     package = null;
@@ -61,6 +65,9 @@
       window-theme = "dark";
 
       copy-on-select = "clipboard";
+
+      custom-shader = "~/.config/ghostty/shaders/cursor.glsl";
+      custom-shader-animation = true;
     };
   };
 }
