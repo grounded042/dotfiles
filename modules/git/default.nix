@@ -22,7 +22,6 @@
 
       github = {
         user = "grounded042";
-        token = "MOVEALONG";
       };
 
       color = {
@@ -141,9 +140,14 @@
         format = "ssh";
       };
 
-      "gpg \"ssh\"" = {
-        program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
-      };
+      "gpg \"ssh\"" = lib.mkMerge [
+        (lib.mkIf pkgs.stdenv.isDarwin {
+          program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+        })
+        (lib.mkIf pkgs.stdenv.isLinux {
+          program = lib.getExe' pkgs._1password-gui "op-ssh-sign";
+        })
+      ];
     };
 
     aliases = {

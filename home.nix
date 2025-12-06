@@ -13,9 +13,13 @@
     c-aresSupport = true;
   };
   custom-colmena = colmena.packages.${pkgs.system}.colmena;
+  
+  # Platform detection
+  isDarwin = pkgs.stdenv.isDarwin;
+  isLinux = pkgs.stdenv.isLinux;
 in {
   home.username = username;
-  home.homeDirectory = "/Users/${username}";
+  home.homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
   xdg.enable = true;
 
   home.stateVersion = "22.11";
@@ -24,13 +28,16 @@ in {
 
   home.sessionPath = [
     "$GOBIN"
-    "/opt/local/bin"
-    "/opt/local/sbin"
-    "/opt/homebrew/bin"
     "$HOME/.npm-packages/bin"
     "$HOME/.cargo/bin"
     "$HOME/.local/bin"
+  ] ++ lib.optionals isDarwin [
+    "/opt/local/bin"
+    "/opt/local/sbin"
+    "/opt/homebrew/bin"
   ];
+
+  home.file.".npmrc".text = "prefix=~/.npm-packages";
 
   programs.alacritty = {
     enable = true;
@@ -157,12 +164,22 @@ in {
     ./modules/git
     ./modules/tmux.nix
     ./modules/zsh.nix
-    ./modules/user-defaults.nix
     ./modules/ghostty.nix
     ./modules/ghostty-shader
   ];
 
-  # TODO: programs.ssh
+  programs.ssh = {
+    enable = true;
+    extraConfig = ''
+      Host *
+        IdentityAgent ~/.1password/agent.sock
+    '';
+  };
+
+  # Create symlink for 1Password SSH agent socket on macOS
+  home.file.".1password/agent.sock" = lib.mkIf isDarwin {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+  };
 
   home.file.".digrc".text = "@1.1.1.1";
   # home.file.".curlrc".text = "--doh-url \"https://1.1.1.1/dns-query\"\n--capath /Users/${config.home.username}/.config/certs";
@@ -235,7 +252,6 @@ in {
     rust-analyzer
     shellcheck
     sipcalc
-    swiftlint
     tailwindcss_4
     tmux
     tree-sitter
@@ -248,5 +264,5 @@ in {
     yq-go
     zola
     zsh-syntax-highlighting
-  ];
+  ] ++ lib.attrValues (pkgs.platformPackages or {});
 }
