@@ -6,7 +6,6 @@
     ./sketchybar.nix
     ./yabai.nix
     ./system-settings.nix
-    ./user-defaults.nix
   ];
 
   system.stateVersion = 6;
@@ -31,4 +30,9 @@
 
   users.users.${username}.home = "/Users/${username}";
   system.primaryUser = username;
+
+  # Add Darwin-specific Home Manager modules
+  home-manager.sharedModules = [
+    ./user-defaults.nix
+  ];
 }

@@ -46,7 +46,6 @@ require("CopilotChat").setup {
     -- See Configuration section for options
 }
 
-local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
 
 cmp.setup({
@@ -107,19 +106,68 @@ local on_attach = function(client, bufnr)
     buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
+-- Use a loop to conveniently configure and enable LSP servers
 -- gopls: GO111MODULE=on go get golang.org/x/tools/gopls@latest
 -- pylsp: pip install 'python-lsp-server[all]'
 local servers = { "gopls", "pylsp", "ts_ls", "lua_ls", "nixd", "rust_analyzer" }
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- Set utf-16 offset encoding for all LSP servers
+capabilities.offsetEncoding = { "utf-16" }
+
+-- Set up LspAttach autocmd for keybindings (replaces on_attach)
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local bufnr = args.buf
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+        -- Call the original on_attach function
+        on_attach(client, bufnr)
+    end,
+})
+
 for _, lsp in ipairs(servers) do
     local user_config = {
-        on_attach = on_attach,
         capabilities = capabilities
     }
 
-    if lsp == "nixd" then
+    if lsp == "gopls" then
+        user_config.settings = {
+            gopls = {
+                gofumpt = true,
+                codelenses = {
+                    gc_details = false,
+                    generate = true,
+                    regenerate_cgo = true,
+                    run_govulncheck = true,
+                    test = true,
+                    tidy = true,
+                    upgrade_dependency = true,
+                    vendor = true,
+                },
+                hints = {
+                    assignVariableTypes = true,
+                    compositeLiteralFields = true,
+                    compositeLiteralTypes = true,
+                    constantValues = true,
+                    functionTypeParameters = true,
+                    parameterNames = true,
+                    rangeVariableTypes = true,
+                },
+                analyses = {
+                    nilness = true,
+                    unusedparams = true,
+                    unusedwrite = true,
+                    useany = true,
+                },
+                usePlaceholders = true,
+                completeUnimported = true,
+                staticcheck = true,
+                directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+                semanticTokens = true,
+            }
+        }
+    elseif lsp == "nixd" then
         user_config.settings = {
             nixd = {
                 formatting = {
@@ -129,20 +177,37 @@ for _, lsp in ipairs(servers) do
         }
     end
 
-    nvim_lsp[lsp].setup(user_config)
+    -- Configure the LSP server
+    vim.lsp.config(lsp, user_config)
+
+    -- Enable the LSP server
+    vim.lsp.enable(lsp)
 end
 
 function goimports(wait_ms)
-    local params = vim.lsp.util.make_range_params()
-    params.context = { only = { "source.organizeImports" } }
-    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
-    for cid, res in pairs(result or {}) do
-        for _, r in pairs(res.result or {}) do
-            if r.edit then
-                local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
-                vim.lsp.util.apply_workspace_edit(r.edit, enc)
+    -- Check if any LSP client supports code actions
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
+    local has_code_action = false
+    for _, client in ipairs(clients) do
+        if client.supports_method("textDocument/codeAction") then
+            has_code_action = true
+            break
+        end
+    end
+
+    if has_code_action then
+        local params = vim.lsp.util.make_range_params()
+        params.context = { only = { "source.organizeImports" } }
+        local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+        for cid, res in pairs(result or {}) do
+            for _, r in pairs(res.result or {}) do
+                if r.edit then
+                    local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+                    vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                end
             end
         end
     end
+
     vim.lsp.buf.format({ async = false })
 end

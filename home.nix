@@ -13,7 +13,8 @@
     c-aresSupport = true;
   };
   custom-colmena = colmena.packages.${pkgs.system}.colmena;
-  
+  opencode = pkgs.callPackage ./packages/opencode { };
+
   # Platform detection
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
@@ -139,6 +140,7 @@ in {
 
   programs.direnv = {
     enable = true;
+    enableFishIntegration = false;
   };
 
   programs.eza = {
@@ -155,6 +157,11 @@ in {
     package = pkgs.go;
     goPath = "go";
     goBin = "go/bin";
+  };
+
+  home.sessionVariables = {
+    GOPATH = "${config.home.homeDirectory}/go";
+    GOBIN = "${config.home.homeDirectory}/go/bin";
   };
 
   programs.jq.enable = true;
@@ -198,6 +205,7 @@ in {
     cmake
     custom-colmena
     custom-curl
+    opencode
     c-ares
     delta
     difftastic
@@ -212,8 +220,11 @@ in {
     gnumake
     gnupg
     gnused
+    gofumpt
+    gopls
     graphviz
     grpcurl
+    html-tidy
     htop
     hugo
     hurl
@@ -221,7 +232,7 @@ in {
     imagemagick
     kind
     iperf
-    kcat
+    # kcat  # Temporarily disabled due to avro-c++ build issue
     kubectl
     ldns
     libtool
@@ -245,7 +256,10 @@ in {
     openssl
     pkg-config
     protobuf
+    # putty  # Temporarily disabled due to gtk+3 build issue
+    pyenv
     nodejs_24
+    postgresql
     redis
     ripgrep
     rustc
@@ -253,6 +267,7 @@ in {
     shellcheck
     sipcalc
     tailwindcss_4
+    templ
     tmux
     tree-sitter
     typescript-language-server

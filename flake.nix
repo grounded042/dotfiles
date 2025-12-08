@@ -8,7 +8,7 @@
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    darwin.url = "github:nix-darwin/nix-darwin/master";
+    darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -33,7 +33,7 @@
       if currentSystem ? username && currentSystem.username != null && currentSystem.username != ""
       then currentSystem.username
       else throw "Username not configured or empty in current_system.nix";
-    
+
     # Host definitions
     hosts = {
       "pollux" = {
@@ -45,12 +45,12 @@
         system = "aarch64-darwin";
       };
     };
-    
+
     # Helper to create configurations based on platform
     mkHost = hostname: hostConfig: let
       system = hostConfig.system;
       platform = hostConfig.platform;
-      
+
       # Common configuration shared between platforms
       commonConfig = {
         inherit system;
@@ -61,7 +61,7 @@
           currentSystem.configuration
           (if platform == "darwin" then home-manager.darwinModules.home-manager else home-manager.nixosModules.home-manager)
           {
-            nixpkgs.overlays = [ 
+            nixpkgs.overlays = [
               self.overlays.default
               (import ./modules/platforms/${platform}/overlay.nix) 
             ];
@@ -99,6 +99,9 @@
         osxkeychainSupport = false;
       };
       claude-code = unstable.claude-code;
+      direnv = prev.direnv.overrideAttrs (oldAttrs: {
+        doCheck = false;
+      });
     };
   };
 }
