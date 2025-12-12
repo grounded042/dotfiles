@@ -29,7 +29,7 @@
     inherit (darwin.lib) darwinSystem;
     inherit (nixpkgs.lib) nixosSystem;
     currentSystem = import ./current_system.nix;
-    username = 
+    username =
       if currentSystem ? username && currentSystem.username != null && currentSystem.username != ""
       then currentSystem.username
       else throw "Username not configured or empty in current_system.nix";
@@ -51,9 +51,21 @@
       system = hostConfig.system;
       platform = hostConfig.platform;
 
+      pkgsSrc = if platform == "darwin" then inputs.nixpkgs-darwin else inputs.nixpkgs;
+      pkgs = import pkgsSrc {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [
+          self.overlays.default
+          (import ./modules/platforms/${platform}/overlay.nix)
+        ];
+      };
+
       # Common configuration shared between platforms
       commonConfig = {
         inherit system;
+        inherit pkgs;
+
         specialArgs = {inherit username;};
         modules = [
           ./hosts/${hostname}
@@ -61,10 +73,6 @@
           currentSystem.configuration
           (if platform == "darwin" then home-manager.darwinModules.home-manager else home-manager.nixosModules.home-manager)
           {
-            nixpkgs.overlays = [
-              self.overlays.default
-              (import ./modules/platforms/${platform}/overlay.nix) 
-            ];
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
