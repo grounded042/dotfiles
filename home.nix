@@ -15,7 +15,6 @@
     c-aresSupport = true;
   };
   custom-colmena = colmena.packages.${pkgs.system}.colmena;
-  opencode = pkgs.callPackage ./packages/opencode { };
 
   # Platform detection
   isDarwin = pkgs.stdenv.isDarwin;

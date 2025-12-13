@@ -125,20 +125,28 @@
       };
       
       bind = [
-        "$mainMod, Q, exec, $terminal"
-        "$mainMod, C, killactive,"
-        "$mainMod, M, exit,"
+        # macOS-style application shortcuts
+        "$mainMod, Q, killactive,"  # Cmd+Q to quit/close window
+        "$mainMod, W, killactive,"  # Cmd+W to close window (alternative)
+        "$mainMod SHIFT, Q, exit,"  # Cmd+Shift+Q to exit Hyprland
+        "$mainMod, Return, exec, $terminal"  # Cmd+Return for terminal
         "$mainMod, E, exec, $fileManager"
-        "$mainMod, V, togglefloating,"
-        "$mainMod, R, exec, $menu"
-        "$mainMod, P, pseudo,"
-        "$mainMod, J, togglesplit,"
-        
-        "$mainMod, left, movefocus, l"
+        "$mainMod, Space, exec, $menu"  # Cmd+Space for launcher (like Spotlight)
+        "$mainMod, F, fullscreen,"  # Cmd+F for fullscreen
+        "$mainMod SHIFT, F, togglefloating,"  # Cmd+Shift+F for floating
+
+        # macOS-style window management
+        "$mainMod, H, movefocus, l"  # Vim-style navigation
+        "$mainMod, L, movefocus, r"
+        "$mainMod, K, movefocus, u"
+        "$mainMod, J, movefocus, d"
+
+        "$mainMod, left, movefocus, l"  # Arrow key navigation
         "$mainMod, right, movefocus, r"
         "$mainMod, up, movefocus, u"
         "$mainMod, down, movefocus, d"
-        
+
+        # Workspace switching (like macOS Spaces)
         "$mainMod, 1, workspace, 1"
         "$mainMod, 2, workspace, 2"
         "$mainMod, 3, workspace, 3"
@@ -149,7 +157,8 @@
         "$mainMod, 8, workspace, 8"
         "$mainMod, 9, workspace, 9"
         "$mainMod, 0, workspace, 10"
-        
+
+        # Move windows to workspace
         "$mainMod SHIFT, 1, movetoworkspace, 1"
         "$mainMod SHIFT, 2, movetoworkspace, 2"
         "$mainMod SHIFT, 3, movetoworkspace, 3"
@@ -160,12 +169,20 @@
         "$mainMod SHIFT, 8, movetoworkspace, 8"
         "$mainMod SHIFT, 9, movetoworkspace, 9"
         "$mainMod SHIFT, 0, movetoworkspace, 10"
-        
+
+        # Special workspace (like Mission Control)
         "$mainMod, S, togglespecialworkspace, magic"
         "$mainMod SHIFT, S, movetoworkspace, special:magic"
-        
+
+        # Workspace scrolling
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
+        "$mainMod CTRL, right, workspace, e+1"
+        "$mainMod CTRL, left, workspace, e-1"
+
+        # Window tiling shortcuts
+        "$mainMod, P, pseudo,"
+        "$mainMod, T, togglesplit,"
       ];
       
       bindel = [
