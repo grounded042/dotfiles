@@ -3,5 +3,8 @@ final: prev: {
   platformPackages = (prev.platformPackages or {}) // {
     # GUI applications (manually installed via Homebrew/App Store on macOS)
     inherit (prev) firefox ghostty wofi;
+    google-chrome = prev.google-chrome.override {
+      commandLineArgs = "--ozone-platform=wayland";
+    };
   };
 }

@@ -7,6 +7,10 @@
     settings = {
       monitor = "HDMI-A-1,3440x1440,auto,1.25";
       
+      xwayland = {
+        force_zero_scaling = true;
+      };
+
       "$terminal" = "ghostty";
       "$fileManager" = "dolphin";
       "$menu" = "wofi --show drun";
@@ -211,6 +215,7 @@
         "immediate,class:^(chromium)$"
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+        "fullscreen,class:^steam_app_.*"
       ];
     };
   };

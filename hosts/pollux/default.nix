@@ -12,16 +12,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
-  # NVIDIA Configuration - using open drivers (recommended for RTX 30 series+)
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = true;  # Use open-source drivers
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Enable OpenGL
   hardware.graphics = {
@@ -34,4 +25,11 @@
     enable = true;
   };
 
+  # Enable Steam
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
+  };
 }
