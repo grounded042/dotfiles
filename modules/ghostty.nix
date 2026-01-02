@@ -65,6 +65,7 @@ in
       window-theme = "dark";
 
       copy-on-select = "clipboard";
+      app-notifications = "no-clipboard-copy";
 
       custom-shader = "~/.config/ghostty/shaders/cursor.glsl";
       custom-shader-animation = true;

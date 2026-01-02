@@ -116,7 +116,7 @@
       };
       
       exec-once = [
-        "waybar"
+        "quickshell"
       ];
       
       gestures = {

@@ -8,6 +8,7 @@
   home-manager.sharedModules = [
     ../../hyprland.nix
     ../../waybar.nix
+    ../../quickshell.nix
   ];
 
   system.stateVersion = "25.05";
@@ -63,10 +64,12 @@
     swayidle
     wl-clipboard
     grim
+    qt6.qtdeclarative  # provides qmlls and qmlformat
     slurp
     pavucontrol
     brightnessctl
     networkmanagerapplet
+    zoom-us
   ];
 
   environment.sessionVariables = {

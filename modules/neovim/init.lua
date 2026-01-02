@@ -109,7 +109,7 @@ end
 -- Use a loop to conveniently configure and enable LSP servers
 -- gopls: GO111MODULE=on go get golang.org/x/tools/gopls@latest
 -- pylsp: pip install 'python-lsp-server[all]'
-local servers = { "gopls", "pylsp", "ts_ls", "lua_ls", "nixd", "rust_analyzer" }
+local servers = { "gopls", "pylsp", "ts_ls", "lua_ls", "nixd", "rust_analyzer", "qmlls" }
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Set utf-16 offset encoding for all LSP servers

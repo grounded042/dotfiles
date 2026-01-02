@@ -15,6 +15,9 @@
 
     agenix.url = "github:ryantm/agenix";
     colmena.url = "github:zhaofengli/colmena";
+
+    quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+    quickshell.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -24,6 +27,7 @@
     home-manager,
     agenix,
     colmena,
+    quickshell,
     ...
   } @ inputs: let
     inherit (darwin.lib) darwinSystem;
@@ -77,7 +81,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               backupFileExtension = "backup";
-              extraSpecialArgs = {inherit colmena username;};
+              extraSpecialArgs = {inherit colmena quickshell username;};
               users.${username} = import ./home.nix;
               sharedModules = [agenix.homeManagerModules.age];
             };

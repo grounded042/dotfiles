@@ -31,6 +31,7 @@
             markdown_inline
             nginx
             nix
+            qmljs
             rego
             rust
             sql
@@ -93,6 +94,7 @@
   home.file.".config/nvim/ftplugin/go.vim".source = ./ftplugin/go.vim;
   home.file.".config/nvim/ftplugin/javascript.vim".source = ./ftplugin/javascript.vim;
   home.file.".config/nvim/ftplugin/json.vim".source = ./ftplugin/json.vim;
+  home.file.".config/nvim/ftplugin/qml.vim".source = ./ftplugin/qml.vim;
   home.file.".config/nvim/ftplugin/sh.vim".source = ./ftplugin/sh.vim;
   home.file.".config/nvim/ftplugin/typescript.vim".source = ./ftplugin/typescript.vim;
   home.file.".config/nvim/ftplugin/yaml.vim".source = ./ftplugin/yaml.vim;
