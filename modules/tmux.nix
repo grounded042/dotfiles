@@ -50,6 +50,11 @@
 
       set-option -g renumber-windows on
 
+      # focus
+      set -g focus-events on
+      set -g window-active-style 'bg=#292929' # active pane black bg
+      set -g window-style 'bg=#363636'        # inactive pane washed out
+
       bind-key b break-pane -d
 
       bind-key C-j choose-tree

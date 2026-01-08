@@ -39,7 +39,7 @@ in {
     "/opt/homebrew/bin"
   ];
 
-  home.file.".npmrc".text = "prefix=~/.npm-packages";
+  home.file.".npmrc".text = lib.mkDefault "prefix=~/.npm-packages";
 
   programs.alacritty = {
     enable = true;
