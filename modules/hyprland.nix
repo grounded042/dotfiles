@@ -18,7 +18,11 @@
       
       env = [
         "XCURSOR_SIZE,24"
+        "XCURSOR_THEME,macOS"
         "HYPRCURSOR_SIZE,24"
+        "HYPRCURSOR_THEME,macOS"
+        "EGL_PLATFORM,wayland"
+        "QT_QPA_PLATFORM,wayland"
       ];
       
       input = {
@@ -114,15 +118,16 @@
         vfr = true;
         vrr = 0;
       };
+
+      debug = {
+        disable_logs = false;
+        enable_stdout_logs = true;
+      };
       
       exec-once = [
         "quickshell"
       ];
-      
-      gestures = {
-        workspace_swipe = false;
-      };
-      
+
       device = {
         name = "epic-mouse-v1";
         sensitivity = -0.5;
@@ -211,11 +216,11 @@
       ];
       
       windowrule = [
-        "immediate,class:^(chromium-browser)$"
-        "immediate,class:^(chromium)$"
-        "suppressevent maximize, class:.*"
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-        "fullscreen,class:^steam_app_.*"
+        "match:class ^(chromium-browser)$, immediate on"
+        "match:class ^(chromium)$, immediate on"
+        "match:class .*, suppress_event maximize"
+        "match:class ^$, match:title ^$, match:xwayland true, float on, fullscreen off, pin off"
+        "match:class ^steam_app_.*, fullscreen on, suppress_event fullscreen"
       ];
     };
   };

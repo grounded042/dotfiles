@@ -12,12 +12,17 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
+  # Use kernel 6.18
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
+
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  # Enable OpenGL
+  # Enable OpenGL with Mesa 25.3 from unstable
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    package = pkgs.mesa;
+    package32 = pkgs.pkgsi686Linux.mesa;
   };
 
   # Enable Docker

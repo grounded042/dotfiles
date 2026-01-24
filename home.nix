@@ -26,6 +26,14 @@ in {
 
   home.stateVersion = "22.11";
 
+  home.pointerCursor = lib.mkIf isLinux {
+    name = "macOS";
+    package = pkgs.apple-cursor;
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
   manual.manpages.enable = false;
 
   home.sessionPath = [

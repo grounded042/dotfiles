@@ -17,7 +17,9 @@
     colmena.url = "github:zhaofengli/colmena";
 
     quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-    quickshell.inputs.nixpkgs.follows = "nixpkgs";
+    quickshell.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = {
@@ -28,6 +30,7 @@
     agenix,
     colmena,
     quickshell,
+    hyprland,
     ...
   } @ inputs: let
     inherit (darwin.lib) darwinSystem;
@@ -70,7 +73,7 @@
         inherit system;
         inherit pkgs;
 
-        specialArgs = {inherit username;};
+        specialArgs = {inherit username hyprland;};
         modules = [
           ./hosts/${hostname}
           ./modules/platforms/${platform}
@@ -81,7 +84,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               backupFileExtension = "backup";
-              extraSpecialArgs = {inherit colmena quickshell username;};
+              extraSpecialArgs = {inherit colmena quickshell hyprland username;};
               users.${username} = import ./home.nix;
               sharedModules = [agenix.homeManagerModules.age];
             };
@@ -111,6 +114,8 @@
         osxkeychainSupport = false;
       };
       claude-code = unstable.claude-code;
+      mesa = unstable.mesa;
+      ghostty = unstable.ghostty;
       direnv = prev.direnv.overrideAttrs (oldAttrs: {
         doCheck = false;
       });

@@ -1,11 +1,13 @@
-{ config, lib, pkgs, username, ... }:
+{ config, lib, pkgs, username, hyprland, ... }:
 
 {
   imports = [
     ../shared
+    hyprland.nixosModules.default
   ];
 
   home-manager.sharedModules = [
+    hyprland.homeManagerModules.default
     ../../hyprland.nix
     ../../waybar.nix
     ../../quickshell.nix
@@ -14,13 +16,17 @@
   system.stateVersion = "25.05";
 
   networking.networkmanager.enable = true;
+  networking.enableIPv6 = false;
 
   i18n.defaultLocale = "en_US.UTF-8";
 
   services.xserver.xkb = {
     layout = "us";
   };
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -29,7 +35,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
         user = "greeter";
       };
     };
@@ -69,7 +75,9 @@
     pavucontrol
     brightnessctl
     networkmanagerapplet
+    slack
     zoom-us
+    foot  # fallback terminal
   ];
 
   environment.sessionVariables = {
@@ -84,4 +92,10 @@
   ];
 
   nix.gc.dates = "weekly";
+
+  # Hyprland binary cache
+  nix.settings = {
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+  };
 }
