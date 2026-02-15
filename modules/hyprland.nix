@@ -220,7 +220,7 @@
         "match:class ^(chromium)$, immediate on"
         "match:class .*, suppress_event maximize"
         "match:class ^$, match:title ^$, match:xwayland true, float on, fullscreen off, pin off"
-        "match:class ^steam_app_.*, fullscreen on, suppress_event fullscreen"
+        "match:class ^steam_app_.*, fullscreen on"
       ];
     };
   };

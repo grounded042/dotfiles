@@ -15,8 +15,20 @@
 
   system.stateVersion = "25.05";
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    connectionConfig = {
+      "ipv6.method" = "disabled";
+    };
+  };
   networking.enableIPv6 = false;
+  boot.kernel.sysctl = {
+    "net.ipv6.conf.all.disable_ipv6" = 1;
+    "net.ipv6.conf.default.disable_ipv6" = 1;
+  };
+  environment.etc."gai.conf".text = ''
+  precedence ::ffff:0:0/96 100
+'';
 
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -86,7 +98,7 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     font-awesome
     nerd-fonts.jetbrains-mono
   ];

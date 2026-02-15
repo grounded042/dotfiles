@@ -17,12 +17,17 @@
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  # Enable OpenGL with Mesa 25.3 from unstable
+  # RDNA 4 (RX 9070 XT) - Mesa 25.2.6 from nixos-25.11 (RADV is default)
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    package = pkgs.mesa;
-    package32 = pkgs.pkgsi686Linux.mesa;
+    extraPackages = with pkgs; [
+      vulkan-loader
+      vulkan-tools
+    ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [
+      vulkan-loader
+    ];
   };
 
   # Enable Docker
@@ -33,8 +38,14 @@
   # Enable Steam
   programs.steam = {
     enable = true;
+    gamescopeSession.enable = true;
     extraCompatPackages = with pkgs; [
       proton-ge-bin
     ];
+  };
+
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
   };
 }

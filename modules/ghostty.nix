@@ -5,7 +5,6 @@ in
 {
   programs.ghostty = {
     enable = true;
-    package = null;
 
     settings = {
       # make alt work for tmux
