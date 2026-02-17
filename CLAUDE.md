@@ -85,7 +85,7 @@ packages/
 - Pre-read hooks blocking access to `.env`, `.key`, `.pem`, and other sensitive files
 - Claude Code plugins: gopls-lsp, compound-engineering
 - macOS system preferences declaratively set via `modules/platforms/darwin/system-settings.nix`
-- Automatic Nix garbage collection (weekly, 7-day retention)
+- Automatic Nix garbage collection (Sunday 2 AM, 7-day retention)
 - Work-specific configuration sourced from `~/.work_profile`
 - Alejandra used for Nix formatting
 

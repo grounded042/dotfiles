@@ -169,13 +169,10 @@ in {
   programs.go = {
     enable = true;
     package = pkgs.go;
-    goPath = "go";
-    goBin = "go/bin";
-  };
-
-  home.sessionVariables = {
-    GOPATH = "${config.home.homeDirectory}/go";
-    GOBIN = "${config.home.homeDirectory}/go/bin";
+    env = {
+      GOPATH = "${config.home.homeDirectory}/go";
+      GOBIN = "${config.home.homeDirectory}/go/bin";
+    };
   };
 
   programs.jq.enable = true;
@@ -193,10 +190,8 @@ in {
 
   programs.ssh = {
     enable = true;
-    extraConfig = ''
-      Host *
-        IdentityAgent ~/.1password/agent.sock
-    '';
+    enableDefaultConfig = false;
+    matchBlocks."*".identityAgent = "~/.1password/agent.sock";
   };
 
   # Create symlink for 1Password SSH agent socket on macOS

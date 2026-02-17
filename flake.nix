@@ -119,6 +119,9 @@
       direnv = prev.direnv.overrideAttrs (oldAttrs: {
         doCheck = false;
       });
+      # nix-2.31 functional tests fail on macOS (nixpkgs 25.11 issue);
+      # override in the overlay so all dependents (niv, nixd, etc.) use the patched version
+      nix = prev.nix.overrideAttrs (_: {doCheck = false;});
     };
   };
 }
