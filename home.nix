@@ -21,7 +21,10 @@
   isLinux = pkgs.stdenv.isLinux;
 in {
   home.username = username;
-  home.homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+  home.homeDirectory =
+    if isDarwin
+    then "/Users/${username}"
+    else "/home/${username}";
   xdg.enable = true;
 
   home.stateVersion = "22.11";
@@ -36,16 +39,18 @@ in {
 
   manual.manpages.enable = false;
 
-  home.sessionPath = [
-    "$GOBIN"
-    "$HOME/.npm-packages/bin"
-    "$HOME/.cargo/bin"
-    "$HOME/.local/bin"
-  ] ++ lib.optionals isDarwin [
-    "/opt/local/bin"
-    "/opt/local/sbin"
-    "/opt/homebrew/bin"
-  ];
+  home.sessionPath =
+    [
+      "$GOBIN"
+      "$HOME/.npm-packages/bin"
+      "$HOME/.cargo/bin"
+      "$HOME/.local/bin"
+    ]
+    ++ lib.optionals isDarwin [
+      "/opt/local/bin"
+      "/opt/local/sbin"
+      "/opt/homebrew/bin"
+    ];
 
   home.file.".npmrc".text = lib.mkDefault "prefix=~/.npm-packages";
 
@@ -183,6 +188,7 @@ in {
     ./modules/zsh.nix
     ./modules/ghostty.nix
     ./modules/ghostty-shader
+    ./modules/claude-code
   ];
 
   programs.ssh = {
@@ -204,90 +210,91 @@ in {
   # TODO: services.gpg-agent
   # TODO: xdg
 
-  home.packages = with pkgs; [
-    ack
-    autoconf
-    automake
-    awscli2
-    btop
-    cargo
-    claude-code
-    cmake
-    custom-colmena
-    custom-curl
-    opencode
-    c-ares
-    delta
-    difftastic
-    dig
-    duckdb
-    dyff
-    exiftool
-    findutils
-    gh
-    git
-    gnugrep
-    gnumake
-    gnupg
-    gnused
-    gofumpt
-    gopls
-    graphviz
-    grpcurl
-    html-tidy
-    htop
-    hugo
-    hurl
-    hwatch
-    imagemagick
-    kind
-    iperf
-    # kcat  # Temporarily disabled due to avro-c++ build issue
-    kubectl
-    ldns
-    libtool
-    (lua.withPackages (
-      ps:
-        with ps; [
-          luacheck
-          cjson
-          basexx
-        ]
-    ))
-    lua-language-server
-    lynx
-    miller
-    moreutils
-    nginx
-    niv
-    nixd
-    alejandra
-    nmap
-    openssl
-    pkg-config
-    protobuf
-    # putty  # Temporarily disabled due to gtk+3 build issue
-    pyenv
-    nodejs_24
-    postgresql
-    redis
-    ripgrep
-    rustc
-    rust-analyzer
-    shellcheck
-    sipcalc
-    tailwindcss_4
-    templ
-    tmux
-    tree-sitter
-    typescript-language-server
-    unbound
-    vegeta
-    wakeonlan
-    yadm
-    yarn
-    yq-go
-    zola
-    zsh-syntax-highlighting
-  ] ++ lib.attrValues (pkgs.platformPackages or {});
+  home.packages = with pkgs;
+    [
+      ack
+      autoconf
+      automake
+      awscli2
+      btop
+      cargo
+      cmake
+      custom-colmena
+      custom-curl
+      opencode
+      c-ares
+      delta
+      difftastic
+      dig
+      duckdb
+      dyff
+      exiftool
+      findutils
+      gh
+      git
+      gnugrep
+      gnumake
+      gnupg
+      gnused
+      gofumpt
+      gopls
+      graphviz
+      grpcurl
+      html-tidy
+      htop
+      hugo
+      hurl
+      hwatch
+      imagemagick
+      kind
+      iperf
+      # kcat  # Temporarily disabled due to avro-c++ build issue
+      kubectl
+      ldns
+      libtool
+      (lua.withPackages (
+        ps:
+          with ps; [
+            luacheck
+            cjson
+            basexx
+          ]
+      ))
+      lua-language-server
+      lynx
+      miller
+      moreutils
+      nginx
+      niv
+      nixd
+      alejandra
+      nmap
+      openssl
+      pkg-config
+      protobuf
+      # putty  # Temporarily disabled due to gtk+3 build issue
+      pyenv
+      nodejs_24
+      postgresql
+      redis
+      ripgrep
+      rustc
+      rust-analyzer
+      shellcheck
+      sipcalc
+      tailwindcss_4
+      templ
+      tmux
+      tree-sitter
+      typescript-language-server
+      unbound
+      vegeta
+      wakeonlan
+      yadm
+      yarn
+      yq-go
+      zola
+      zsh-syntax-highlighting
+    ]
+    ++ lib.attrValues (pkgs.platformPackages or {});
 }

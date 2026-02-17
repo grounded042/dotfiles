@@ -20,6 +20,7 @@
     quickshell.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
+    claude-code.url = "github:sadjow/claude-code-nix";
   };
 
   outputs = {
@@ -31,6 +32,7 @@
     colmena,
     quickshell,
     hyprland,
+    claude-code,
     ...
   } @ inputs: let
     inherit (darwin.lib) darwinSystem;
@@ -113,7 +115,7 @@
       git = prev.git.override {
         osxkeychainSupport = false;
       };
-      claude-code = unstable.claude-code;
+      inherit (claude-code.packages.${prev.system}) claude-code;
       direnv = prev.direnv.overrideAttrs (oldAttrs: {
         doCheck = false;
       });
