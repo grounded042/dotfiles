@@ -21,12 +21,18 @@
 
     prefix = "C-s";
 
-    terminal = "screen-256color";
+    terminal = "tmux-256color";
 
     # scroll back farther
     historyLimit = 30000;
 
     extraConfig = ''
+      # Enable passthrough for graphics (tmux 3.3+)
+      set -g allow-passthrough on
+
+      # Ensure true color support
+      set -ag terminal-overrides ",xterm-256color:RGB"
+
       bind-key -n C-h select-pane -L
       bind-key -n C-j select-pane -D
       bind-key -n C-k select-pane -U
