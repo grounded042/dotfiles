@@ -175,6 +175,11 @@ in {
     };
   };
 
+  home.sessionVariables = {
+    GOPATH = "${config.home.homeDirectory}/go";
+    GOBIN = "${config.home.homeDirectory}/go/bin";
+  };
+
   programs.jq.enable = true;
 
   imports = [

@@ -4,6 +4,7 @@
   programs.ghostty = {
     enable = true;
     package = if pkgs.stdenv.isDarwin then null else pkgs.ghostty;
+    enableZshIntegration = false;
 
     settings = {
       # make alt work for tmux

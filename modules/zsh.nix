@@ -77,9 +77,27 @@
         export PURE_CMD_MAX_EXEC_TIME=0
         export PURE_PROMPT_SYMBOL=→
         export PURE_GIT_PULL=0
-        export RPROMPT=""
         zinit ice pick"async.zsh" src"pure.zsh"
         zinit light sindresorhus/pure
+
+        # Track command start/end times
+        _cmd_start_time=""
+        _cmd_end_time=""
+
+        preexec() {
+          _cmd_start_time=$(date '+%H:%M:%S')
+        }
+
+        _update_cmd_times() {
+          if [[ -n $_cmd_start_time ]]; then
+            _cmd_end_time=$(date '+%H:%M:%S')
+            RPROMPT="%F{242}$_cmd_start_time → $_cmd_end_time%f"
+          else
+            RPROMPT=""
+          fi
+        }
+
+        precmd_functions+=(_update_cmd_times)
 
         # fuzzy find
         # if [ -n "''${commands[fzf-share]}" ]; then
@@ -122,7 +140,9 @@
           fi
         }
 
-        source $HOME/.work_profile
+        if [ -f $HOME/.work_profile ]; then
+          source $HOME/.work_profile
+        fi
       ''
     ];
 
