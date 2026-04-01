@@ -6,8 +6,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
     darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
@@ -16,11 +14,10 @@
     agenix.url = "github:ryantm/agenix";
     colmena.url = "github:zhaofengli/colmena";
 
-    quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+    quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell?rev=dacfa9de829ac7cb173825f593236bf2c21f637e";
     quickshell.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    claude-code.url = "github:sadjow/claude-code-nix";
+    hyprland.url = "github:hyprwm/Hyprland/v0.54.3";
   };
 
   outputs = {
@@ -32,7 +29,6 @@
     colmena,
     quickshell,
     hyprland,
-    claude-code,
     ...
   } @ inputs: let
     inherit (darwin.lib) darwinSystem;
@@ -106,16 +102,11 @@
     darwinConfigurations = nixpkgs.lib.mapAttrs' mkHost darwinHosts;
     nixosConfigurations = nixpkgs.lib.mapAttrs' mkHost nixosHosts;
 
-    overlays.default = final: prev: let
-      unstable = import inputs.nixpkgs-unstable {
-        system = prev.system;
-        config.allowUnfree = true;
-      };
-    in {
+    overlays.default = final: prev: {
       git = prev.git.override {
         osxkeychainSupport = false;
       };
-      inherit (claude-code.packages.${prev.system}) claude-code;
+      claude-code = prev.callPackage (self + "/packages/claude-code/package.nix") {};
       direnv = prev.direnv.overrideAttrs (oldAttrs: {
         doCheck = false;
       });

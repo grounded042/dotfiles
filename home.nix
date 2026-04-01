@@ -52,7 +52,17 @@ in {
       "/opt/homebrew/bin"
     ];
 
-  home.file.".npmrc".text = lib.mkDefault "prefix=~/.npm-packages";
+  home.file.".npmrc".text = lib.mkDefault ''
+    prefix=~/.npm-packages
+    registry=https://registry.npmjs.org/
+    ignore-scripts=true
+    min-release-age=7d
+    strict-ssl=true
+    audit=true
+    engine-strict=true
+    prefer-offline=true
+    fund=false
+  '';
 
   programs.alacritty = {
     enable = true;
@@ -196,16 +206,33 @@ in {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*".identityAgent = "~/.1password/agent.sock";
+    matchBlocks."*" = {
+      identityAgent = "~/.1password/agent.sock";
+      extraOptions = {
+        UserKnownHostsFile = "~/.ssh/known_hosts.d/pinned ~/.ssh/known_hosts";
+      };
+    };
   };
+
+  home.file.".ssh/known_hosts.d/pinned".text = ''
+    github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+    github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+    github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
+  '';
 
   # Create symlink for 1Password SSH agent socket on macOS
   home.file.".1password/agent.sock" = lib.mkIf isDarwin {
     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
   };
 
+  home.file.".config/pip/pip.conf".text = ''
+    [global]
+    index-url = https://pypi.org/simple/
+    require-hashes = true
+  '';
+
   home.file.".digrc".text = "@1.1.1.1";
-  # home.file.".curlrc".text = "--doh-url \"https://1.1.1.1/dns-query\"\n--capath /Users/${config.home.username}/.config/certs";
+  home.file.".curlrc".text = ''--doh-url "https://1.1.1.1/dns-query"'';
 
   # TODO: services.gpg-agent
   # TODO: xdg
@@ -294,7 +321,6 @@ in {
       yarn
       yq-go
       zola
-      zsh-syntax-highlighting
     ]
     ++ lib.attrValues (pkgs.platformPackages or {});
 }

@@ -34,25 +34,34 @@
 
     autocd = true;
 
+    plugins = [
+      {
+        name = "fast-syntax-highlighting";
+        src = pkgs.zsh-fast-syntax-highlighting;
+        file = "share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
+      }
+      {
+        name = "pure-async";
+        src = pkgs.pure-prompt;
+        file = "share/zsh/site-functions/async";
+      }
+      {
+        name = "pure";
+        src = pkgs.pure-prompt;
+        file = "share/zsh/site-functions/prompt_pure_setup";
+      }
+    ];
+
     initContent = lib.mkMerge [
       (lib.mkBefore ''
-        ZINIT_HOME="''${XDG_DATA_HOME:-''${HOME}/.local/share}/zinit/zinit.git"
-
-        if [[ ! -d $ZINIT_HOME ]]; then
-            print -P "%F{33}▓▒░ %F{220}Installing zinit…%f"
-            command mkdir -p "$(dirname $ZINIT_HOME)"
-            command git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" && \
-                print -P "%F{33}▓▒░ %F{34}Installation successful.%F" || \
-                print -P "%F{160}▓▒░ The clone has failed.%F"
-        fi
-
-        # use zinit
-        source "''${ZINIT_HOME}/zinit.zsh"
-
         export DISABLE_AUTO_UPDATE=true
         export HISTDUP=erase        # Erase duplicates in the history file
 
         export KEYTIMEOUT=1
+
+        export PURE_CMD_MAX_EXEC_TIME=0
+        export PURE_PROMPT_SYMBOL=→
+        export PURE_GIT_PULL=0
 
         autoload -U select-word-style
         select-word-style bash
@@ -71,33 +80,23 @@
         bindkey '^[[3~' delete-char
       '')
       ''
-        # load plugins
-        zinit load zdharma-continuum/fast-syntax-highlighting
-
-        export PURE_CMD_MAX_EXEC_TIME=0
-        export PURE_PROMPT_SYMBOL=→
-        export PURE_GIT_PULL=0
-        zinit ice pick"async.zsh" src"pure.zsh"
-        zinit light sindresorhus/pure
-
-        # Track command start/end times
-        _cmd_start_time=""
-        _cmd_end_time=""
+        # Append wall clock start→end times next to pure's duration display
+        _wall_clock_start=""
 
         preexec() {
-          _cmd_start_time=$(date '+%H:%M:%S')
+          _wall_clock_start=$(date '+%H:%M:%S')
         }
 
-        _update_cmd_times() {
-          if [[ -n $_cmd_start_time ]]; then
-            _cmd_end_time=$(date '+%H:%M:%S')
-            RPROMPT="%F{242}$_cmd_start_time → $_cmd_end_time%f"
-          else
-            RPROMPT=""
+        # Wrap pure's exec time check to append our wall clock times
+        functions[_orig_prompt_pure_check_cmd_exec_time]=$functions[prompt_pure_check_cmd_exec_time]
+        prompt_pure_check_cmd_exec_time() {
+          _orig_prompt_pure_check_cmd_exec_time
+          if [[ -n $_wall_clock_start && -n $prompt_pure_cmd_exec_time ]]; then
+            local end_time=$(date '+%H:%M:%S')
+            prompt_pure_cmd_exec_time+=" ($_wall_clock_start → $end_time)"
           fi
+          _wall_clock_start=""
         }
-
-        precmd_functions+=(_update_cmd_times)
 
         # fuzzy find
         # if [ -n "''${commands[fzf-share]}" ]; then
@@ -158,7 +157,6 @@
       vd = "vagrant destroy --force";
       vu = "vagrant up";
       vs = "vagrant ssh";
-      eev = "export $(cat .env | xargs)";
       dd = "docker stop $(docker ps -a -q); docker rm $(docker ps -a -q)";
       k = "kubectl";
       gs = "git status";

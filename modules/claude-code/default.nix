@@ -14,10 +14,39 @@
   blockSensitiveFilesHook = pkgs.writeShellScript "block-sensitive-files" ''
     export PATH="${pkgs.jq}/bin:$PATH"
     FILE_PATH=$(jq -r '.tool_input.file_path // ""' )
+    BASENAME=$(basename "$FILE_PATH")
+
+    # .env files
     if [[ "$FILE_PATH" =~ \.env$ ]] || \
        [[ "$FILE_PATH" =~ \.env\. ]] || \
-       [[ "$FILE_PATH" =~ \.(secret|key|pem|p12|pfx|jks|credentials)$ ]] || \
-       [[ "$(basename "$FILE_PATH")" =~ ^\.?env$ ]]; then
+       [[ "$BASENAME" =~ ^\.?env$ ]]; then
+      echo "Blocked: Cannot read sensitive file: $FILE_PATH"
+      exit 2
+    fi
+
+    # Secrets by extension
+    if [[ "$FILE_PATH" =~ \.(secret|key|pem|p12|pfx|jks|credentials|keystore)$ ]]; then
+      echo "Blocked: Cannot read sensitive file: $FILE_PATH"
+      exit 2
+    fi
+
+    # SSH private keys by name pattern
+    if [[ "$BASENAME" =~ ^id_(rsa|ed25519|ecdsa|dsa)$ ]] || \
+       [[ "$FILE_PATH" =~ _rsa$ ]] || \
+       [[ "$FILE_PATH" =~ _ed25519$ ]] || \
+       [[ "$FILE_PATH" =~ _ecdsa$ ]]; then
+      echo "Blocked: Cannot read private key: $FILE_PATH"
+      exit 2
+    fi
+
+    # Sensitive directories and files
+    if [[ "$FILE_PATH" =~ /\.ssh/ ]] || \
+       [[ "$FILE_PATH" =~ /\.gnupg/ ]] || \
+       [[ "$FILE_PATH" =~ /\.aws/credentials ]] || \
+       [[ "$FILE_PATH" =~ /\.aws/config ]] || \
+       [[ "$FILE_PATH" =~ /\.kube/config ]] || \
+       [[ "$FILE_PATH" =~ /\.docker/config\.json ]] || \
+       [[ "$BASENAME" == ".netrc" ]]; then
       echo "Blocked: Cannot read sensitive file: $FILE_PATH"
       exit 2
     fi
