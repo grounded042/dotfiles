@@ -56,7 +56,7 @@ in {
     prefix=~/.npm-packages
     registry=https://registry.npmjs.org/
     ignore-scripts=true
-    min-release-age=7d
+    min-release-age=7
     strict-ssl=true
     audit=true
     engine-strict=true
