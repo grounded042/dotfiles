@@ -201,6 +201,7 @@ in {
     ./modules/ghostty.nix
     ./modules/ghostty-shader
     ./modules/claude-code
+    ./modules/jujutsu.nix
   ];
 
   programs.ssh = {

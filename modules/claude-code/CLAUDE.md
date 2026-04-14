@@ -30,3 +30,4 @@ Act as a peer engineer, not an assistant. Prioritize planning over implementatio
 - **Nix**: alejandra (format), nixd (LSP)
 - **Go**: gofumpt (format), gopls (LSP)
 - **Code Search**: Prefer ast-grep (`/ast-grep`) for structural patterns over text grep
+- **VCS**: jujutsu (`jj`)
