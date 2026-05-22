@@ -142,6 +142,17 @@
         if [ -f $HOME/.work_profile ]; then
           source $HOME/.work_profile
         fi
+
+        # Keep _ghostty_precmd from being the last precmd so it never modifies
+        # PS1. When not last, Ghostty writes OSC marks directly to TTY instead
+        # of patching PS1 — semantic markup, CWD tracking, title, and cursor
+        # shape all still work; pure's cleaned_ps1 extraction stays intact.
+        if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+          _ghostty_pure_compat() {
+            precmd_functions=(''${precmd_functions:#_ghostty_pure_compat} _ghostty_pure_compat)
+          }
+          add-zsh-hook precmd _ghostty_pure_compat
+        fi
       ''
     ];
 
