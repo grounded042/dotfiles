@@ -104,30 +104,38 @@
     };
   };
 in {
-  # Install claude-code package
-  home.packages = [pkgs.claude-code];
-
-  # Create ~/.claude directory and settings
-  home.file = {
-    ".claude/settings.json".text = builtins.toJSON settings;
-
-    # Global instructions (applies to all projects)
-    ".claude/CLAUDE.md".source = ./CLAUDE.md;
-
-    # ast-grep skill from upstream repo
-    ".claude/skills/ast-grep".source = "${astGrepSkill}/ast-grep/skills/ast-grep";
-
-    # Config viewer script
-    ".local/bin/claude-config" = {
-      executable = true;
-      source = ./claude-config.sh;
-    };
+  options.programs.claude-code.extraSettings = lib.mkOption {
+    type = lib.types.attrs;
+    default = {};
+    description = "Machine-specific settings merged (via recursiveUpdate) into the base Claude Code settings.";
   };
 
-  # Shell aliases for Claude Code
-  programs.zsh.shellAliases = lib.mkIf config.programs.zsh.enable {
-    cr = "claude --resume";
-    cn = "claude --new";
-    cconfig = "claude-config";
+  config = {
+    # Install claude-code package
+    home.packages = [pkgs.claude-code];
+
+    # Create ~/.claude directory and settings
+    home.file = {
+      ".claude/settings.json".text = builtins.toJSON (lib.recursiveUpdate settings config.programs.claude-code.extraSettings);
+
+      # Global instructions (applies to all projects)
+      ".claude/CLAUDE.md".source = ./CLAUDE.md;
+
+      # ast-grep skill from upstream repo
+      ".claude/skills/ast-grep".source = "${astGrepSkill}/ast-grep/skills/ast-grep";
+
+      # Config viewer script
+      ".local/bin/claude-config" = {
+        executable = true;
+        source = ./claude-config.sh;
+      };
+    };
+
+    # Shell aliases for Claude Code
+    programs.zsh.shellAliases = lib.mkIf config.programs.zsh.enable {
+      cr = "claude --resume";
+      cn = "claude --new";
+      cconfig = "claude-config";
+    };
   };
 }
