@@ -6,10 +6,9 @@
   lib,
   colmena,
   username,
+  currentSystem,
   ...
 }: let
-  # Import system-specific configuration
-  currentSystem = import ./current_system.nix;
   # for some reason we cannot do an overlay of curl so we do this instead
   custom-curl = pkgs.curl.override {
     c-aresSupport = true;

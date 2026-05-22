@@ -1,13 +1,13 @@
 {
-  username = "joncarl";
+  # Set this to your system username
+  username = "your-username";
   configuration = {
     config,
     pkgs,
     lib,
     ...
   }: {
-    # Minimal system-specific configuration
-    # Replace this file or use --impure mode for machine-specific config
+    # Machine-specific system configuration goes here
   };
   home = {
     config,
@@ -15,6 +15,6 @@
     lib,
     ...
   }: {
-
+    # Machine-specific home-manager configuration goes here
   };
 }

@@ -3,12 +3,8 @@
   lib,
   username,
   ...
-}: let
-  # Import system-specific configuration
-  currentSystem = import ./current_system.nix;
-in {
+}: {
   imports = [
-    currentSystem.configuration
     ./modules/sketchybar.nix
     ./modules/yabai.nix
     ./modules/system-settings.nix

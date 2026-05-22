@@ -33,86 +33,92 @@
   } @ inputs: let
     inherit (darwin.lib) darwinSystem;
     inherit (nixpkgs.lib) nixosSystem;
-    currentSystem = import ./current_system.nix;
-    username =
-      if currentSystem ? username && currentSystem.username != null && currentSystem.username != ""
-      then currentSystem.username
-      else throw "Username not configured or empty in current_system.nix";
 
-    # Host definitions
-    hosts = {
-      "pollux" = {
-        platform = "nixos";
-        system = "x86_64-linux";
-      };
-      "joncarl-macbook" = {
-        platform = "darwin";
-        system = "aarch64-darwin";
-      };
-    };
+    mkConfigurations = {currentSystem ? import ./current_system.nix}: let
+      username =
+        if currentSystem ? username && currentSystem.username != null && currentSystem.username != ""
+        then currentSystem.username
+        else throw "Username not configured or empty in current_system.nix";
 
-    # Helper to create configurations based on platform
-    mkHost = hostname: hostConfig: let
-      system = hostConfig.system;
-      platform = hostConfig.platform;
-
-      pkgsSrc = if platform == "darwin" then inputs.nixpkgs-darwin else inputs.nixpkgs;
-      pkgs = import pkgsSrc {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [
-          self.overlays.default
-          (import ./modules/platforms/${platform}/overlay.nix)
-        ];
+      # Host definitions
+      hosts = {
+        "pollux" = {
+          platform = "nixos";
+          system = "x86_64-linux";
+        };
+        "joncarl-macbook" = {
+          platform = "darwin";
+          system = "aarch64-darwin";
+        };
       };
 
-      # Common configuration shared between platforms
-      commonConfig = {
-        inherit system;
-        inherit pkgs;
+      # Helper to create configurations based on platform
+      mkHost = hostname: hostConfig: let
+        system = hostConfig.system;
+        platform = hostConfig.platform;
 
-        specialArgs = {inherit username hyprland;};
-        modules = [
-          ./hosts/${hostname}
-          ./modules/platforms/${platform}
-          currentSystem.configuration
-          (if platform == "darwin" then home-manager.darwinModules.home-manager else home-manager.nixosModules.home-manager)
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "backup";
-              extraSpecialArgs = {inherit colmena quickshell hyprland username;};
-              users.${username} = import ./home.nix;
-              sharedModules = [agenix.homeManagerModules.age];
-            };
-            environment.systemPackages = [agenix.packages.${system}.default];
-          }
-        ];
+        pkgsSrc = if platform == "darwin" then inputs.nixpkgs-darwin else inputs.nixpkgs;
+        pkgs = import pkgsSrc {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [
+            self.overlays.default
+            (import ./modules/platforms/${platform}/overlay.nix)
+          ];
+        };
+
+        # Common configuration shared between platforms
+        commonConfig = {
+          inherit system;
+          inherit pkgs;
+
+          specialArgs = {inherit username hyprland currentSystem;};
+          modules = [
+            ./hosts/${hostname}
+            ./modules/platforms/${platform}
+            currentSystem.configuration
+            (if platform == "darwin" then home-manager.darwinModules.home-manager else home-manager.nixosModules.home-manager)
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "backup";
+                extraSpecialArgs = {inherit colmena quickshell hyprland username currentSystem;};
+                users.${username} = import ./home.nix;
+                sharedModules = [agenix.homeManagerModules.age];
+              };
+              environment.systemPackages = [agenix.packages.${system}.default];
+            }
+          ];
+        };
+      in {
+        name = hostname;
+        value = if platform == "darwin" then darwinSystem commonConfig else nixosSystem commonConfig;
       };
+
+      # Separate by platform
+      darwinHosts = nixpkgs.lib.filterAttrs (_: config: config.platform == "darwin") hosts;
+      nixosHosts = nixpkgs.lib.filterAttrs (_: config: config.platform == "nixos") hosts;
     in {
-      name = hostname;
-      value = if platform == "darwin" then darwinSystem commonConfig else nixosSystem commonConfig;
+      darwinConfigurations = nixpkgs.lib.mapAttrs' mkHost darwinHosts;
+      nixosConfigurations = nixpkgs.lib.mapAttrs' mkHost nixosHosts;
     };
+  in
+    (mkConfigurations {})
+    // {
+      lib.mkConfigurations = mkConfigurations;
 
-    # Separate by platform
-    darwinHosts = nixpkgs.lib.filterAttrs (_: config: config.platform == "darwin") hosts;
-    nixosHosts = nixpkgs.lib.filterAttrs (_: config: config.platform == "nixos") hosts;
-  in {
-    darwinConfigurations = nixpkgs.lib.mapAttrs' mkHost darwinHosts;
-    nixosConfigurations = nixpkgs.lib.mapAttrs' mkHost nixosHosts;
-
-    overlays.default = final: prev: {
-      git = prev.git.override {
-        osxkeychainSupport = false;
+      overlays.default = final: prev: {
+        git = prev.git.override {
+          osxkeychainSupport = false;
+        };
+        claude-code = prev.callPackage (self + "/packages/claude-code/package.nix") {};
+        direnv = prev.direnv.overrideAttrs (oldAttrs: {
+          doCheck = false;
+        });
+        # nix-2.31 functional tests fail on macOS (nixpkgs 25.11 issue);
+        # override in the overlay so all dependents (niv, nixd, etc.) use the patched version
+        nix = prev.nix.overrideAttrs (_: {doCheck = false;});
       };
-      claude-code = prev.callPackage (self + "/packages/claude-code/package.nix") {};
-      direnv = prev.direnv.overrideAttrs (oldAttrs: {
-        doCheck = false;
-      });
-      # nix-2.31 functional tests fail on macOS (nixpkgs 25.11 issue);
-      # override in the overlay so all dependents (niv, nixd, etc.) use the patched version
-      nix = prev.nix.overrideAttrs (_: {doCheck = false;});
     };
-  };
 }

@@ -104,10 +104,17 @@
     };
   };
 in {
-  options.programs.claude-code.extraSettings = lib.mkOption {
-    type = lib.types.attrs;
-    default = {};
-    description = "Machine-specific settings merged (via recursiveUpdate) into the base Claude Code settings.";
+  options.programs.claude-code = {
+    extraSettings = lib.mkOption {
+      type = lib.types.attrs;
+      default = {};
+      description = "Machine-specific settings merged (via recursiveUpdate) into the base Claude Code settings.";
+    };
+    extraCLAUDEmd = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      description = "Additional content appended to the global CLAUDE.md.";
+    };
   };
 
   config = {
@@ -118,8 +125,8 @@ in {
     home.file = {
       ".claude/settings.json".text = builtins.toJSON (lib.recursiveUpdate settings config.programs.claude-code.extraSettings);
 
-      # Global instructions (applies to all projects)
-      ".claude/CLAUDE.md".source = ./CLAUDE.md;
+      # Global instructions (applies to all projects), with optional machine-specific additions
+      ".claude/CLAUDE.md".text = builtins.readFile ./CLAUDE.md + lib.optionalString (config.programs.claude-code.extraCLAUDEmd != "") ("\n" + config.programs.claude-code.extraCLAUDEmd);
 
       # ast-grep skill from upstream repo
       ".claude/skills/ast-grep".source = "${astGrepSkill}/ast-grep/skills/ast-grep";
