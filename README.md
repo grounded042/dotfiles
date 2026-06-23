@@ -6,7 +6,11 @@ the dotfiles of Jon Carl
 ### Prerequisites
 1. **Install Ghostty** - Download from [ghostty.org](https://ghostty.org)
 1. **Install Homebrew** - https://brew.sh/
-2. **Install Nix** - https://nixos.org/download/
+2. **Install Nix** (Determinate installer) -
+   ```bash
+   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+   ```
+   This enables `nix-command` and `flakes` by default, so no extra flags are needed during bootstrap.
 3. **Install SF Symbols** - Download from [Apple Developer](https://developer.apple.com/sf-symbols/)
 4. **Required Permissions** - Terminal (or your terminal app) needs **Full Disk Access** permission to modify system preferences:
    - Go to **System Settings** > **Privacy & Security** > **Full Disk Access**
@@ -19,12 +23,15 @@ the dotfiles of Jon Carl
    ```
 
 ### Installation
-1. **Install nix-darwin** - Run from the repository root:
-   ```bash
-   sudo nix --extra-experimental-features "nix-command flakes" run nix-darwin -- switch --flake ~/code/dotfiles#joncarl-macbook
-   ```
+1. **Clone this repo** to `~/code/dotfiles`
 
-2. **Apply future changes** - After initial setup, use:
+2. **Bootstrap nix-darwin** - This one-time step installs nix-darwin itself. Run from the repo root:
+   ```bash
+   sudo nix run nix-darwin -- switch --flake ~/code/dotfiles#joncarl-macbook
+   ```
+   > If using the stock Nix installer instead of Determinate, use `sudo nix --extra-experimental-features "nix-command flakes" run nix-darwin -- switch --flake ~/code/dotfiles#joncarl-macbook` since flakes aren't enabled by default.
+
+3. **Apply future changes** - After initial setup, use:
    ```bash
    sudo darwin-rebuild switch --flake ~/code/dotfiles#joncarl-macbook
    ```

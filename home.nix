@@ -291,6 +291,7 @@ in {
       lynx
       miller
       moreutils
+      mosh
       nginx
       niv
       nixd

@@ -72,6 +72,10 @@ in {
       # Disable press-and-hold for keys in favor of key repeat
       ApplePressAndHoldEnabled = false;
 
+      # Fast key repeat (lower = faster; min 1)
+      KeyRepeat = 2;
+      InitialKeyRepeat = 15;
+
       # Set language and text formats
       AppleMeasurementUnits = "Inches";
       AppleMetricUnits = false;

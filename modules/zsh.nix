@@ -98,12 +98,6 @@
           _wall_clock_start=""
         }
 
-        # fuzzy find
-        # if [ -n "''${commands[fzf-share]}" ]; then
-        #   source "$(fzf-share)/key-bindings.zsh"
-        #   source "$(fzf-share)/completion.zsh"
-        # fi
-
         setopt hist_ignore_all_dups # remove older duplicate entries from history
         setopt hist_reduce_blanks # remove superfluous blanks from history items
         setopt inc_append_history # save history entries as soon as they are entered
@@ -158,7 +152,6 @@
 
     sessionVariables = {
       HOMEBREW_NO_AUTO_UPDATE = 1;
-      PATH = "$PATH:$(brew --prefix coreutils)/libexec/gnubin";
       GPG_TTY = "$(tty)";
       VISUAL = "nvim";
       EDITOR = "nvim";
