@@ -40,11 +40,6 @@ require('nvim-treesitter.configs').setup {
     },
 }
 
-require("copilot").setup()
-
-require("CopilotChat").setup {
-    -- See Configuration section for options
-}
 
 local cmp = require('cmp')
 

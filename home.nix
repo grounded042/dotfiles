@@ -201,6 +201,7 @@ in {
     ./modules/ghostty-shader
     ./modules/claude-code
     ./modules/jujutsu.nix
+    ./modules/opencode
   ];
 
   programs.ssh = {
@@ -248,7 +249,7 @@ in {
       cmake
       custom-colmena
       custom-curl
-      opencode
+      rtk
       c-ares
       delta
       difftastic

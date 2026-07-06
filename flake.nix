@@ -57,7 +57,10 @@
         system = hostConfig.system;
         platform = hostConfig.platform;
 
-        pkgsSrc = if platform == "darwin" then inputs.nixpkgs-darwin else inputs.nixpkgs;
+        pkgsSrc =
+          if platform == "darwin"
+          then inputs.nixpkgs-darwin
+          else inputs.nixpkgs;
         pkgs = import pkgsSrc {
           inherit system;
           config.allowUnfree = true;
@@ -77,7 +80,11 @@
             ./hosts/${hostname}
             ./modules/platforms/${platform}
             currentSystem.configuration
-            (if platform == "darwin" then home-manager.darwinModules.home-manager else home-manager.nixosModules.home-manager)
+            (
+              if platform == "darwin"
+              then home-manager.darwinModules.home-manager
+              else home-manager.nixosModules.home-manager
+            )
             {
               home-manager = {
                 useGlobalPkgs = true;
@@ -93,7 +100,10 @@
         };
       in {
         name = hostname;
-        value = if platform == "darwin" then darwinSystem commonConfig else nixosSystem commonConfig;
+        value =
+          if platform == "darwin"
+          then darwinSystem commonConfig
+          else nixosSystem commonConfig;
       };
 
       # Separate by platform
@@ -113,6 +123,9 @@
           osxkeychainSupport = false;
         };
         claude-code = prev.callPackage (self + "/packages/claude-code/package.nix") {};
+        opencode = prev.callPackage (self + "/packages/opencode") {};
+        opencode-dcp = prev.callPackage (self + "/packages/opencode-dcp") {};
+        rtk = prev.callPackage (self + "/packages/rtk") {};
         direnv = prev.direnv.overrideAttrs (oldAttrs: {
           doCheck = false;
         });

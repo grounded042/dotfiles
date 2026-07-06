@@ -81,9 +81,6 @@
         vim-prettier
         rust-vim
 
-        # Copilot
-        copilot-lua
-        CopilotChat-nvim
       ];
 
     extraConfig = lib.fileContents ./init.vim;
