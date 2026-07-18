@@ -4,6 +4,15 @@
   lib,
   ...
 }: let
+  # RTK version (read from packages/rtk/default.nix)
+  rtkVersion = pkgs.rtk.version;
+
+  # RTK.md instructions for Claude Code
+  rtkAwareness = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/rtk-ai/rtk/v${rtkVersion}/hooks/claude/rtk-awareness.md";
+    sha256 = "1p02vcfn5qnv7nx6sadgbkhdm8dkw6cj1lcbnhshyyfaszchgq4z";
+  };
+
   # Statusline script with jq in PATH
   statusLineScript = pkgs.writeShellScript "claude-statusline" ''
     export PATH="${pkgs.jq}/bin:$PATH"
@@ -77,7 +86,6 @@
     # Enabled plugins/MCP servers
     enabledPlugins = {
       "gopls-lsp@claude-plugins-official" = true;
-      "compound-engineering@every-marketplace" = true;
     };
 
     # Environment variables for Claude Code sessions
@@ -97,6 +105,15 @@
             {
               type = "command";
               command = "${blockSensitiveFilesHook}";
+            }
+          ];
+        }
+        {
+          matcher = "Bash";
+          hooks = [
+            {
+              type = "command";
+              command = "rtk hook claude";
             }
           ];
         }

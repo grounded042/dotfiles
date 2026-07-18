@@ -7,17 +7,17 @@ let
     else throw "rtk: unsupported platform ${stdenv.system}";
 
   hashes = {
-    aarch64-apple-darwin = "sha256-tJm8/ouMAEWK/W6pbkuA8VQ73k3EMoy5q1s1MxR83mU=";
-    x86_64-unknown-linux-musl = lib.fakeHash;
+    aarch64-apple-darwin = "sha256-7SXfONB8r9NwD3sanPd0uFeLKvkpOpJOfvuf0grEw5U=";
+    x86_64-unknown-linux-musl = "sha256-/4oed2ZJbhdSkaha7KHcl8n/bfM+UeWJPR+8eP6ipgk=";
   };
 in
 stdenv.mkDerivation rec {
   pname = "rtk";
-  version = "0.42.4";
+  version = "0.43.0";
 
   src = fetchzip {
     url = "https://github.com/rtk-ai/rtk/releases/download/v${version}/rtk-${platform}.tar.gz";
-    sha256 = hashes.${platform};
+    hash = hashes.${platform};
     stripRoot = false;
   };
 
