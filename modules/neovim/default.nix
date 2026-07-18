@@ -10,6 +10,8 @@
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    withRuby = false;
+    withPython3 = false;
 
     plugins = let
       nvim-treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (
@@ -84,7 +86,7 @@
       ];
 
     extraConfig = lib.fileContents ./init.vim;
-    extraLuaConfig = lib.fileContents ./init.lua;
+    initLua = lib.fileContents ./init.lua;
   };
 
   # Create ftplugin files for language-specific configuration

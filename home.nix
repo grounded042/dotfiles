@@ -13,7 +13,7 @@
   custom-curl = pkgs.curl.override {
     c-aresSupport = true;
   };
-  custom-colmena = colmena.packages.${pkgs.system}.colmena;
+  custom-colmena = colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena;
 
   # Platform detection
   isDarwin = pkgs.stdenv.isDarwin;
@@ -207,11 +207,9 @@ in {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*" = {
-      identityAgent = "~/.1password/agent.sock";
-      extraOptions = {
-        UserKnownHostsFile = "~/.ssh/known_hosts.d/pinned ~/.ssh/known_hosts";
-      };
+    settings."*" = {
+      IdentityAgent = "~/.1password/agent.sock";
+      UserKnownHostsFile = "~/.ssh/known_hosts.d/pinned ~/.ssh/known_hosts";
     };
   };
 

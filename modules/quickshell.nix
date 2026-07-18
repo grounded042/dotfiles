@@ -3,7 +3,7 @@
 {
   # Install quickshell package
   home.packages = [
-    quickshell.packages.${pkgs.system}.default
+    quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   # Create quickshell config directory

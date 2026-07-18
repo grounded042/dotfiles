@@ -1,7 +1,7 @@
 -- Disable TreeSitter installation when using Nix
 require("nvim-treesitter.install").prefer_git = false
 
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter').setup {
     -- Don't manage parsers with TreeSitter when using Nix
     ensure_installed = {},
 

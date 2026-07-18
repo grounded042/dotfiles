@@ -4,11 +4,11 @@
   description = "Jon Carl's cross-platform dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
-    darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-26.05-darwin";
+    darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     agenix.url = "github:ryantm/agenix";
@@ -119,9 +119,6 @@
       lib.mkConfigurations = mkConfigurations;
 
       overlays.default = final: prev: {
-        git = prev.git.override {
-          osxkeychainSupport = false;
-        };
         claude-code = prev.callPackage (self + "/packages/claude-code/package.nix") {};
         opencode = prev.callPackage (self + "/packages/opencode") {};
         opencode-dcp = prev.callPackage (self + "/packages/opencode-dcp") {};
