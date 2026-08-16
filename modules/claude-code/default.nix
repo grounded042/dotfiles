@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  currentSystem,
   ...
 }: let
   # RTK version (read from packages/rtk/default.nix)
@@ -156,10 +157,14 @@ in {
     };
 
     # Shell aliases for Claude Code
-    programs.zsh.shellAliases = lib.mkIf config.programs.zsh.enable {
-      cr = "claude --resume";
-      cn = "claude --new";
-      cconfig = "claude-config";
-    };
+    programs.zsh.shellAliases = lib.mkIf config.programs.zsh.enable ({
+        cr = "claude --resume";
+        cn = "claude --new";
+        cconfig = "claude-config";
+      }
+      // lib.optionalAttrs (currentSystem.enableNono or false) {
+        # Run Claude Code inside nono's kernel-enforced sandbox
+        sclaude = "nono run --profile nolabs-ai/claude -- claude";
+      });
   };
 }

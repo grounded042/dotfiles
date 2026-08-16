@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   pname = "opencode";
-  version = "1.17.8";
+  version = "1.18.18";
 
   src = fetchzip {
-    url = "https://github.com/sst/opencode/releases/download/v${version}/opencode-darwin-arm64.zip";
-    sha256 = "sha256-cE10nzK7Wd8t+0Hlbs3+z7wynYNXHn/msNQHZ/L7p6I=";
+    url = "https://github.com/anomalyco/opencode/releases/download/v${version}/opencode-darwin-arm64.zip";
+    sha256 = "sha256-H+EDiYUQMie5kUW/K/egC80AeImppIBXtlbeA/hCkaM=";
     stripRoot = false;
   };
 
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "AI coding agent, built for the terminal";
-    homepage = "https://github.com/sst/opencode";
+    homepage = "https://github.com/anomalyco/opencode";
     license = licenses.mit;
     platforms = platforms.darwin;
     maintainers = [];

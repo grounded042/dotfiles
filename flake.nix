@@ -6,6 +6,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-26.05-darwin";
+    # nono moves fast and isn't backported to the stable channel yet;
+    # pull it from unstable rather than waiting on the release branch.
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-26.05";
@@ -123,6 +126,10 @@
         opencode = prev.callPackage (self + "/packages/opencode") {};
         opencode-dcp = prev.callPackage (self + "/packages/opencode-dcp") {};
         rtk = prev.callPackage (self + "/packages/rtk") {};
+        nono = (import inputs.nixpkgs-unstable {
+          inherit (final) system;
+          config.allowUnfree = true;
+        }).nono;
         direnv = prev.direnv.overrideAttrs (oldAttrs: {
           doCheck = false;
         });

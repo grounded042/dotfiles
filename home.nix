@@ -202,6 +202,7 @@ in {
     ./modules/claude-code
     ./modules/jujutsu.nix
     ./modules/opencode
+    ./modules/nono
   ];
 
   programs.ssh = {

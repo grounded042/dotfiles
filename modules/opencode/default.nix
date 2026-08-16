@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   currentSystem,
@@ -7,7 +8,7 @@
   enabled = currentSystem.enableOpencode or false;
   apiKey = currentSystem.opencodeApiKey or null;
 
-  config = {
+  opencodeConfig = {
     "$schema" = "https://opencode.ai/config.json";
     # Plugins are installed declaratively via Nix into ~/.config/opencode/plugins/
     # (see xdg.configFile below); no `plugin` array so opencode never auto-installs.
@@ -27,9 +28,23 @@
             output = 16384;
           };
         };
+        models."qwen3.8-8b" = {
+          name = "Qwen3.8-8b";
+          limit = {
+            context = 131072;
+            output = 16384;
+          };
+        };
+        models."qwen3.8-4b" = {
+          name = "Qwen3.8-4b";
+          limit = {
+            context = 131072;
+            output = 16384;
+          };
+        };
       };
     };
-    model = "omlx/ornith";
+    model = "omlx/qwen3.8-4b";
     permission = {
       edit = "ask";
       bash = "ask";
@@ -68,7 +83,7 @@ in {
   home.packages = lib.mkIf enabled [pkgs.opencode];
 
   xdg.configFile."opencode/opencode.jsonc" = lib.mkIf enabled {
-    text = builtins.toJSON config;
+    text = builtins.toJSON opencodeConfig;
   };
 
   # Local plugins, managed by Nix instead of opencode's npm auto-install.
@@ -84,5 +99,10 @@ in {
 
   xdg.configFile."opencode/dcp.jsonc" = lib.mkIf enabled {
     text = builtins.toJSON dcpConfig;
+  };
+
+  # Run opencode inside nono's kernel-enforced sandbox
+  programs.zsh.shellAliases = lib.mkIf (enabled && config.programs.zsh.enable && (currentSystem.enableNono or false)) {
+    sopencode = "nono run --profile nolabs-ai/opencode -- opencode";
   };
 }
