@@ -324,5 +324,8 @@ in {
       yq-go
       zola
     ]
+    # pollux gets op via programs._1password (modules/platforms/nixos/default.nix);
+    # nix-darwin has no equivalent module, so the CLI is user-scoped on macOS only
+    ++ lib.optionals isDarwin [pkgs._1password-cli]
     ++ lib.attrValues (pkgs.platformPackages or {});
 }
