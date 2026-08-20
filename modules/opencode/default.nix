@@ -6,7 +6,7 @@
   ...
 }: let
   enabled = currentSystem.enableOpencode or false;
-  apiKey = currentSystem.opencodeApiKey or null;
+  apiKey = currentSystem.omlxApiKey or null;
 
   opencodeConfig = {
     "$schema" = "https://opencode.ai/config.json";

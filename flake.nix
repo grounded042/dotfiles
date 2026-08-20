@@ -125,6 +125,7 @@
         claude-code = prev.callPackage (self + "/packages/claude-code/package.nix") {};
         opencode = prev.callPackage (self + "/packages/opencode") {};
         opencode-dcp = prev.callPackage (self + "/packages/opencode-dcp") {};
+        pi = prev.callPackage (self + "/packages/pi") {};
         rtk = prev.callPackage (self + "/packages/rtk") {};
         nono = (import inputs.nixpkgs-unstable {
           inherit (final) system;
