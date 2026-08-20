@@ -78,6 +78,9 @@
     # Always use extended thinking
     alwaysThinkingEnabled = true;
 
+    # Terse responses by default
+    outputStyle = "Concise";
+
     # Status line using our Nix-managed script
     statusLine = {
       type = "command";

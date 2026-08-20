@@ -29,11 +29,11 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "claude-code";
-    version = "2.1.214";
+    version = "2.1.237";
 
     src = fetchzip {
       url = "https://registry.npmjs.org/@anthropic-ai/claude-code-${platformStr}/-/claude-code-${platformStr}-${finalAttrs.version}.tgz";
-      hash = "sha256-9tOMzSZaBMsBFOA+jTYzd2/Ga1aCqPPPElEvXBLP6fs=";
+      hash = "sha256-izl06tM/vVyJs4YfxRGQulaiJBAGuq1KvUUO2qEsrgg=";
     };
 
     nativeBuildInputs = [makeWrapper];
