@@ -3,6 +3,7 @@
   pkgs,
   lib,
   currentSystem,
+  agentInstructions,
   ...
 }: let
   # RTK version (read from packages/rtk/default.nix)
@@ -147,7 +148,7 @@ in {
       ".claude/settings.json".text = builtins.toJSON (lib.recursiveUpdate settings config.programs.claude-code.extraSettings);
 
       # Global instructions (applies to all projects), with optional machine-specific additions
-      ".claude/CLAUDE.md".text = builtins.readFile ./CLAUDE.md + lib.optionalString (config.programs.claude-code.extraCLAUDEmd != "") ("\n" + config.programs.claude-code.extraCLAUDEmd);
+      ".claude/CLAUDE.md".text = agentInstructions + lib.optionalString (config.programs.claude-code.extraCLAUDEmd != "") ("\n" + config.programs.claude-code.extraCLAUDEmd);
 
       # ast-grep skill from upstream repo
       ".claude/skills/ast-grep".source = "${astGrepSkill}/ast-grep/skills/ast-grep";

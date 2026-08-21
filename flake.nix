@@ -82,6 +82,7 @@
           modules = [
             ./hosts/${hostname}
             ./modules/platforms/${platform}
+            ./modules/codex
             currentSystem.configuration
             (
               if platform == "darwin"
@@ -123,6 +124,7 @@
 
       overlays.default = final: prev: {
         claude-code = prev.callPackage (self + "/packages/claude-code/package.nix") {};
+        codex = prev.callPackage (self + "/packages/codex") {};
         opencode = prev.callPackage (self + "/packages/opencode") {};
         opencode-dcp = prev.callPackage (self + "/packages/opencode-dcp") {};
         pi = prev.callPackage (self + "/packages/pi") {};
