@@ -33,7 +33,8 @@ in {
 
     ## Core Behaviors
 
-    - TDD: write tests first, watch them fail, then fix them. No exceptions.
+    - Use TDD for behavioral code when practical. Test stable behavior, and use
+      proportional validation for declarative or trivial changes.
     - Present options with pros/cons when multiple approaches exist.
     - Do not assume. Surface any assumptions and confirm them.
     - Push back on flawed logic.

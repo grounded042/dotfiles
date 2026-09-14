@@ -10,17 +10,21 @@
 
   settingsConfig = {
     defaultProvider = "omlx";
-    defaultModel = "qwen3.8-4b";
-    compaction.enabled = true;
+    defaultModel = "qwen3.8-27b-q4";
+    compaction = {
+      enabled = true;
+      reserveTokens = 16384;
+      keepRecentTokens = 12000;
+    };
   };
 
   modelsConfig = {
     providers = {
-      omlx = {
-        baseUrl = "http://172.28.1.240:8000/v1";
-        api = "openai-completions";
-        models =
-          [
+      omlx =
+        {
+          baseUrl = "http://172.28.1.240:8000/v1";
+          api = "openai-completions";
+          models = [
             {
               id = "ornith";
               name = "Ornith 1.0 35B";
@@ -34,14 +38,14 @@
               maxTokens = 16384;
             }
             {
-              id = "qwen3.8-4b";
-              name = "Qwen3.8-4b";
-              contextWindow = 131072;
-              maxTokens = 16384;
+              id = "qwen3.8-27b-q4";
+              name = "qwen3.8-27b-q4";
+              contextWindow = 65536;
+              maxTokens = 8192;
             }
           ];
-      }
-      // lib.optionalAttrs (apiKey != null) {inherit apiKey;};
+        }
+        // lib.optionalAttrs (apiKey != null) {inherit apiKey;};
     };
   };
 in {
