@@ -8,42 +8,33 @@
     battery = pkgs.writeShellScript "battery.sh" ''
       #!/bin/sh
 
-      PERCENTAGE=$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)
-      CHARGING=$(pmset -g batt | grep 'AC Power')
+      BATTERY_INFO=$(pmset -g batt)
+      PERCENTAGE=$(printf '%s\n' "$BATTERY_INFO" | sed -n 's/.*[[:space:]]\([0-9][0-9]*\)%;.*/\1/p')
 
-      if [ $PERCENTAGE = "" ]; then
+      if [ -z "$PERCENTAGE" ]; then
         exit 0
       fi
 
       case ''${PERCENTAGE} in
-        100) ICON="􀛨"
+        9[0-9]|100) ICON="􀛨"
         ;;
-        [8-9][0-9]) ICON="􀺸"
+        [6-8][0-9]) ICON="􀺸"
         ;;
-        [7][5-9]) ICON="􀺸"
+        [3-5][0-9]) ICON="􀺶"
         ;;
-        [7][0-4]) ICON="􀺶"
-        ;;
-        [5-6][0-9]) ICON="􀺶"
-        ;;
-        [3-4][0-9]) ICON="􀛪"
-        ;;
-        [2][5-9]) ICON="􀛪"
-        ;;
-        [2][0-4]) ICON="􀛪"
-        ;;
-        [1][0-9]) ICON="􀛪"
+        [1-2][0-9]) ICON="􀛩"
         ;;
         *) ICON="􀛪"
       esac
 
-      if [[ $CHARGING != "" ]]; then
-        ICON="􀢋"
-      fi
+      case "$BATTERY_INFO" in
+        *"AC Power"*) ICON="􀢋"
+        ;;
+      esac
 
       # The item invoking this script (name $NAME) will get its icon and label
       # updated with the current battery status
-      sketchybar --set $NAME icon="$ICON" label="''${PERCENTAGE}%"
+      sketchybar --set "$NAME" icon="$ICON" label="''${PERCENTAGE}%"
     '';
 
     clock = pkgs.writeShellScript "clock.sh" ''
@@ -56,25 +47,6 @@
       # sketchybar --set $NAME label="$(date '+%d/%m %H:%M')"
       # Mon, Feb 27, 2023 - 14:33 -0700
       sketchybar --set $NAME label="$(date +%Y-%m-%dT%H:%M%z)"
-    '';
-
-    front_app = pkgs.writeShellScript "front_app.sh" ''
-      #!/bin/sh
-
-      # Some events send additional information specific to the event in the $INFO
-      # variable. E.g. the front_app_switched event sends the name of the newly
-      # focused application in the $INFO variable:
-      # https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
-
-      json=$(yabai -m query --windows --window)
-      app=$(echo "$json" | ${pkgs.jq}/bin/jq -r .app)
-      title=$(echo "$json" | ${pkgs.jq}/bin/jq -r .title)
-
-      if [[ ''${#title} -gt 75 ]]; then
-        title=$(echo "$title" | cut -c 1-75)...
-      fi
-
-      sketchybar --set $NAME label="$title"
     '';
 
     space = pkgs.writeShellScript "space.sh" ''
@@ -95,8 +67,6 @@
 
       VOLUME=$INFO
 
-      output_device_name=$(system_profiler SPAudioDataType -json | ${pkgs.jq}/bin/jq -r '.SPAudioDataType[0]._items[] | select(.coreaudio_default_audio_output_device == "spaudio_yes") | ._name')
-
       case $VOLUME in
         [6-9][0-9]|100) ICON="􀊩 "
         ;;
@@ -106,10 +76,6 @@
         ;;
         *) ICON="􀊡 "
       esac
-
-      if [[ "$output_device_name" == *"AirPods Max"* ]]; then
-        ICON="􀺹 "
-      fi
 
       sketchybar --set $NAME icon="$ICON" label="$VOLUME%"
     '';
@@ -169,22 +135,6 @@ in {
                                     script="${plugins.space}"                  \
                                     click_script="yabai -m space --focus $sid"
       done
-
-      ##### Adding Left Items #####
-      # We add some regular items to the left side of the bar
-      # only the properties deviating from the current defaults need to be set
-
-      # sketchybar --add item space_separator left                         \
-      #            --set space_separator icon=􀛨                            \
-      #                                  padding_left=10                   \
-      #                                  padding_right=10                  \
-      #                                  label.drawing=off
-
-      sketchybar --add event window_focus                            \
-                 --add event title_change                            \
-                 --add item title center                             \
-                 --set title       script="${plugins.front_app}"     \
-                 --subscribe title front_app_switched window_focus title_change
 
       ##### Adding Right Items #####
       # In the same way as the left items we can add items to the right side.

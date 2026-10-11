@@ -32,10 +32,6 @@
       window_gap = 10;
     };
     extraConfig = ''
-      # events
-      yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus &> /dev/null"
-      yabai -m signal --add event=window_title_changed action="sketchybar --trigger title_change &> /dev/null"
-
       # rules
       yabai -m rule --add app="^(System Preferences|System Settings)$" manage=off
       yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
