@@ -10,6 +10,32 @@ private final class BarPanel: NSPanel {
   }
 }
 
+private final class AdaptiveTintView: NSView {
+  override init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
+    wantsLayer = true
+    updateTint()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) is unavailable")
+  }
+
+  override func viewDidChangeEffectiveAppearance() {
+    super.viewDidChangeEffectiveAppearance()
+    updateTint()
+  }
+
+  private func updateTint() {
+    let isDark = effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+    layer?.backgroundColor =
+      (isDark
+      ? NSColor(calibratedWhite: 32 / 255, alpha: 0.72)
+      : NSColor(calibratedWhite: 248 / 255, alpha: 0.72)).cgColor
+  }
+}
+
 private final class BarWindow {
   private static let barHeight: CGFloat = 32
   private static let fadeHeight: CGFloat = 14
@@ -103,7 +129,7 @@ private final class BarWindow {
       NativeBarLog.panels.debug("Using Liquid Glass background")
       let glass = glassType.init(frame: frame)
       glass.setValue(
-        NSColor(calibratedRed: 32 / 255, green: 32 / 255, blue: 32 / 255, alpha: 0.65),
+        NSColor.windowBackgroundColor.withAlphaComponent(0.65),
         forKey: "tintColor"
       )
       glass.setValue(0, forKey: "cornerRadius")
@@ -116,15 +142,7 @@ private final class BarWindow {
     fallback.material = .menu
     fallback.state = .active
 
-    let tint = NSView(frame: frame)
-    tint.wantsLayer = true
-    tint.layer?.backgroundColor =
-      NSColor(
-        calibratedRed: 32 / 255,
-        green: 32 / 255,
-        blue: 32 / 255,
-        alpha: 0.72
-      ).cgColor
+    let tint = AdaptiveTintView(frame: frame)
     tint.autoresizingMask = [.width, .height]
     fallback.addSubview(tint)
     return fallback

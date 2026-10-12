@@ -19,6 +19,7 @@ stdenv.mkDerivation {
 
   buildPhase = ''
     runHook preBuild
+    export NIX_CC_WRAPPER_SUPPRESS_TARGET_WARNING=1
     export SWIFTPM_MODULECACHE_OVERRIDE="$TMPDIR/swift-module-cache"
     export CLANG_MODULE_CACHE_PATH="$TMPDIR/clang-module-cache"
     swift build -c release --disable-sandbox --scratch-path .build

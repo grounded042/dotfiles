@@ -11,7 +11,7 @@ struct BarView: View {
       HStack(spacing: 12) {
         ForEach(Array(spaceLabels.enumerated()), id: \.offset) { index, label in
           Text(label)
-            .foregroundStyle(model.activeSpace == index + 1 ? selectedColor : .white)
+            .foregroundStyle(model.activeSpace == index + 1 ? selectedColor : Color.primary)
         }
       }
       .font(.system(size: 15, weight: .semibold))
@@ -61,7 +61,7 @@ private struct ClockItem: View {
 private struct BarItem: View {
   let symbol: String?
   let label: String?
-  var color: Color = .white
+  var color: Color = .primary
   var monospacedDigits = false
 
   var body: some View {
@@ -136,7 +136,7 @@ private struct ExtensionItems: View {
       value.count == 7,
       let rgb = UInt64(value.dropFirst(), radix: 16)
     else {
-      return .white
+      return .primary
     }
 
     return Color(
