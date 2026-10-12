@@ -1,3 +1,4 @@
+import AppKit
 import CoreLocation
 import CoreWLAN
 import Foundation
@@ -28,11 +29,20 @@ final class WiFiController: NSObject, CLLocationManagerDelegate, CWEventDelegate
     monitor.start(queue: monitorQueue)
 
     guard requestLocation else { return }
-    NativeBarLog.wifi.notice("Requesting Location Services access for SSID display")
     let manager = CLLocationManager()
     manager.delegate = self
     locationManager = manager
-    manager.requestWhenInUseAuthorization()
+
+    guard manager.authorizationStatus == .notDetermined else {
+      refreshSSID()
+      return
+    }
+
+    NativeBarLog.wifi.notice("Requesting Location Services access for SSID display")
+    DispatchQueue.main.async {
+      NSApplication.shared.activate(ignoringOtherApps: true)
+      manager.requestWhenInUseAuthorization()
+    }
   }
 
   private func startMonitoring(_ event: CWEventType) {

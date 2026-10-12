@@ -94,6 +94,8 @@ private final class BarDecorationView: NSView {
 }
 
 private final class BarWindow {
+  private static let barLevel: NSWindow.Level = .floating
+
   let bar: NSPanel
   let decoration: NSPanel
 
@@ -104,7 +106,7 @@ private final class BarWindow {
     decoration = Self.makePanel(
       frame: decorationFrame,
       screen: screen,
-      level: NSWindow.Level(rawValue: NSWindow.Level.statusBar.rawValue - 1),
+      level: NSWindow.Level(rawValue: Self.barLevel.rawValue - 1),
       ignoresMouseEvents: true,
       isOpaque: false
     )
@@ -117,7 +119,7 @@ private final class BarWindow {
     bar = Self.makePanel(
       frame: barFrame,
       screen: screen,
-      level: .statusBar,
+      level: Self.barLevel,
       ignoresMouseEvents: false,
       isOpaque: true
     )
@@ -160,7 +162,7 @@ private final class BarWindow {
     panel.isMovable = false
     panel.collectionBehavior = [
       .canJoinAllSpaces,
-      .stationary,
+      .transient,
       .ignoresCycle,
     ]
     return panel

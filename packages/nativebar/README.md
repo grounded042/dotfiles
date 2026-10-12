@@ -18,6 +18,8 @@ The first prototype provides:
 - an opaque black 38-point AppKit panel, flush with each display's top and
   sides, with inverse 19-point curves that round the desktop beneath it and a
   shadow following that lower edge;
+- floating-window placement that stays above application windows, below system
+  overlays, and hides during Mission Control;
 - white foreground content with a red active-Space indicator;
 - ten noninteractive Space indicators, with the active Space queried from
   yabai after AppKit reports a Space change;
@@ -32,17 +34,14 @@ swift test --package-path packages/nativebar
 swift run --package-path packages/nativebar NativeBar
 ```
 
-Wi-Fi connection state does not require special permission. To additionally
-show the SSID, launch the packaged app once with `--request-location` and grant
-Location Services access:
+Wi-Fi connection state does not require special permission. The launch agent
+starts NativeBar with `--request-location`; on its first launch, NativeBar
+briefly activates so macOS can present the Location Services dialog needed to
+show the SSID. Later launches use the stored decision without taking focus.
 
-```sh
-open result/Applications/NativeBar.app --args --request-location
-```
-
-The app bundle is required because it contains the Location Services usage
-description. If access is denied or macOS redacts the SSID, NativeBar keeps
-showing the connection-state icon without a network name.
+If access is denied or macOS redacts the SSID, NativeBar keeps showing the
+connection-state icon without a network name. A denied request must be changed
+in System Settings because macOS does not present the initial dialog again.
 
 Running the prototype does not stop SketchyBar, so the bars will overlap. Stop
 the prototype with `pkill NativeBar` after visual testing.

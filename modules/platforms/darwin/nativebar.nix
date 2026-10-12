@@ -12,6 +12,7 @@ in {
     serviceConfig = {
       ProgramArguments = [
         "${pkgs.nativebar}/Applications/NativeBar.app/Contents/MacOS/NativeBar"
+        "--request-location"
       ];
       KeepAlive = true;
       ProcessType = "Interactive";

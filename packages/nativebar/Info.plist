@@ -26,5 +26,7 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>NativeBar uses location access only to display the current Wi-Fi network name.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>NativeBar uses location access only to display the current Wi-Fi network name.</string>
 </dict>
 </plist>

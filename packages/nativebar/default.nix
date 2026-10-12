@@ -40,6 +40,14 @@ stdenv.mkDerivation {
     runHook postInstall
   '';
 
+  postFixup = ''
+    /usr/bin/codesign \
+      --force \
+      --sign - \
+      --identifier com.joncarl.NativeBar \
+      "$out/Applications/NativeBar.app"
+  '';
+
   meta = {
     description = "Native, event-driven macOS status bar";
     mainProgram = "nativebar";
