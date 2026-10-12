@@ -15,10 +15,10 @@ configuration.
 
 The first prototype provides:
 
-- a 32-point AppKit panel on each display using native Liquid Glass on macOS
-  26 or newer, with a material fallback and a separate, mouse-transparent fade
-  beneath it;
-- glass tint and foreground colors that follow macOS light or dark appearance;
+- an opaque black 38-point AppKit panel, flush with each display's top and
+  sides, with inverse 19-point curves that round the desktop beneath it and a
+  shadow following that lower edge;
+- white foreground content with a red active-Space indicator;
 - ten noninteractive Space indicators, with the active Space queried from
   yabai after AppKit reports a Space change;
 - a clock scheduled on exact minute boundaries; and

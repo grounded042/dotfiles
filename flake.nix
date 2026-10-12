@@ -128,6 +128,7 @@
         opencode = prev.callPackage (self + "/packages/opencode") {};
         opencode-dcp = prev.callPackage (self + "/packages/opencode-dcp") {};
         nativebar = prev.callPackage (self + "/packages/nativebar") {};
+        screen-corners = prev.callPackage (self + "/packages/screencorners") {};
         pi = prev.callPackage (self + "/packages/pi") {};
         rtk = prev.callPackage (self + "/packages/rtk") {};
         nono = (import inputs.nixpkgs-unstable {

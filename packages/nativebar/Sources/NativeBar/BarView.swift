@@ -11,7 +11,7 @@ struct BarView: View {
       HStack(spacing: 12) {
         ForEach(Array(spaceLabels.enumerated()), id: \.offset) { index, label in
           Text(label)
-            .foregroundStyle(model.activeSpace == index + 1 ? selectedColor : Color.primary)
+            .foregroundStyle(model.activeSpace == index + 1 ? selectedColor : Color.white)
         }
       }
       .font(.system(size: 15, weight: .semibold))
@@ -61,7 +61,7 @@ private struct ClockItem: View {
 private struct BarItem: View {
   let symbol: String?
   let label: String?
-  var color: Color = .primary
+  var color: Color = .white
   var monospacedDigits = false
 
   var body: some View {
@@ -136,23 +136,13 @@ private struct ExtensionItems: View {
       value.count == 7,
       let rgb = UInt64(value.dropFirst(), radix: 16)
     else {
-      return .primary
+      return .white
     }
 
     return Color(
       red: Double((rgb >> 16) & 0xff) / 255,
       green: Double((rgb >> 8) & 0xff) / 255,
       blue: Double(rgb & 0xff) / 255
-    )
-  }
-}
-
-struct BarFadeView: View {
-  var body: some View {
-    LinearGradient(
-      colors: [Color.black.opacity(0.28), .clear],
-      startPoint: .top,
-      endPoint: .bottom
     )
   }
 }

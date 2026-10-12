@@ -1,4 +1,5 @@
 import AppKit
+import NativeBarCore
 import SwiftUI
 
 private final class BarPanel: NSPanel {
@@ -10,11 +11,14 @@ private final class BarPanel: NSPanel {
   }
 }
 
-private final class AdaptiveTintView: NSView {
-  override init(frame frameRect: NSRect) {
+private final class BarDecorationView: NSView {
+  private let radius: CGFloat
+  private let shadowDepth: CGFloat
+
+  init(frame frameRect: NSRect, radius: CGFloat, shadowDepth: CGFloat) {
+    self.radius = radius
+    self.shadowDepth = shadowDepth
     super.init(frame: frameRect)
-    wantsLayer = true
-    updateTint()
   }
 
   @available(*, unavailable)
@@ -22,65 +26,121 @@ private final class AdaptiveTintView: NSView {
     fatalError("init(coder:) is unavailable")
   }
 
-  override func viewDidChangeEffectiveAppearance() {
-    super.viewDidChangeEffectiveAppearance()
-    updateTint()
-  }
+  override var isOpaque: Bool { false }
 
-  private func updateTint() {
-    let isDark = effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-    layer?.backgroundColor =
-      (isDark
-      ? NSColor(calibratedWhite: 32 / 255, alpha: 0.72)
-      : NSColor(calibratedWhite: 248 / 255, alpha: 0.72)).cgColor
+  override func draw(_ dirtyRect: NSRect) {
+    super.draw(dirtyRect)
+
+    let top = bounds.maxY
+    let curveBottom = top - radius
+
+    let boundary = NSBezierPath()
+    boundary.move(to: NSPoint(x: bounds.minX, y: curveBottom))
+    boundary.appendArc(
+      withCenter: NSPoint(x: bounds.minX + radius, y: curveBottom),
+      radius: radius,
+      startAngle: 180,
+      endAngle: 90,
+      clockwise: true
+    )
+    boundary.line(to: NSPoint(x: bounds.maxX - radius, y: top))
+    boundary.appendArc(
+      withCenter: NSPoint(x: bounds.maxX - radius, y: curveBottom),
+      radius: radius,
+      startAngle: 90,
+      endAngle: 0,
+      clockwise: true
+    )
+
+    boundary.lineWidth = 1
+    for step in stride(from: Int(shadowDepth), through: 0, by: -1) {
+      let distance = CGFloat(step)
+      NSGraphicsContext.saveGraphicsState()
+      NSGraphicsContext.current?.cgContext.translateBy(x: 0, y: -distance)
+      NSColor.black.withAlphaComponent(BarGeometry.shadowOpacity(at: distance)).setStroke()
+      boundary.stroke()
+      NSGraphicsContext.restoreGraphicsState()
+    }
+
+    let leftCorner = NSBezierPath()
+    leftCorner.move(to: NSPoint(x: bounds.minX, y: top))
+    leftCorner.line(to: NSPoint(x: bounds.minX + radius, y: top))
+    leftCorner.appendArc(
+      withCenter: NSPoint(x: bounds.minX + radius, y: curveBottom),
+      radius: radius,
+      startAngle: 90,
+      endAngle: 180,
+      clockwise: false
+    )
+    leftCorner.close()
+
+    let rightCorner = NSBezierPath()
+    rightCorner.move(to: NSPoint(x: bounds.maxX - radius, y: top))
+    rightCorner.line(to: NSPoint(x: bounds.maxX, y: top))
+    rightCorner.line(to: NSPoint(x: bounds.maxX, y: curveBottom))
+    rightCorner.appendArc(
+      withCenter: NSPoint(x: bounds.maxX - radius, y: curveBottom),
+      radius: radius,
+      startAngle: 0,
+      endAngle: 90,
+      clockwise: false
+    )
+    rightCorner.close()
+
+    NSColor.black.setFill()
+    leftCorner.fill()
+    rightCorner.fill()
   }
 }
 
 private final class BarWindow {
-  private static let barHeight: CGFloat = 32
-  private static let fadeHeight: CGFloat = 14
-
   let bar: NSPanel
-  let fade: NSPanel
+  let decoration: NSPanel
 
   init(screen: NSScreen, model: BarModel) {
-    let barFrame = NSRect(
-      x: screen.frame.minX,
-      y: screen.frame.maxY - Self.barHeight,
-      width: screen.frame.width,
-      height: Self.barHeight
+    let barFrame = BarGeometry.frame(in: screen.frame)
+    let decorationFrame = BarGeometry.decorationFrame(in: screen.frame)
+
+    decoration = Self.makePanel(
+      frame: decorationFrame,
+      screen: screen,
+      level: NSWindow.Level(rawValue: NSWindow.Level.statusBar.rawValue - 1),
+      ignoresMouseEvents: true,
+      isOpaque: false
     )
-    let fadeFrame = NSRect(
-      x: screen.frame.minX,
-      y: barFrame.minY - Self.fadeHeight,
-      width: screen.frame.width,
-      height: Self.fadeHeight
+    decoration.contentView = BarDecorationView(
+      frame: NSRect(origin: .zero, size: decorationFrame.size),
+      radius: BarGeometry.cornerRadius,
+      shadowDepth: BarGeometry.shadowDepth
     )
 
-    bar = Self.makePanel(frame: barFrame, screen: screen, ignoresMouseEvents: false)
+    bar = Self.makePanel(
+      frame: barFrame,
+      screen: screen,
+      level: .statusBar,
+      ignoresMouseEvents: false,
+      isOpaque: true
+    )
     bar.acceptsMouseMovedEvents = true
     bar.contentView = Self.makeBarContent(frame: barFrame, model: model)
-
-    fade = Self.makePanel(frame: fadeFrame, screen: screen, ignoresMouseEvents: true)
-    fade.level = NSWindow.Level(rawValue: NSWindow.Level.statusBar.rawValue - 1)
-    fade.contentView = NSHostingView(rootView: BarFadeView())
-    bar.addChildWindow(fade, ordered: .below)
   }
 
   func show() {
+    decoration.orderFrontRegardless()
     bar.orderFrontRegardless()
   }
 
   func close() {
-    bar.removeChildWindow(fade)
-    fade.close()
+    decoration.close()
     bar.close()
   }
 
   private static func makePanel(
     frame: NSRect,
     screen: NSScreen,
-    ignoresMouseEvents: Bool
+    level: NSWindow.Level,
+    ignoresMouseEvents: Bool,
+    isOpaque: Bool
   ) -> NSPanel {
     let panel = BarPanel(
       contentRect: frame,
@@ -90,12 +150,12 @@ private final class BarWindow {
       screen: screen
     )
     panel.setFrame(frame, display: false)
-    panel.level = .statusBar
-    panel.backgroundColor = .clear
-    panel.isOpaque = false
+    panel.backgroundColor = isOpaque ? .black : .clear
+    panel.isOpaque = isOpaque
     panel.hasShadow = false
     panel.hidesOnDeactivate = false
     panel.isFloatingPanel = true
+    panel.level = level
     panel.ignoresMouseEvents = ignoresMouseEvents
     panel.isMovable = false
     panel.collectionBehavior = [
@@ -110,42 +170,14 @@ private final class BarWindow {
     let bounds = NSRect(origin: .zero, size: frame.size)
     let container = NSView(frame: bounds)
     container.autoresizingMask = [.width, .height]
-
-    let background = makeBarBackground(frame: bounds)
-    background.autoresizingMask = [.width, .height]
-    container.addSubview(background)
+    container.wantsLayer = true
+    container.layer?.backgroundColor = NSColor.black.cgColor
 
     let content = NSHostingView(rootView: BarView(model: model))
     content.frame = bounds
     content.autoresizingMask = [.width, .height]
     container.addSubview(content)
     return container
-  }
-
-  private static func makeBarBackground(frame: NSRect) -> NSView {
-    if #available(macOS 26.0, *),
-      let glassType = NSClassFromString("NSGlassEffectView") as? NSView.Type
-    {
-      NativeBarLog.panels.debug("Using Liquid Glass background")
-      let glass = glassType.init(frame: frame)
-      glass.setValue(
-        NSColor.windowBackgroundColor.withAlphaComponent(0.65),
-        forKey: "tintColor"
-      )
-      glass.setValue(0, forKey: "cornerRadius")
-      return glass
-    }
-
-    NativeBarLog.panels.notice("Liquid Glass unavailable; using material background")
-    let fallback = NSVisualEffectView(frame: frame)
-    fallback.blendingMode = .behindWindow
-    fallback.material = .menu
-    fallback.state = .active
-
-    let tint = AdaptiveTintView(frame: frame)
-    tint.autoresizingMask = [.width, .height]
-    fallback.addSubview(tint)
-    return fallback
   }
 }
 

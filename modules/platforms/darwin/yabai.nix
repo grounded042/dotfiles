@@ -1,13 +1,20 @@
 {
+  currentSystem,
   pkgs,
   lib,
   ...
-}: {
+}: let
+  nativeBarEnabled = (currentSystem.statusBar or "sketchybar") == "nativebar";
+in {
   services.yabai = {
     enable = true;
     config = {
       # top bar
-      external_bar = "all:26:0";
+      # NativeBar occupies a flush 38-point strip at the top of the display.
+      external_bar =
+        if nativeBarEnabled
+        then "all:38:0"
+        else "all:26:0";
 
       # global settings
       mouse_follows_focus = "off";
@@ -25,10 +32,22 @@
 
       # general space settings
       layout = "bsp";
-      top_padding = 24;
-      bottom_padding = 20;
-      left_padding = 20;
-      right_padding = 20;
+      top_padding =
+        if nativeBarEnabled
+        then 10
+        else 24;
+      bottom_padding =
+        if nativeBarEnabled
+        then 10
+        else 20;
+      left_padding =
+        if nativeBarEnabled
+        then 10
+        else 20;
+      right_padding =
+        if nativeBarEnabled
+        then 10
+        else 20;
       window_gap = 10;
     };
     extraConfig = ''

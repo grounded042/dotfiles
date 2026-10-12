@@ -10,6 +10,7 @@
 in {
   imports = [
     ./nativebar.nix
+    ./screen-corners.nix
     ../shared
     ./sketchybar.nix
     ./yabai.nix
