@@ -1,11 +1,29 @@
-{ config, lib, pkgs, username, ... }:
-
 {
+  config,
+  currentSystem,
+  lib,
+  pkgs,
+  username,
+  ...
+}: let
+  statusBar = currentSystem.statusBar or "sketchybar";
+in {
   imports = [
+    ./nativebar.nix
     ../shared
     ./sketchybar.nix
     ./yabai.nix
     ./system-settings.nix
+  ];
+
+  assertions = [
+    {
+      assertion = builtins.elem statusBar ["sketchybar" "nativebar" "none"];
+      message = ''
+        currentSystem.statusBar must be "sketchybar", "nativebar", or "none";
+        got ${builtins.toJSON statusBar}
+      '';
+    }
   ];
 
   system.stateVersion = 6;

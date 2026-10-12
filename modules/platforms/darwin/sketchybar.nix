@@ -1,8 +1,10 @@
 {
+  currentSystem,
   pkgs,
   lib,
   ...
 }: let
+  enabled = (currentSystem.statusBar or "sketchybar") == "sketchybar";
   # Plugin scripts that will be put in the nix store
   plugins = {
     battery = pkgs.writeShellScript "battery.sh" ''
@@ -96,7 +98,7 @@
   };
 in {
   services.sketchybar = {
-    enable = true;
+    enable = enabled;
     config = ''
       sketchybar --bar height=32        \
                        position=top     \
