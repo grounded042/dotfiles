@@ -11,12 +11,12 @@
   opencodeConfig = {
     "$schema" = "https://opencode.ai/config.json";
     # Plugins are installed declaratively via Nix into ~/.config/opencode/plugins/
-    # (see xdg.configFile below); no `plugin` array so opencode never auto-installs.
-    provider = {
+    # (see xdg.configFile below); no `plugins` array so opencode never auto-installs.
+    providers = {
       omlx = {
-        npm = "@ai-sdk/openai-compatible";
+        package = "@opencode/ai/providers/openai-compatible";
         name = "oMLX";
-        options =
+        settings =
           {
             baseURL = "http://172.28.1.240:8000/v1";
           }
@@ -45,12 +45,17 @@
       };
     };
     model = "omlx/qwen3.8-4b";
-    permission = {
-      edit = "ask";
-      bash = "ask";
-      webfetch = "ask";
-    };
-    compaction.enabled = true;
+    permissions =
+      map (action: {
+        inherit action;
+        resource = "*";
+        effect = "ask";
+      }) [
+        "edit"
+        "shell"
+        "webfetch"
+      ];
+    compaction.auto = true;
     watcher.ignore = [
       "node_modules"
       ".git"
@@ -70,7 +75,8 @@
   dcpConfig = {
     enabled = true;
     compress = {
-      permission = "ask";
+      # OpenCode V2 does not yet support interactive DCP compression approval.
+      permission = "allow";
       minContextLimit = 64000;
       maxContextLimit = 96000;
     };
@@ -86,11 +92,8 @@ in {
     text = builtins.toJSON opencodeConfig;
   };
 
-  # Local plugins, managed by Nix instead of opencode's npm auto-install.
-  # rtk: thin TS plugin that shells out to the `rtk` binary (already on PATH).
-  xdg.configFile."opencode/plugins/rtk.ts" = lib.mkIf enabled {
-    source = ./plugins/rtk.ts;
-  };
+  # RTK's released plugin still targets OpenCode V1; use rtk explicitly until
+  # upstream ships its V2 plugin.
 
   # dcp: vendored npm package + node_modules in the Nix store.
   xdg.configFile."opencode/plugins/dcp.js" = lib.mkIf enabled {

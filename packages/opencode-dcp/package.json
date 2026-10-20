@@ -4,6 +4,6 @@
   "description": "Nix vendor wrapper to install @tarquinen/opencode-dcp with its node_modules",
   "private": true,
   "dependencies": {
-    "@tarquinen/opencode-dcp": "3.1.13"
+    "@tarquinen/opencode-dcp": "3.2.0"
   }
 }

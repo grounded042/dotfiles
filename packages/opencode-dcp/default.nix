@@ -32,11 +32,11 @@ let
 in
   buildNpmPackage {
     pname = "opencode-dcp";
-    version = "3.1.13";
+    version = "3.2.0";
 
     src = patchedSrc;
 
-    npmDepsHash = "sha256-d0WJMqLXg4DIwOR0sJEsUoxpwGe+2GU/UK9huBiZzAU=";
+    npmDepsHash = "sha256-IP4IqjwTNNM6tecNGDoTcYx/tIwBUXLnjTE2poeT6lk=";
 
     # Upstream ships prebuilt dist/; we just want node_modules installed.
     dontNpmBuild = true;
