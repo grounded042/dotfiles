@@ -14,6 +14,7 @@
     c-aresSupport = true;
   };
   custom-colmena = colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena;
+  systemCaBundle = "/etc/ssl/certs/ca-certificates.crt";
 
   # Platform detection
   isDarwin = pkgs.stdenv.isDarwin;
@@ -221,6 +222,16 @@ in {
   home.sessionVariables = {
     GOPATH = "${config.home.homeDirectory}/go";
     GOBIN = "${config.home.homeDirectory}/go/bin";
+
+    # Route CLI/runtime TLS clients that honor these variables through the
+    # Nix-managed bundle. Node otherwise prefers its embedded Mozilla roots.
+    SSL_CERT_FILE = systemCaBundle;
+    CURL_CA_BUNDLE = systemCaBundle;
+    GIT_SSL_CAINFO = systemCaBundle;
+    REQUESTS_CA_BUNDLE = systemCaBundle;
+    PIP_CERT = systemCaBundle;
+    AWS_CA_BUNDLE = systemCaBundle;
+    NODE_OPTIONS = "--use-openssl-ca";
   };
 
   programs.jq.enable = true;
