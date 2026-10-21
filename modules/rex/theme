@@ -1,0 +1,25 @@
+background = 292929
+foreground = dee2ea
+
+selection-foreground = dee2ea
+selection-background = fc2c1d
+
+cursor-color = c5c5c5
+cursor-text = 131313
+
+palette = 0=#292929
+palette = 8=#494949
+palette = 1=#fc2c1d
+palette = 9=#e74b3b
+palette = 2=#2fcc70
+palette = 10=#07d773
+palette = 3=#f1c40c
+palette = 11=#f6c700
+palette = 4=#3398db
+palette = 12=#0095de
+palette = 5=#6170c4
+palette = 13=#6667c6
+palette = 6=#0095de
+palette = 14=#0092e2
+palette = 7=#b9b9b9
+palette = 15=#d9d9d9

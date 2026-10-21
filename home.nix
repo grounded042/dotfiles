@@ -233,6 +233,7 @@ in {
     ./modules/zsh.nix
     ./modules/ghostty.nix
     ./modules/ghostty-shader
+    ./modules/rex
     ./modules/claude-code
     ./modules/jujutsu.nix
     ./modules/opencode
