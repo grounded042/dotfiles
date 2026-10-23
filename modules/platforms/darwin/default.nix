@@ -38,6 +38,7 @@ in {
 
   homebrew = {
     enable = true;
+    casks = lib.optionals (currentSystem.enableTailscale or false) ["tailscale"];
     onActivation = {
       autoUpdate = true;
       cleanup = "none";
