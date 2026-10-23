@@ -37,6 +37,8 @@
 in {
   targets.darwin.defaults = {
     NSGlobalDomain = {
+      # Disable Resume system-wide
+      NSQuitAlwaysKeepsWindows = false;
       # Expand save panel by default
       NSNavPanelExpandedStateForSaveMode = true;
       NSNavPanelExpandedStateForSaveMode2 = true;

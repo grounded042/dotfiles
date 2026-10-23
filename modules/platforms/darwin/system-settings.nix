@@ -45,10 +45,6 @@
         # Enable AirDrop over Ethernet and on unsupported Macs running Lion
         BrowseAllInterfaces = true;
       };
-      "com.apple.systempreferences" = {
-        # Disable Resume system-wide
-        NSQuitAlwaysKeepsWindows = false;
-      };
       "com.apple.print.PrintingPrefs" = {
         # Automatically quit printer app once the print jobs complete
         "Quit When Finished" = true;

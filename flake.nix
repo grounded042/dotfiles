@@ -53,6 +53,10 @@
           platform = "darwin";
           system = "aarch64-darwin";
         };
+        "joncarl-mini" = {
+          platform = "darwin";
+          system = "aarch64-darwin";
+        };
       };
 
       # Helper to create configurations based on platform
